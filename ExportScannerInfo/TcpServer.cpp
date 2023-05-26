@@ -97,7 +97,7 @@ void TcpServer::onReadyRead() {
 
 		QByteArray data = socket->readAll();
 		if (IpPort.isValidData(data)) {
-			LOGE_(DataStr.INVALID_SIZE.toStdString().data());
+			LOGE_(DataStr.INVALID_SIZE);
 			return;
 		}
 
@@ -134,7 +134,7 @@ TP TcpServer::sendDataToClient(int repeatNum, const std::string & message) {
 			catch (std::exception & e){
 				record_result(TP::SEND_FAILURE, client, mess);
 
-				LOGE("[%s:%d] %s", client->peerAddress().toString(), client->peerPort(), TP_Str::GetInstance().SEND_FAILURE.toStdString().data());
+				LOGE("[%s:%d] %s", client->peerAddress().toString(), client->peerPort(), TPStr.SEND_FAILURE);
 			}
 			i++;
 		} while (i < repeatNum);
@@ -171,7 +171,7 @@ TP TcpServer::sendDataToClient(QString addr, int port, int repeatNum, const std:
 				catch (std::exception & e){
 					record_result(TP::SEND_FAILURE, var, mess);
 
-					LOGE("[%s:%d] %s", var->peerAddress().toString(), var->peerPort(), TP_Str::GetInstance().SEND_FAILURE.toStdString().data());
+					LOGE("[%s:%d] %s", var->peerAddress().toString(), var->peerPort(), TPStr.SEND_FAILURE);
 
 					fail = true;
 				}

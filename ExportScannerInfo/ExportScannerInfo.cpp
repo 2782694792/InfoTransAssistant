@@ -279,7 +279,7 @@ bool ExportScannerInfo::eventFilter(QObject* obj, QEvent* event) {
 
 // 添加端口号到 CB 中
 void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
-	std::string tempstr = TPStr.PORT_ILLEGAL.toStdString();
+	std::string tempstr = std::string(TPStr.PORT_ILLEGAL);
 	bool        isCreate = false;
 
 	if (IpPort.isValidPort(ui.LE_TCPS_LISTEN_PORT->text().toInt())) {
@@ -298,7 +298,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
 
 			ui.CB_TCPS_LISTEN_PORT_LIST->addItem(text);
 			tempstr = text.toStdString() + " "
-				+ TPStr.PORT_ADDING_SUCCESS.toStdString();
+				+ std::string(TPStr.PORT_ADDING_SUCCESS);
 			isCreate = true;
 			ui.LE_TCPS_LISTEN_PORT->clear();
 
@@ -314,7 +314,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
 				&ExportScannerInfo::getTcpsRest);
 		}
 		else {
-			tempstr = TPStr.PORT_ADDED.toStdString();
+			tempstr = std::string(TPStr.PORT_ADDED);
 		}
 	}
 
@@ -325,7 +325,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
 		LOGE_(tempstr.data());
 	}
 
-	prompt_operation_status(isCreate, tempstr.data());
+	prompt_operation_status(isCreate, tempstr);
 }
 
 // 删除端口
@@ -352,7 +352,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_DELETE() {
 	
 	isListen_change_control_status();
 
-	prompt_operation_status(false, QString::number(m_tcps[temp]->m_port) + QString::fromLocal8Bit(std::string(" 已删除端口号").data()));
+	prompt_operation_status(false, m_tcps[temp]->m_port + " 已删除端口号");
 
 	auto i = m_tcps.begin();
 	i += temp;
@@ -580,7 +580,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_SEND(){
 		isSuccess = m_tcps[temp]->sendDataToClient(ip, port, num, mess.toStdString().data());
 	}
 
-	prompt_operation_status(isSuccess == TP::SEND_SUCCESS, (isSuccess == TP::SEND_SUCCESS ? TPStr.SEND_SUCCESS : TPStr.SEND_FAILURE).toStdString().data());
+	prompt_operation_status(isSuccess == TP::SEND_SUCCESS, (isSuccess == TP::SEND_SUCCESS ? TPStr.SEND_SUCCESS : TPStr.SEND_FAILURE));
 
 	LOGI_("");
 }
@@ -603,8 +603,8 @@ int ExportScannerInfo::currentTCPS() const {
 	}
 
 	prompt_operation_status(false,
-		TPStr.PORT_ILLEGAL.toStdString().data());
-	LOGE_(TPStr.PORT_ILLEGAL.toStdString().data());
+		TPStr.PORT_ILLEGAL);
+	LOGE_(std::string(TPStr.PORT_ILLEGAL));
 
 	return -1;
 }
@@ -627,7 +627,7 @@ void ExportScannerInfo::getTcpsRest(const QString& result) {
 		m_log = result;
 	}
 	else {
-		prompt_operation_status(false, QString::fromLocal8Bit("接收为空"));
+		prompt_operation_status(false, "接收为空");
 		LOGE_("");
 	}
 
@@ -687,8 +687,8 @@ void ExportScannerInfo::onUpdateTcpsRecvOrNone(){
 
 // 标签提示操作状态
 void ExportScannerInfo::prompt_operation_status(
-	bool isSuccess, const QString& labelContent) const {
-	ui.TL_PROMPT_OPERATION_STATUS->setText(labelContent); // 设置文本
+	bool isSuccess, const std::string & labelContent) const {
+	ui.TL_PROMPT_OPERATION_STATUS->setText(labelContent.data()); // 设置文本
 	ui.TL_PROMPT_OPERATION_STATUS->setAlignment(
 		Qt::AlignCenter); // 设置文本对齐方式为居中
 	QColor   color = isSuccess ? QColor(Qt::blue)

@@ -3,8 +3,6 @@
 
 #include <ctime>
 
-#define belien_qt
-
 static std::string getTime() {
     const char* time_fmt = "%Y-%m-%d %H:%M:%S";
     time_t      t        = time(nullptr);
@@ -17,24 +15,24 @@ static std::string getTime() {
 namespace belien {
 namespace log {
 
-#ifdef belien_vs
+//#ifdef belien_vs
 #include <string>
 #define LOGI(format, ...)                                                   \
     fprintf(stderr, "[INFO]%s [%s:%d %s()] " format "\n", getTime().data(), \
-            __FILE__, __LINE__, __func__, ##__VA_ARGS__)
+            __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__)
 #define LOGE(format, ...)                                                    \
     fprintf(stderr, "[ERROR]%s [%s:%d %s()] " format "\n", getTime().data(), \
-            __FILE__, __LINE__, __func__, ##__VA_ARGS__)
-#endif
+            __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__)
+//#endif
 
 
-#ifdef belien_qt
-#define LOGI(format, ...)                                                    \
-    qDebug("[INFO]%s [%s:%d %s()] " format "\n", getTime().data(), __FILE__, \
-           __LINE__, __FUNCTION__, ##__VA_ARGS__)
-#define LOGE(format, ...)                                                     \
-    qDebug("[ERROR]%s [%s:%d %s()] " format "\n", getTime().data(), __FILE__, \
-           __LINE__, __FUNCTION__, ##__VA_ARGS__)
+//#ifdef belien_qt
+//#define LOGI(format, ...)                                                    \
+//    qDebug("[INFO]%s [%s:%d %s()] " format "\n", getTime().data(), __FILE__, \
+//           __LINE__, __FUNCTION__, ##__VA_ARGS__)
+//#define LOGE(format, ...)                                                     \
+//    qDebug("[ERROR]%s [%s:%d %s()] " format "\n", getTime().data(), __FILE__, \
+//           __LINE__, __FUNCTION__, ##__VA_ARGS__)
 
 #define LOGI_(...)                                                             \
     qDebug("[INFO]%s [%s:%d %s()] %s\n", getTime().data(), __FILE__, __LINE__, \
@@ -42,7 +40,7 @@ namespace log {
 #define LOGE_(...)                                                    \
     qDebug("[ERROR]%s [%s:%d %s()] %s\n", getTime().data(), __FILE__, \
            __LINE__, __FUNCTION__, ##__VA_ARGS__)
-#endif
+//#endif
 
 } // namespace log
 } // namespace belien

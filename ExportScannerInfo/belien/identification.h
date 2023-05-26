@@ -1,8 +1,8 @@
 #ifndef BELIEN_IDENTIFICATION_H
 #define BELIEN_IDENTIFICATION_H
 
-#define belien_qt
-//#define belien_vs
+//#define belien_qt
+#define belien_vs
 
 #ifdef belien_vs
 #include <string>

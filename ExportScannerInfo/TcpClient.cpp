@@ -74,7 +74,7 @@ bool TcpClient::SendDataToServer()
 }
 
 // 处理server端传送过来的消息
-const char * TcpClient::ProcessMsg()
+const std::string & TcpClient::ProcessMsg()
 {
 	char	m_recvBuff[MAX_PACKET_SIZE + 1];
 	int nRecv = ::recv(m_client, m_recvBuff, MAX_PACKET_SIZE + 1, 0);
@@ -83,8 +83,8 @@ const char * TcpClient::ProcessMsg()
 	{
 		printf("%d", m_recvBuff[i]);
 	}
-
-	return m_recvBuff;
+	std::string temp = std::string(m_recvBuff);
+	return temp;
 }
 
 // 关闭socket库
@@ -101,6 +101,7 @@ const std::string & TcpClient::getLocalPort() {
     int len = sizeof(local_addr);
     memset(&local_addr, 0, len);
     getsockname(m_client, (struct sockaddr*) &local_addr, &len);
+	std::string temp = std::to_string(ntohs(local_addr.sin_port));
 
-	return std::to_string(ntohs(local_addr.sin_port));
+	return temp;
 }

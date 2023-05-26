@@ -97,7 +97,7 @@ private:
     void isListen_change_control_status();
 
     void prompt_operation_status(
-        bool isSuccess, const QString& labelContent) const; // 标签提示操作状态
+        bool isSuccess, const std::string & labelContent) const; // 标签提示操作状态
 
     int currentTCPS() const; // 返回集合索引当前服务端
 
