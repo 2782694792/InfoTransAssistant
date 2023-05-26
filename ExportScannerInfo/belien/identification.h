@@ -63,8 +63,10 @@ namespace identification {
 #endif
     };
 
-    // 传输协议 —— 服务端
-    enum class TPServer : short {
+
+#pragma region 传输协议
+
+    enum class TP : short {
         PORT_ILLEGAL,
         PORT_ADDED,
         PORT_ADDING,
@@ -82,9 +84,9 @@ namespace identification {
         SEND_FAILURE
     };
 
-#define TPServerStr TPServer_Str::GetInstance()
-    class TPServer_Str : public Singleton< TPServer_Str > {
-        friend Singleton< TPServer_Str >;
+#define TPStr TP_Str::GetInstance()
+    class TP_Str : public Singleton< TP_Str > {
+        friend Singleton< TP_Str >;
 
     public:
 #ifdef belien_vs
@@ -124,6 +126,8 @@ namespace identification {
         const QString SEND_FAILURE = QString::fromLocal8Bit("发送失败");
 #endif
     };
+	
+#pragma endregion
 
 } // namespace identification
 } // namespace belien

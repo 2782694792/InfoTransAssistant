@@ -31,6 +31,9 @@
     <Filter Include="belien">
       <UniqueIdentifier>{aef9ee3a-ddfa-4d9f-ba06-3c90f5229733}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{c1285b81-9b60-40b8-a9a1-af45b61ae9fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExportScannerInfo.cpp">
@@ -48,6 +51,9 @@
     <ClCompile Include="TcpClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TCPC_AddConnect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ExportScannerInfo.h">
@@ -59,9 +65,15 @@
     <QtMoc Include="TcpServer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="TCPC_AddConnect.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ExportScannerInfo.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="TCPC_AddConnect.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -85,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="TcpClient.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IpAndPort.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

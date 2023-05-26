@@ -15,8 +15,9 @@ QPushButton {
 	font-family: 'Microsoft Yahei';
 	font-size: 16px;
 	margin: 4px 2px;
-    /*min-width: 6em; */
-	min-height: 1.2em;
+    min-width: 6em;
+    min-height: 1.2em;
+
 }
 QPushButton:hover {
     background-color: rgb(76, 131, 204);
@@ -227,13 +228,4 @@ QLabel#imageLabel {
    border: none;
    height: 50px;
    width: 50px;
-}
-
-/*=================================================  QTableWidget*/
-QTableWidget::grid-line:horizontal {
-    background-color: blue;
-}
-
-QTableWidget::grid-line:vertical {
-    background-color: blue;
 }

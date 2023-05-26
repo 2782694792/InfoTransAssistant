@@ -4,16 +4,18 @@
 #include <thread>
 
 #define cross_thread_start
-// #define uncross_thread_start
 
+// #define uncross_thread_start
 #ifdef uncross_thread_start
 #include <condition_variable>
 #include <mutex>
-
+#include "port.h"
 bool                    t_canRun = false; // 定义共享数据
 std::condition_variable t_cv;
 std::mutex              t_mx;
 #endif
+
+#pragma region 主程序界面处理
 
 ExportScannerInfo::ExportScannerInfo(QWidget* parent) : QMainWindow(parent) {
 	ui.setupUi(this);
@@ -22,6 +24,10 @@ ExportScannerInfo::ExportScannerInfo(QWidget* parent) : QMainWindow(parent) {
 	init_default_widget();
 	init_ctrl_visible(false);
 	init_member();
+
+#ifdef test_ctrl
+	test_ctrl_init();
+#endif
 
 #ifdef test_eventFilter
 	init_register_eventFilter();
@@ -52,6 +58,11 @@ void ExportScannerInfo::init_main_slots() {
 		SLOT(onClickableLabel_Clicked()));
 	connect(ui.TL_PDF_EXPORT, SIGNAL(clicked()), this,
 		SLOT(onClickableLabel_Clicked()));
+
+	connect(ui.TL_PDF_ICON, SIGNAL(clicked()), this,
+		SLOT(onClickableLabel_Clicked()));
+	connect(ui.TL_TCP, SIGNAL(clicked()), this,
+		SLOT(onClickableLabel_Clicked()));
 }
 
 void ExportScannerInfo::init_default_widget() {
@@ -61,8 +72,6 @@ void ExportScannerInfo::init_default_widget() {
 	setAttribute(Qt::WA_TranslucentBackground); // 设置窗口透明度
 	setWindowOpacity(0.96);
 	// setAttribute(Qt::WA_TransparentForMouseEvents);	// 设置标题栏隐藏
-
-	ui.PB_TCPS_DISCONTENT_CLIENT->setVisible(false);
 
 	init_qss();
 }
@@ -75,12 +84,18 @@ void ExportScannerInfo::init_qss() {
 }
 
 void ExportScannerInfo::init_ctrl_visible(bool isVisible) {
+	ui.PB_TCPS_DISCONTENT_CLIENT->setVisible(isVisible);
+
 	ui.TL_FTP->setVisible(isVisible);
 	ui.TL_FTP_CLIENT->setVisible(isVisible);
 	ui.TL_FTP_SERVER->setVisible(isVisible);
 
 	ui.PB_TCPS_START_RECV_CONTENT->setEnabled(isVisible);
 	ui.PB_TCPS_STOP_RECV_CONTENT->setEnabled(isVisible);
+
+	// 添加QSpacerItem到垂直布局中，用于占据空间
+	m_spacerItem = new QSpacerItem(0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding);
+	ui.VLAYOUT_PDF_SETS->addItem(m_spacerItem);
 }
 
 void ExportScannerInfo::clear_sidebar_label() {
@@ -151,6 +166,7 @@ void ExportScannerInfo::init_sidebar_label(TextLabelID tlid) {
 			"border-image:url(\"./images/toRight.png\");");
 		break;
 	case UNKNOWN:
+		return;
 	default:
 		break;
 	}
@@ -185,14 +201,46 @@ void ExportScannerInfo::onClickableLabel_Clicked() {
 		ui.STACKWIDGET->setCurrentIndex(TextLabelID::FTP_CLIENT);
 	}
 #endif
-	else {
-		QMessageBox::information(NULL, "单击", "导出pdf",
-			QMessageBox::Yes | QMessageBox::No,
-			QMessageBox::Yes);
+	else if (label == ui.TL_PDF_ICON){
+		//QPropertyAnimation *animation = new QPropertyAnimation(ui.GB_PDF_SETS, "maximumHeight");
+		if (ui.GB_PDF_SETS->isVisible()) {
+			//if (ui.GB_PDF_SETS->maximumHeight() > 0) {
+			//animation->setStartValue(ui.GB_PDF_SETS->maximumHeight());
+			//animation->setEndValue(0);
+			//animation->setDuration(300);
+			//animation->start();
+			//m_spacerItem->changeSize(0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding);
+			ui.GB_PDF_SETS->setVisible(false);
+		}
+		else {
+			//animation->setStartValue(0);
+			//animation->setEndValue(ui.GB_PDF_SETS->minimumHeight());
+			//animation->setDuration(300);
+			//animation->start();
+			//m_spacerItem->changeSize(0, ui.GB_PDF_SETS->minimumHeight(), QSizePolicy::Preferred, QSizePolicy::Expanding);
+			ui.GB_PDF_SETS->setVisible(true);
+		}
+	}
+	else if (label == ui.TL_TCP)
+	{
+		if (ui.GB_TCP_SETS->isVisible()) {
+			ui.GB_TCP_SETS->setVisible(false);
+		}
+		else {
+			ui.GB_TCP_SETS->setVisible(true);
+		}
+	}
+	else
+	{
+
 	}
 
 	init_sidebar_label(tempID);
 }
+
+#pragma endregion
+
+#pragma region TCP 服务端连接处理
 
 #ifdef test_eventFilter
 
@@ -231,24 +279,9 @@ bool ExportScannerInfo::eventFilter(QObject* obj, QEvent* event) {
 }
 #endif
 
-inline static bool isValidPort(int port) {
-	// 首先判断端口号是否在 0 到 65535 之间
-	if (port < 0 || port > 65535) {
-		return false;
-	}
-	// 判断是否是保留端口号
-	if (port == 0 || port == 20 || port == 21 || port == 22 || port == 23
-		|| port == 25 || port == 53 || port == 80 || port == 110 || port == 143
-		|| port == 443 || port == 3306) {
-		return false;
-	}
-	// 端口号合法
-	return true;
-}
-
 // 添加端口号到 CB 中
 void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
-	std::string tempstr = TPServerStr.PORT_ILLEGAL.toStdString();
+	std::string tempstr = TPStr.PORT_ILLEGAL.toStdString();
 	bool        isCreate = false;
 
 	if (isValidPort(ui.LE_TCPS_LISTEN_PORT->text().toInt())) {
@@ -267,7 +300,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
 
 			ui.CB_TCPS_LISTEN_PORT_LIST->addItem(text);
 			tempstr = text.toStdString() + " "
-				+ TPServerStr.PORT_ADDING_SUCCESS.toStdString();
+				+ TPStr.PORT_ADDING_SUCCESS.toStdString();
 			isCreate = true;
 			ui.LE_TCPS_LISTEN_PORT->clear();
 
@@ -283,7 +316,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
 				&ExportScannerInfo::getTcpsRest);
 		}
 		else {
-			tempstr = TPServerStr.PORT_ADDED.toStdString();
+			tempstr = TPStr.PORT_ADDED.toStdString();
 		}
 	}
 
@@ -310,6 +343,8 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_DELETE() {
 	}
 	m_tcps[temp]->wait();
 	m_tcps[temp]->closeServer();
+
+	prompt_operation_status(false, QString::number(m_tcps[temp]->m_port) + QString::fromLocal8Bit(std::string(" 已删除端口号").data()));
 #endif
 
 	auto i = m_tcps.begin();
@@ -350,7 +385,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTENING() {
 #endif
 
 	/// 3 避免重复监听
-	if (m_tcps[temp]->getStatus() != TPServer::LISTENING) {
+	if (m_tcps[temp]->getStatus() != TP::LISTENING) {
 		m_tcps[temp]->startListen();
 		listenNum += 1; // 更改监听数
 	}
@@ -379,12 +414,12 @@ void ExportScannerInfo::isListen_change_control_status() {
 	if (inListen) // 可由服务端获取监听状态
 	{
 		ui.TE_TCPS_RECV_CONTENT->setFocus();
-		prompt_operation_status(inListen, TPServerStr.LISTENING);
+		prompt_operation_status(inListen, TPStr.LISTENING);
 	}
 	else // 未监听
 	{
 		ui.TL_PROMPT_OPERATION_STATUS->setFocus();
-		prompt_operation_status(!inListen, TPServerStr.NOT_LISTENED);
+		prompt_operation_status(!inListen, TPStr.NOT_LISTENED);
 	}
 
 	ui.PB_TCPS_START_RECV_CONTENT->setEnabled(!inListen);
@@ -403,8 +438,8 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTENED() {
 	}
 
 	/// 2 避免重复停止
-	if (m_tcps[temp]->getStatus() == TPServer::NOT_LISTENED) {
-		prompt_operation_status(false, TPServerStr.NOT_LISTENED);
+	if (m_tcps[temp]->getStatus() == TP::NOT_LISTENED) {
+		prompt_operation_status(false, TPStr.NOT_LISTENED);
 		return;
 	}
 
@@ -500,7 +535,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_DISCONNECT_CLIENT(){
 	{
 		m_tcps[temp]->disconnectedOne(ui.CB_TCPS_CONTENT_CLIENT_IP->currentText(), ui.LE_TCPS_CONTENT_CLIENT_PORT->text().toInt());
 	}
-	
+
 	LOGI_("");
 }
 
@@ -513,7 +548,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_SEND_CLIENT(){
 	{
 		return;
 	}
-	
+
 	if (ui.CHB_TCPS_ALL_CLIENT->isChecked()) // 所有
 	{
 		int num = ui.SB_TCPS_NUM_SEND->text().toInt();
@@ -552,8 +587,8 @@ int ExportScannerInfo::currentTCPS() const {
 	}
 
 	prompt_operation_status(false,
-		TPServerStr.PORT_ILLEGAL.toStdString().data());
-	LOGE_(TPServerStr.PORT_ILLEGAL.toStdString().data());
+		TPStr.PORT_ILLEGAL.toStdString().data());
+	LOGE_(TPStr.PORT_ILLEGAL.toStdString().data());
 
 	return -1;
 }
@@ -578,7 +613,7 @@ void ExportScannerInfo::getTcpsRest(const QString& result) {
 	else {
 		prompt_operation_status(false, QString::fromLocal8Bit("接收为空"));
 		LOGE_("");
-}
+	}
 
 #ifdef uncross_thread_start
 	lk.unlock();
@@ -618,18 +653,18 @@ void ExportScannerInfo::onUpdateTcpsRecvOrNone(){
 		return;
 	}
 
-	if (m_tcps[temp]->getStatus() == TPServer::RECVING_REQUEST_DATA)
+	if (m_tcps[temp]->getStatus() == TP::RECVING_REQUEST_DATA)
 	{
 		ui.PB_TCPS_START_RECV_CONTENT->setEnabled(false);
 		ui.PB_TCPS_STOP_RECV_CONTENT->setEnabled(true);
-		prompt_operation_status(true, TPServerStr.RECVING_REQUEST_DATA);
+		prompt_operation_status(true, TPStr.RECVING_REQUEST_DATA);
 	}
 
-	if (m_tcps[temp]->getStatus() == TPServer::STOP_RECVED_REQUEST_DATA)
+	if (m_tcps[temp]->getStatus() == TP::STOP_RECVED_REQUEST_DATA)
 	{
 		ui.PB_TCPS_START_RECV_CONTENT->setEnabled(true);
 		ui.PB_TCPS_STOP_RECV_CONTENT->setEnabled(false);
-		prompt_operation_status(false, TPServerStr.STOP_RECVED_REQUEST_DATA);
+		prompt_operation_status(false, TPStr.STOP_RECVED_REQUEST_DATA);
 	}
 }
 
@@ -645,3 +680,64 @@ void ExportScannerInfo::prompt_operation_status(
 	palette.setColor(QPalette::WindowText, color);
 	ui.TL_PROMPT_OPERATION_STATUS->setPalette(palette);
 }
+
+#pragma endregion
+
+#pragma region TCP 客户端连接处理
+
+void ExportScannerInfo::onClicked_PB_TCPC_ADD_CONNECT(){
+	m_form_tcpc_add_connect = new FORM_TCPC_ADD_CONNECT;
+	
+	connect(m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::startLogTcpcConnection, this,
+		&ExportScannerInfo::doStartLogTcpcConnection);
+
+	m_form_tcpc_add_connect->setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
+	m_form_tcpc_add_connect->setModal(true);
+
+	m_form_tcpc_add_connect->show();
+	m_form_tcpc_add_connect->exec();
+}
+
+void ExportScannerInfo::doStartLogTcpcConnection(const std::vector<Connection>& connection){
+	if (connection.size() > 0)
+	{
+		ui.CB_TCPC_TARGET_IP->clear();
+		ui.CB_TCPC_TARGET_PORT->clear();
+
+		for (auto var : connection)
+		{
+			ui.CB_TCPC_TARGET_IP->addItem(var.getIP());
+			ui.CB_TCPC_TARGET_PORT->addItem(QString::number(var.getPort()));
+		}
+
+		int lastIndex = ui.CB_TCPC_TARGET_IP->count() - 1;
+		ui.CB_TCPC_TARGET_IP->setCurrentIndex(lastIndex);
+		lastIndex = ui.CB_TCPC_TARGET_PORT->count() - 1;
+		ui.CB_TCPC_TARGET_PORT->setCurrentIndex(lastIndex);
+	}
+
+	m_form_tcpc_add_connect = nullptr;
+}
+
+
+void ExportScannerInfo::onClicked_PB_TCPC_CONNECT(){
+
+}
+
+void ExportScannerInfo::onClicked_PB_TCPC_DISCONNECT(){
+
+}
+
+void ExportScannerInfo::onClicked_PB_TCPC_START_RECV_CONTENT(){
+
+}
+
+void ExportScannerInfo::onClicked_PB_TCPC_STOP_RECV_CONTENT(){
+
+}
+
+void ExportScannerInfo::onClicked_PB_TCPC_SEND(){
+
+}
+
+#pragma endregion

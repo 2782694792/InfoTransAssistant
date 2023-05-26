@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/ExportScannerInfo">
-        <file alias="PushButton">main.qss</file>
+        <file alias="main">main.qss</file>
+        <file alias="black">blackTheme.qss</file>
     </qresource>
 </RCC>

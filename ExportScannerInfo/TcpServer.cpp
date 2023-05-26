@@ -1,9 +1,8 @@
 ﻿#include "TcpServer.h"
 #include <iostream>
-#include <qdebug.h>
 
 TcpServer::TcpServer(int port)
-	: m_log(""), m_port((quint16)port), m_status(TPServer::PORT_ILLEGAL),
+	: m_log(""), m_port((quint16)port), m_status(TP::PORT_ILLEGAL),
 	QThread(nullptr), m_server(nullptr) {}
 
 TcpServer::~TcpServer() {
@@ -19,7 +18,7 @@ TcpServer::~TcpServer() {
 
 void TcpServer::run() {
 	// moveToThread(this);
-	LOGI_("线程运行");
+	LOGI_(QString::fromLocal8Bit("线程运行").toStdString().data());
 }
 
 bool TcpServer::isListen(){
@@ -31,19 +30,19 @@ bool TcpServer::isListen(){
 	return m_server->isListening();
 }
 
-TPServer TcpServer::startListen() {
+TP TcpServer::startListen() {
 	m_server = new QTcpServer(this);
 	m_clients.clear();
 	clearLog();
 
 	/// 1 重复监听
 	if (m_server->isListening()) {
-		return record_result(TPServer::LISTENING, nullptr, "");
+		return record_result(TP::LISTENING, nullptr, "");
 	}
 
 	/// 2 监听所有
 	if (!m_server->listen(QHostAddress::Any, m_port)) {
-		return record_result(TPServer::NOT_LISTENED, nullptr,
+		return record_result(TP::NOT_LISTENED, nullptr,
 			m_server->errorString().toStdString().data());
 	}
 
@@ -53,14 +52,14 @@ TPServer TcpServer::startListen() {
 
 	LOGI("Server started: %d", m_port);
 
-	return record_result(TPServer::LISTENING, nullptr, "");
+	return record_result(TP::LISTENING, nullptr, "");
 }
 
-TPServer TcpServer::stopListen() {
-	record_result(TPServer::NOT_LISTENED, nullptr, "");
+TP TcpServer::stopListen() {
+	record_result(TP::NOT_LISTENED, nullptr, "");
 	closeServer();
 
-	return TPServer::NOT_LISTENED;
+	return TP::NOT_LISTENED;
 }
 
 void TcpServer::onNewConnection() {
@@ -72,7 +71,7 @@ void TcpServer::onNewConnection() {
 			m_clients.insert(socket);
 		}
 
-		record_result(TPServer::CONNECT, socket);
+		record_result(TP::CONNECT, socket);
 
 		connect(socket, &QTcpSocket::readyRead, this, &TcpServer::onReadyRead);
 		connect(socket, &QTcpSocket::disconnected, this,
@@ -81,11 +80,11 @@ void TcpServer::onNewConnection() {
 }
 
 void TcpServer::startRecvRequestData() {
-	m_status = TPServer::RECVING_REQUEST_DATA;
+	m_status = TP::RECVING_REQUEST_DATA;
 }
 
 void TcpServer::stopRecvRequestData() {
-	m_status = TPServer::STOP_RECVED_REQUEST_DATA;
+	m_status = TP::STOP_RECVED_REQUEST_DATA;
 }
 
 void TcpServer::onReadyRead() {
@@ -98,21 +97,23 @@ void TcpServer::onReadyRead() {
 
 		QByteArray data = socket->readAll();
 
-		if (m_status == TPServer::STOP_RECVED_REQUEST_DATA) // 停止接收
+		if (m_status == TP::STOP_RECVED_REQUEST_DATA) // 停止接收
 		{
-			record_result(TPServer::STOP_RECVED_REQUEST_DATA, socket, data);
+			record_result(TP::STOP_RECVED_REQUEST_DATA, socket, data);
 		}
 		else // RECVING_REQUEST_DATA
 		{
-			record_result(TPServer::RECVING_REQUEST_DATA, socket, data);
+			record_result(TP::RECVING_REQUEST_DATA, socket, data);
 		}
 
 		m_mx.unlock();
 	}
 }
 
-TPServer TcpServer::sendDataToClient(int repeatNum, const std::string & message) {
-	record_result(TPServer::SENDING, nullptr);
+TP TcpServer::sendDataToClient(int repeatNum, const std::string & message) {
+	const QByteArray & mess = QString(message.data()).toLocal8Bit();
+
+	record_result(TP::SENDING, nullptr);
 	bool fail = true;
 
 	QMutexLocker lock(&m_mx);
@@ -123,13 +124,13 @@ TPServer TcpServer::sendDataToClient(int repeatNum, const std::string & message)
 		{
 			try{
 				client->write(message.data());
-				record_result(TPServer::SEND_SUCCESS, client);
+				record_result(TP::SEND_SUCCESS, client, mess);
 				fail = false;
 			}
 			catch (std::exception & e){
-				record_result(TPServer::SEND_FAILURE, client);
+				record_result(TP::SEND_FAILURE, client, mess);
 
-				LOGE("[%s:%d] %s", client->peerAddress().toString(), client->peerPort(), TPServer_Str::GetInstance().SEND_FAILURE.toStdString().data());
+				LOGE("[%s:%d] %s", client->peerAddress().toString(), client->peerPort(), TP_Str::GetInstance().SEND_FAILURE.toStdString().data());
 			}
 			i++;
 		} while (i < repeatNum);
@@ -139,14 +140,16 @@ TPServer TcpServer::sendDataToClient(int repeatNum, const std::string & message)
 
 	if (fail)
 	{
-		return TPServer::UNCONNECT;
+		return TP::UNCONNECT;
 	}
-	return TPServer::SEND_SUCCESS;
+	return TP::SEND_SUCCESS;
 }
 
-TPServer TcpServer::sendDataToClient(QString addr, int port, int repeatNum, const std::string & message){
+TP TcpServer::sendDataToClient(QString addr, int port, int repeatNum, const std::string & message){
+	const QByteArray & mess = QString(message.data()).toLocal8Bit();
+
 	bool fail = true;
-	record_result(TPServer::SENDING, nullptr);
+	record_result(TP::SENDING, nullptr);
 
 	QMutexLocker lock(&m_mx);
 
@@ -162,14 +165,14 @@ TPServer TcpServer::sendDataToClient(QString addr, int port, int repeatNum, cons
 					var->write(message.data());
 				}
 				catch (std::exception & e){
-					record_result(TPServer::SEND_FAILURE, var);
+					record_result(TP::SEND_FAILURE, var, mess);
 
-					LOGE("[%s:%d] %s", var->peerAddress().toString(), var->peerPort(), TPServer_Str::GetInstance().SEND_FAILURE.toStdString().data());
+					LOGE("[%s:%d] %s", var->peerAddress().toString(), var->peerPort(), TP_Str::GetInstance().SEND_FAILURE.toStdString().data());
 
 					fail = true;
 				}
 
-				record_result(TPServer::SEND_SUCCESS, var);
+				record_result(TP::SEND_SUCCESS, var, mess);
 			} while (i < repeatNum);
 
 			fail = false;
@@ -180,36 +183,36 @@ TPServer TcpServer::sendDataToClient(QString addr, int port, int repeatNum, cons
 
 	if (fail)
 	{
-		return TPServer::UNCONNECT;
+		return TP::UNCONNECT;
 	}
-	return TPServer::SEND_SUCCESS;
+	return TP::SEND_SUCCESS;
 }
 
-TPServer TcpServer::doDisconnected() {
+TP TcpServer::doDisconnected() {
 	QTcpSocket* socket = static_cast<QTcpSocket*>(sender());
 	if (m_clients.contains(socket)) {
 		m_clients.remove(socket);
 		socket->deleteLater();
 	}
 
-	return record_result(TPServer::DISCONNECT, socket);
+	return record_result(TP::DISCONNECT, socket);
 }
 
-TPServer TcpServer::disconnectedOne(QString addr, int port){
+TP TcpServer::disconnectedOne(QString addr, int port){
 	for each (auto var in m_clients)
 	{
 		if (var->peerAddress().toString() == addr.toStdString().data() && port == var->peerPort())
 		{
 			m_clients.remove(var);
 			var->deleteLater();
-			return record_result(TPServer::DISCONNECT, var);
+			return record_result(TP::DISCONNECT, var);
 		}
 	}
 
-	return record_result(TPServer::UNCONNECT, nullptr);
+	return record_result(TP::UNCONNECT, nullptr);
 }
 
-TPServer TcpServer::disconnectedAll(){
+TP TcpServer::disconnectedAll(){
 	bool fail = true;
 	{
 		QMutexLocker lock(&m_mx);
@@ -225,22 +228,21 @@ TPServer TcpServer::disconnectedAll(){
 	}
 	if (fail)
 	{
-		return record_result(TPServer::UNCONNECT, nullptr);
+		return record_result(TP::UNCONNECT, nullptr);
 	}
-	return record_result(TPServer::DISCONNECT, nullptr);
+	return record_result(TP::DISCONNECT, nullptr);
 }
 
 
 void TcpServer::closeServer() {
-	LOGE("%s：%s", QString::fromLocal8Bit("连接数"), QString::number(m_clients.size()).data());
+	LOGE("%s:%s", QString::fromLocal8Bit("连接数").toStdString().data(),
+		QString::number(m_clients.size()).data());
 
 	const QList<QTcpSocket*> ptemp = m_clients.toList();
 	for each (auto var in ptemp)
 	{
-		int i = 0;
-		ptemp[i]->disconnectFromHost();
-		ptemp[i]->close();
-		i++;
+		var->disconnectFromHost();
+		var->close();
 	}
 
 	m_clients.clear();
@@ -261,9 +263,9 @@ void TcpServer::getClientsInfo(QStringList& addrs, QList< int >& ports) {
 	}
 }
 
-TPServer TcpServer::record_result(TPServer rest, const QTcpSocket* client,
+TP TcpServer::record_result(TP rest, const QTcpSocket* client,
 	const QByteArray& data) {
-	QString id = "";
+	QString id = "", id2 = "";
 
 	if (client != nullptr) {
 		std::string temp = client->peerAddress().toString().toStdString();
@@ -274,57 +276,61 @@ TPServer TcpServer::record_result(TPServer rest, const QTcpSocket* client,
 			.arg(ip)
 			.arg(port)
 			.arg((int)(m_server->serverPort()));
+		id2 = QString("[%3] > [%1: %2] %4\n")
+			.arg(ip)
+			.arg(port)
+			.arg((int)(m_server->serverPort()));
 	}
 	else {
-		id = QString("(%3) %4\n").arg((int)(m_server->serverPort()));
+		id = QString("(%1) %2\n").arg((int)(m_server->serverPort()));
 	}
 
 	bool isEmit = false;
 
 	m_status = rest;
 	switch (m_status) {
-	case belien::identification::TPServer::CONNECT:
+	case belien::identification::TP::CONNECT:
 		isEmit = true;
-		m_log = id.arg(TPServerStr.CONNECT);
+		m_log = id.arg(TPStr.CONNECT);
 		emit updateClientsReady();
 		break;
-	case belien::identification::TPServer::DISCONNECT:
+	case belien::identification::TP::DISCONNECT:
 		isEmit = true;
-		m_log = id.arg(TPServerStr.DISCONNECT);
+		m_log = id.arg(TPStr.DISCONNECT);
 		emit updateClientsReady();
 		break;
-	case belien::identification::TPServer::RECVING_REQUEST_DATA:
+	case belien::identification::TP::RECVING_REQUEST_DATA:
 		if (!data.isEmpty()) {
 			isEmit = true;
 			m_log = id.arg(QString::fromLocal8Bit(data));
 		}
 		break;
-	case belien::identification::TPServer::STOP_RECVED_REQUEST_DATA:
-		m_log = id.arg(TPServerStr.STOP_RECVED_REQUEST_DATA);
+	case belien::identification::TP::STOP_RECVED_REQUEST_DATA:
+		m_log = id.arg(TPStr.STOP_RECVED_REQUEST_DATA);
 		break;
-	case belien::identification::TPServer::LISTENING:
-		m_log = id.arg(TPServerStr.LISTENING);
+	case belien::identification::TP::LISTENING:
+		m_log = id.arg(TPStr.LISTENING);
 		break;
-	case belien::identification::TPServer::NOT_LISTENED:
-		m_log = id.arg(TPServerStr.NOT_LISTENED);
+	case belien::identification::TP::NOT_LISTENED:
+		m_log = id.arg(TPStr.NOT_LISTENED);
 		break;
-	case belien::identification::TPServer::SENDING:
-		m_log = id.arg(TPServerStr.SENDING);
+	case belien::identification::TP::SENDING:
+		m_log = id2.arg(TPStr.SENDING);
 		break;
-	case belien::identification::TPServer::SEND_SUCCESS:
-		m_log = id.arg(TPServerStr.SEND_SUCCESS);
+	case belien::identification::TP::SEND_SUCCESS:
+		m_log = id2.arg(QString::fromLocal8Bit(data) + TPStr.SEND_SUCCESS);
 		isEmit = true;
 		break;
-	case belien::identification::TPServer::SEND_FAILURE:
-		m_log = id.arg(TPServerStr.SEND_FAILURE);
+	case belien::identification::TP::SEND_FAILURE:
+		m_log = id2.arg(QString::fromLocal8Bit(data) + TPStr.SEND_FAILURE);
 		isEmit = true;
 		break;
-	case belien::identification::TPServer::REQUEST_CONNECT:
+	case belien::identification::TP::REQUEST_CONNECT:
 		break;
-	case belien::identification::TPServer::UNCONNECT:
-		m_log = id.arg(TPServerStr.UNCONNECT);
+	case belien::identification::TP::UNCONNECT:
+		m_log = id.arg(TPStr.UNCONNECT);
 		break;
-	case belien::identification::TPServer::PORT_ILLEGAL:
+	case belien::identification::TP::PORT_ILLEGAL:
 		break;
 	default:
 		break;

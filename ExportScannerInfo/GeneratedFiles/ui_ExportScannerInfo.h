@@ -9,6 +9,7 @@
 #ifndef UI_EXPORTSCANNERINFO_H
 #define UI_EXPORTSCANNERINFO_H
 
+#include <ClickableLabel.h>
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
@@ -24,6 +25,8 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpacerItem>
@@ -33,13 +36,16 @@
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include "ClickableLabel.h"
 
 QT_BEGIN_NAMESPACE
 
 class Ui_ExportScannerInfoClass
 {
 public:
+    QAction *action;
+    QAction *actionExit;
+    QAction *action_5;
+    QAction *action_6;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout_2;
@@ -49,8 +55,10 @@ public:
     QVBoxLayout *verticalLayout;
     QWidget *widget_5;
     QVBoxLayout *verticalLayout_14;
-    QLabel *TL_TCP;
+    ClickableLabel *TL_TCP;
     QFrame *line_2;
+    QGroupBox *GB_TCP_SETS;
+    QVBoxLayout *verticalLayout_18;
     QHBoxLayout *horizontalLayout_17;
     ClickableLabel *TL_TCP_SERVER;
     QLabel *TL_TCP_SERVER_ICON;
@@ -58,13 +66,19 @@ public:
     ClickableLabel *TL_TCP_CLIENT;
     QLabel *TL_TCP_CLIENT_ICON;
     QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout_24;
     QLabel *TL_PDF;
+    ClickableLabel *TL_PDF_ICON;
     QFrame *line;
+    QVBoxLayout *VLAYOUT_PDF_SETS;
+    QGroupBox *GB_PDF_SETS;
     QHBoxLayout *horizontalLayout_19;
     ClickableLabel *TL_PDF_EXPORT;
     QLabel *TL_PDF_EXPORT_ICON;
     QSpacerItem *verticalSpacer_2;
     QLabel *TL_FTP;
+    QGroupBox *groupBox_8;
+    QVBoxLayout *verticalLayout_19;
     QHBoxLayout *horizontalLayout_20;
     ClickableLabel *TL_FTP_SERVER;
     QLabel *TL_FTP_SERVER_ICON;
@@ -109,24 +123,6 @@ public:
     QWidget *SW_TCP_SERVER;
     QWidget *gridWidget_3;
     QGridLayout *gridLayout_4;
-    QHBoxLayout *horizontalLayout_9;
-    QGroupBox *groupBox_2;
-    QHBoxLayout *horizontalLayout_13;
-    QVBoxLayout *verticalLayout_10;
-    QHBoxLayout *horizontalLayout_4;
-    QCheckBox *CHB_TCPS_ALL_CLIENT;
-    QLabel *label_10;
-    QComboBox *CB_TCPS_CONTENT_CLIENT_IP;
-    QLabel *LE_TCPS_CONTENT_CLIENT_PORT;
-    QSpacerItem *horizontalSpacer_11;
-    QPushButton *PB_TCPS_DISCONTENT_CLIENT;
-    QTextEdit *TE_TCPS_SEND_CONTENT;
-    QVBoxLayout *verticalLayout_9;
-    QSpacerItem *verticalSpacer_6;
-    QLabel *label_6;
-    QSpinBox *SB_TCPS_NUM_SEND;
-    QPushButton *PB_TCPS_SEND;
-    QSpacerItem *verticalSpacer_5;
     QHBoxLayout *horizontalLayout_11;
     QGroupBox *groupBox_4;
     QVBoxLayout *verticalLayout_11;
@@ -146,7 +142,6 @@ public:
     QPushButton *PB_TCPS_LISTENING;
     QSpacerItem *horizontalSpacer_6;
     QPushButton *PB_TCPS_LISTENED;
-    QSpacerItem *horizontalSpacer_10;
     QSpacerItem *horizontalSpacer_12;
     QPushButton *PB_TCPS_LISTEN_PORT_DELETE;
     QHBoxLayout *horizontalLayout_10;
@@ -167,39 +162,39 @@ public:
     QPushButton *PB_TCPS_STOP_RECV_CONTENT;
     QSpacerItem *verticalSpacer_4;
     QPushButton *PB_TCPS_RECV_CONTENT_CLEAR;
+    QHBoxLayout *horizontalLayout_25;
+    QHBoxLayout *horizontalLayout_32;
+    QGroupBox *groupBox_9;
+    QHBoxLayout *horizontalLayout_35;
+    QVBoxLayout *verticalLayout_20;
+    QTextEdit *TE_TCPC_SEND_CONTENT_2;
+    QVBoxLayout *verticalLayout_21;
+    QSpacerItem *verticalSpacer_12;
+    QLabel *label_20;
+    QSpinBox *SB_TCPC_NUM_SEND_2;
+    QPushButton *PB_TCPS_SEND;
+    QSpacerItem *verticalSpacer_13;
     QWidget *SW_TCP_CLIENT;
     QWidget *gridWidget_4;
     QGridLayout *gridLayout_5;
-    QHBoxLayout *horizontalLayout_15;
-    QHBoxLayout *horizontalLayout_30;
-    QGroupBox *groupBox_6;
-    QHBoxLayout *horizontalLayout_31;
-    QVBoxLayout *verticalLayout_15;
-    QTextEdit *TE_TCPC_SEND_CONTENT;
-    QVBoxLayout *verticalLayout_16;
-    QSpacerItem *verticalSpacer_10;
-    QLabel *label_16;
-    QSpinBox *SB_TCPC_NUM_SEND;
-    QPushButton *PB_TCPC_SEND;
-    QSpacerItem *verticalSpacer_11;
     QHBoxLayout *horizontalLayout_23;
     QGroupBox *groupBox_7;
     QVBoxLayout *verticalLayout_17;
     QHBoxLayout *horizontalLayout_33;
+    QPushButton *PB_TCPC_ADD_CONNECT;
+    QSpacerItem *horizontalSpacer_15;
     QLabel *label_17;
-    QLineEdit *LE_TCPC_LOCAL_IP;
+    QComboBox *CB_TCPC_TARGET_IP;
     QSpacerItem *horizontalSpacer_14;
+    QLabel *label_19;
+    QComboBox *CB_TCPC_TARGET_PORT;
+    QHBoxLayout *horizontalLayout_34;
     QLabel *label_18;
     QLabel *LE_TCPC_LOCAL_PORT;
-    QSpacerItem *horizontalSpacer_16;
-    QHBoxLayout *horizontalLayout_34;
-    QLabel *label_19;
-    QLineEdit *LE_TCPC_TARGET_IP;
-    QSpacerItem *horizontalSpacer_17;
+    QSpacerItem *horizontalSpacer_20;
     QPushButton *PB_TCPC_CONNECT;
     QSpacerItem *horizontalSpacer_13;
     QPushButton *PB_TCPC_DISCONNECT;
-    QSpacerItem *horizontalSpacer_20;
     QHBoxLayout *horizontalLayout_22;
     QGroupBox *GB_TCP_SERVER_RECV_2;
     QHBoxLayout *horizontalLayout_27;
@@ -210,26 +205,49 @@ public:
     QPushButton *PB_TCPC_STOP_RECV_CONTENT;
     QSpacerItem *verticalSpacer_9;
     QPushButton *PB_TCPC_RECV_CONTENT_CLEAR;
+    QHBoxLayout *horizontalLayout_15;
+    QHBoxLayout *horizontalLayout_30;
+    QGroupBox *groupBox_6;
+    QHBoxLayout *horizontalLayout_31;
+    QVBoxLayout *verticalLayout_15;
+    QTextEdit *TE_TCPS_SEND_CONTENT;
+    QVBoxLayout *verticalLayout_16;
+    QSpacerItem *verticalSpacer_10;
+    QLabel *label_16;
+    QSpinBox *SB_TCPS_NUM_SEND;
+    QPushButton *PB_TCPC_SEND;
+    QSpacerItem *verticalSpacer_11;
     QWidget *SW_PDF_EXPORT;
     QWidget *gridLayoutWidget_5;
     QGridLayout *gridLayout_6;
     QListView *listView;
+    QMenuBar *menuBar;
+    QMenu *menu;
+    QMenu *menu_2;
 
     void setupUi(QMainWindow *ExportScannerInfoClass)
     {
         if (ExportScannerInfoClass->objectName().isEmpty())
             ExportScannerInfoClass->setObjectName(QStringLiteral("ExportScannerInfoClass"));
         ExportScannerInfoClass->setWindowModality(Qt::ApplicationModal);
-        ExportScannerInfoClass->resize(1090, 885);
+        ExportScannerInfoClass->resize(1095, 920);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(ExportScannerInfoClass->sizePolicy().hasHeightForWidth());
         ExportScannerInfoClass->setSizePolicy(sizePolicy);
-        ExportScannerInfoClass->setMinimumSize(QSize(1090, 885));
+        ExportScannerInfoClass->setMinimumSize(QSize(1090, 910));
         ExportScannerInfoClass->setMouseTracking(true);
         ExportScannerInfoClass->setFocusPolicy(Qt::ClickFocus);
         ExportScannerInfoClass->setDocumentMode(false);
+        action = new QAction(ExportScannerInfoClass);
+        action->setObjectName(QStringLiteral("action"));
+        actionExit = new QAction(ExportScannerInfoClass);
+        actionExit->setObjectName(QStringLiteral("actionExit"));
+        action_5 = new QAction(ExportScannerInfoClass);
+        action_5->setObjectName(QStringLiteral("action_5"));
+        action_6 = new QAction(ExportScannerInfoClass);
+        action_6->setObjectName(QStringLiteral("action_6"));
         centralWidget = new QWidget(ExportScannerInfoClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
@@ -294,11 +312,14 @@ public:
         widget_5->setSizePolicy(sizePolicy);
         widget_5->setMinimumSize(QSize(190, 800));
         widget_5->setMaximumSize(QSize(185, 800));
+        QFont font3;
+        font3.setPointSize(12);
+        widget_5->setFont(font3);
         verticalLayout_14 = new QVBoxLayout(widget_5);
         verticalLayout_14->setSpacing(6);
         verticalLayout_14->setContentsMargins(11, 11, 11, 11);
         verticalLayout_14->setObjectName(QStringLiteral("verticalLayout_14"));
-        TL_TCP = new QLabel(widget_5);
+        TL_TCP = new ClickableLabel(widget_5);
         TL_TCP->setObjectName(QStringLiteral("TL_TCP"));
         QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy2.setHorizontalStretch(0);
@@ -306,12 +327,12 @@ public:
         sizePolicy2.setHeightForWidth(TL_TCP->sizePolicy().hasHeightForWidth());
         TL_TCP->setSizePolicy(sizePolicy2);
         TL_TCP->setMinimumSize(QSize(0, 40));
-        QFont font3;
-        font3.setFamily(QStringLiteral("JetBrains Mono ExtraBold"));
-        font3.setPointSize(11);
-        font3.setBold(true);
-        font3.setWeight(75);
-        TL_TCP->setFont(font3);
+        QFont font4;
+        font4.setFamily(QStringLiteral("JetBrains Mono ExtraBold"));
+        font4.setPointSize(11);
+        font4.setBold(true);
+        font4.setWeight(75);
+        TL_TCP->setFont(font4);
         TL_TCP->setStyleSheet(QStringLiteral(""));
 
         verticalLayout_14->addWidget(TL_TCP);
@@ -323,41 +344,54 @@ public:
 
         verticalLayout_14->addWidget(line_2);
 
+        GB_TCP_SETS = new QGroupBox(widget_5);
+        GB_TCP_SETS->setObjectName(QStringLiteral("GB_TCP_SETS"));
+        sizePolicy.setHeightForWidth(GB_TCP_SETS->sizePolicy().hasHeightForWidth());
+        GB_TCP_SETS->setSizePolicy(sizePolicy);
+        GB_TCP_SETS->setStyleSheet(QStringLiteral("border: 0px;"));
+        verticalLayout_18 = new QVBoxLayout(GB_TCP_SETS);
+        verticalLayout_18->setSpacing(7);
+        verticalLayout_18->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_18->setObjectName(QStringLiteral("verticalLayout_18"));
+        verticalLayout_18->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_17 = new QHBoxLayout();
         horizontalLayout_17->setSpacing(6);
         horizontalLayout_17->setObjectName(QStringLiteral("horizontalLayout_17"));
-        TL_TCP_SERVER = new ClickableLabel(widget_5);
+        TL_TCP_SERVER = new ClickableLabel(GB_TCP_SETS);
         TL_TCP_SERVER->setObjectName(QStringLiteral("TL_TCP_SERVER"));
-        sizePolicy.setHeightForWidth(TL_TCP_SERVER->sizePolicy().hasHeightForWidth());
-        TL_TCP_SERVER->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(TL_TCP_SERVER->sizePolicy().hasHeightForWidth());
+        TL_TCP_SERVER->setSizePolicy(sizePolicy3);
         TL_TCP_SERVER->setMinimumSize(QSize(0, 30));
-        QFont font4;
-        font4.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
-        font4.setPointSize(9);
-        TL_TCP_SERVER->setFont(font4);
+        QFont font5;
+        font5.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
+        font5.setPointSize(9);
+        TL_TCP_SERVER->setFont(font5);
         TL_TCP_SERVER->setStyleSheet(QStringLiteral("QLabel:hover {color: #2980B9;}"));
         TL_TCP_SERVER->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         horizontalLayout_17->addWidget(TL_TCP_SERVER);
 
-        TL_TCP_SERVER_ICON = new QLabel(widget_5);
+        TL_TCP_SERVER_ICON = new QLabel(GB_TCP_SETS);
         TL_TCP_SERVER_ICON->setObjectName(QStringLiteral("TL_TCP_SERVER_ICON"));
-        QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(TL_TCP_SERVER_ICON->sizePolicy().hasHeightForWidth());
-        TL_TCP_SERVER_ICON->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(TL_TCP_SERVER_ICON->sizePolicy().hasHeightForWidth());
+        TL_TCP_SERVER_ICON->setSizePolicy(sizePolicy4);
         TL_TCP_SERVER_ICON->setMinimumSize(QSize(35, 30));
 
         horizontalLayout_17->addWidget(TL_TCP_SERVER_ICON);
 
 
-        verticalLayout_14->addLayout(horizontalLayout_17);
+        verticalLayout_18->addLayout(horizontalLayout_17);
 
         horizontalLayout_18 = new QHBoxLayout();
         horizontalLayout_18->setSpacing(6);
         horizontalLayout_18->setObjectName(QStringLiteral("horizontalLayout_18"));
-        TL_TCP_CLIENT = new ClickableLabel(widget_5);
+        TL_TCP_CLIENT = new ClickableLabel(GB_TCP_SETS);
         TL_TCP_CLIENT->setObjectName(QStringLiteral("TL_TCP_CLIENT"));
         sizePolicy.setHeightForWidth(TL_TCP_CLIENT->sizePolicy().hasHeightForWidth());
         TL_TCP_CLIENT->setSizePolicy(sizePolicy);
@@ -368,73 +402,130 @@ public:
 
         horizontalLayout_18->addWidget(TL_TCP_CLIENT);
 
-        TL_TCP_CLIENT_ICON = new QLabel(widget_5);
+        TL_TCP_CLIENT_ICON = new QLabel(GB_TCP_SETS);
         TL_TCP_CLIENT_ICON->setObjectName(QStringLiteral("TL_TCP_CLIENT_ICON"));
-        sizePolicy3.setHeightForWidth(TL_TCP_CLIENT_ICON->sizePolicy().hasHeightForWidth());
-        TL_TCP_CLIENT_ICON->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(TL_TCP_CLIENT_ICON->sizePolicy().hasHeightForWidth());
+        TL_TCP_CLIENT_ICON->setSizePolicy(sizePolicy4);
         TL_TCP_CLIENT_ICON->setMinimumSize(QSize(35, 0));
 
         horizontalLayout_18->addWidget(TL_TCP_CLIENT_ICON);
 
 
-        verticalLayout_14->addLayout(horizontalLayout_18);
+        verticalLayout_18->addLayout(horizontalLayout_18);
+
+
+        verticalLayout_14->addWidget(GB_TCP_SETS);
 
         verticalSpacer = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
         verticalLayout_14->addItem(verticalSpacer);
 
+        horizontalLayout_24 = new QHBoxLayout();
+        horizontalLayout_24->setSpacing(6);
+        horizontalLayout_24->setObjectName(QStringLiteral("horizontalLayout_24"));
         TL_PDF = new QLabel(widget_5);
         TL_PDF->setObjectName(QStringLiteral("TL_PDF"));
-        sizePolicy.setHeightForWidth(TL_PDF->sizePolicy().hasHeightForWidth());
-        TL_PDF->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(TL_PDF->sizePolicy().hasHeightForWidth());
+        TL_PDF->setSizePolicy(sizePolicy5);
         TL_PDF->setMinimumSize(QSize(0, 40));
-        QFont font5;
-        font5.setFamily(QStringLiteral("JetBrains Mono ExtraBold"));
-        font5.setPointSize(10);
-        font5.setBold(true);
-        font5.setWeight(75);
-        TL_PDF->setFont(font5);
+        TL_PDF->setFont(font4);
         TL_PDF->setStyleSheet(QStringLiteral(""));
         TL_PDF->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        verticalLayout_14->addWidget(TL_PDF);
+        horizontalLayout_24->addWidget(TL_PDF);
+
+        TL_PDF_ICON = new ClickableLabel(widget_5);
+        TL_PDF_ICON->setObjectName(QStringLiteral("TL_PDF_ICON"));
+        QSizePolicy sizePolicy6(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(TL_PDF_ICON->sizePolicy().hasHeightForWidth());
+        TL_PDF_ICON->setSizePolicy(sizePolicy6);
+        TL_PDF_ICON->setMinimumSize(QSize(22, 22));
+        TL_PDF_ICON->setStyleSheet(QString::fromUtf8("QLabel {\n"
+"    border: 0px solid black;\n"
+"border-image: url(./images/toDown-arrow.png);    border-radius: 5px;\n"
+"}\n"
+"\n"
+"/* \345\256\232\344\271\211\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\346\240\267\345\274\217 */\n"
+"QLabel:hover {\n"
+"    border-color: blue;\n"
+"    border-image: url(./images/toDown-blue.png);\n"
+"}\n"
+"\n"
+"/* \345\256\232\344\271\211\351\274\240\346\240\207\347\202\271\345\207\273\346\227\266\347\232\204\346\240\267\345\274\217 */\n"
+"QLabel:pressed {\n"
+"    border-image: url(./images/toDown-blue.png);}"));
+
+        horizontalLayout_24->addWidget(TL_PDF_ICON);
+
+
+        verticalLayout_14->addLayout(horizontalLayout_24);
 
         line = new QFrame(widget_5);
         line->setObjectName(QStringLiteral("line"));
-        QSizePolicy sizePolicy4(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(line->sizePolicy().hasHeightForWidth());
-        line->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy7(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(line->sizePolicy().hasHeightForWidth());
+        line->setSizePolicy(sizePolicy7);
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
 
         verticalLayout_14->addWidget(line);
 
-        horizontalLayout_19 = new QHBoxLayout();
-        horizontalLayout_19->setSpacing(6);
+        VLAYOUT_PDF_SETS = new QVBoxLayout();
+        VLAYOUT_PDF_SETS->setSpacing(7);
+        VLAYOUT_PDF_SETS->setObjectName(QStringLiteral("VLAYOUT_PDF_SETS"));
+        GB_PDF_SETS = new QGroupBox(widget_5);
+        GB_PDF_SETS->setObjectName(QStringLiteral("GB_PDF_SETS"));
+        GB_PDF_SETS->setEnabled(true);
+        sizePolicy3.setHeightForWidth(GB_PDF_SETS->sizePolicy().hasHeightForWidth());
+        GB_PDF_SETS->setSizePolicy(sizePolicy3);
+        GB_PDF_SETS->setMinimumSize(QSize(0, 30));
+        GB_PDF_SETS->setMaximumSize(QSize(16777215, 16777215));
+        GB_PDF_SETS->setToolTipDuration(-1);
+        GB_PDF_SETS->setStyleSheet(QStringLiteral("border: 0px;"));
+        GB_PDF_SETS->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        GB_PDF_SETS->setFlat(false);
+        horizontalLayout_19 = new QHBoxLayout(GB_PDF_SETS);
+        horizontalLayout_19->setSpacing(7);
+        horizontalLayout_19->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_19->setObjectName(QStringLiteral("horizontalLayout_19"));
-        TL_PDF_EXPORT = new ClickableLabel(widget_5);
+        horizontalLayout_19->setSizeConstraint(QLayout::SetDefaultConstraint);
+        horizontalLayout_19->setContentsMargins(0, 0, 0, 0);
+        TL_PDF_EXPORT = new ClickableLabel(GB_PDF_SETS);
         TL_PDF_EXPORT->setObjectName(QStringLiteral("TL_PDF_EXPORT"));
         sizePolicy.setHeightForWidth(TL_PDF_EXPORT->sizePolicy().hasHeightForWidth());
         TL_PDF_EXPORT->setSizePolicy(sizePolicy);
         TL_PDF_EXPORT->setMinimumSize(QSize(0, 30));
+        TL_PDF_EXPORT->setMaximumSize(QSize(16777215, 30));
         TL_PDF_EXPORT->setFont(font);
         TL_PDF_EXPORT->setStyleSheet(QStringLiteral("QLabel:hover {color: #2980B9;}"));
         TL_PDF_EXPORT->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         horizontalLayout_19->addWidget(TL_PDF_EXPORT);
 
-        TL_PDF_EXPORT_ICON = new QLabel(widget_5);
+        TL_PDF_EXPORT_ICON = new QLabel(GB_PDF_SETS);
         TL_PDF_EXPORT_ICON->setObjectName(QStringLiteral("TL_PDF_EXPORT_ICON"));
-        sizePolicy3.setHeightForWidth(TL_PDF_EXPORT_ICON->sizePolicy().hasHeightForWidth());
-        TL_PDF_EXPORT_ICON->setSizePolicy(sizePolicy3);
-        TL_PDF_EXPORT_ICON->setMinimumSize(QSize(35, 0));
+        QSizePolicy sizePolicy8(QSizePolicy::Fixed, QSizePolicy::Minimum);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(TL_PDF_EXPORT_ICON->sizePolicy().hasHeightForWidth());
+        TL_PDF_EXPORT_ICON->setSizePolicy(sizePolicy8);
+        TL_PDF_EXPORT_ICON->setMinimumSize(QSize(35, 30));
+        TL_PDF_EXPORT_ICON->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_19->addWidget(TL_PDF_EXPORT_ICON);
 
 
-        verticalLayout_14->addLayout(horizontalLayout_19);
+        VLAYOUT_PDF_SETS->addWidget(GB_PDF_SETS);
+
+
+        verticalLayout_14->addLayout(VLAYOUT_PDF_SETS);
 
         verticalSpacer_2 = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
@@ -457,10 +548,18 @@ public:
 
         verticalLayout_14->addWidget(TL_FTP);
 
+        groupBox_8 = new QGroupBox(widget_5);
+        groupBox_8->setObjectName(QStringLiteral("groupBox_8"));
+        groupBox_8->setStyleSheet(QStringLiteral("border: 0px;"));
+        verticalLayout_19 = new QVBoxLayout(groupBox_8);
+        verticalLayout_19->setSpacing(6);
+        verticalLayout_19->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_19->setObjectName(QStringLiteral("verticalLayout_19"));
+        verticalLayout_19->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_20 = new QHBoxLayout();
         horizontalLayout_20->setSpacing(6);
         horizontalLayout_20->setObjectName(QStringLiteral("horizontalLayout_20"));
-        TL_FTP_SERVER = new ClickableLabel(widget_5);
+        TL_FTP_SERVER = new ClickableLabel(groupBox_8);
         TL_FTP_SERVER->setObjectName(QStringLiteral("TL_FTP_SERVER"));
         sizePolicy.setHeightForWidth(TL_FTP_SERVER->sizePolicy().hasHeightForWidth());
         TL_FTP_SERVER->setSizePolicy(sizePolicy);
@@ -471,21 +570,21 @@ public:
 
         horizontalLayout_20->addWidget(TL_FTP_SERVER);
 
-        TL_FTP_SERVER_ICON = new QLabel(widget_5);
+        TL_FTP_SERVER_ICON = new QLabel(groupBox_8);
         TL_FTP_SERVER_ICON->setObjectName(QStringLiteral("TL_FTP_SERVER_ICON"));
-        sizePolicy3.setHeightForWidth(TL_FTP_SERVER_ICON->sizePolicy().hasHeightForWidth());
-        TL_FTP_SERVER_ICON->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(TL_FTP_SERVER_ICON->sizePolicy().hasHeightForWidth());
+        TL_FTP_SERVER_ICON->setSizePolicy(sizePolicy4);
         TL_FTP_SERVER_ICON->setMinimumSize(QSize(35, 0));
 
         horizontalLayout_20->addWidget(TL_FTP_SERVER_ICON);
 
 
-        verticalLayout_14->addLayout(horizontalLayout_20);
+        verticalLayout_19->addLayout(horizontalLayout_20);
 
         horizontalLayout_21 = new QHBoxLayout();
         horizontalLayout_21->setSpacing(6);
         horizontalLayout_21->setObjectName(QStringLiteral("horizontalLayout_21"));
-        TL_FTP_CLIENT = new ClickableLabel(widget_5);
+        TL_FTP_CLIENT = new ClickableLabel(groupBox_8);
         TL_FTP_CLIENT->setObjectName(QStringLiteral("TL_FTP_CLIENT"));
         sizePolicy.setHeightForWidth(TL_FTP_CLIENT->sizePolicy().hasHeightForWidth());
         TL_FTP_CLIENT->setSizePolicy(sizePolicy);
@@ -496,16 +595,19 @@ public:
 
         horizontalLayout_21->addWidget(TL_FTP_CLIENT);
 
-        TL_FTP_CLIENT_ICON = new QLabel(widget_5);
+        TL_FTP_CLIENT_ICON = new QLabel(groupBox_8);
         TL_FTP_CLIENT_ICON->setObjectName(QStringLiteral("TL_FTP_CLIENT_ICON"));
-        sizePolicy3.setHeightForWidth(TL_FTP_CLIENT_ICON->sizePolicy().hasHeightForWidth());
-        TL_FTP_CLIENT_ICON->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(TL_FTP_CLIENT_ICON->sizePolicy().hasHeightForWidth());
+        TL_FTP_CLIENT_ICON->setSizePolicy(sizePolicy4);
         TL_FTP_CLIENT_ICON->setMinimumSize(QSize(35, 0));
 
         horizontalLayout_21->addWidget(TL_FTP_CLIENT_ICON);
 
 
-        verticalLayout_14->addLayout(horizontalLayout_21);
+        verticalLayout_19->addLayout(horizontalLayout_21);
+
+
+        verticalLayout_14->addWidget(groupBox_8);
 
         verticalSpacer_3 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -578,11 +680,11 @@ public:
 
         lineEdit_2 = new QLineEdit(gridLayoutWidget);
         lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-        QSizePolicy sizePolicy5(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
-        lineEdit_2->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy9(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy9);
 
         horizontalLayout->addWidget(lineEdit_2);
 
@@ -603,8 +705,8 @@ public:
 
         lineEdit = new QLineEdit(gridLayoutWidget);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        sizePolicy5.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
-        lineEdit->setSizePolicy(sizePolicy5);
+        sizePolicy9.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
+        lineEdit->setSizePolicy(sizePolicy9);
 
         horizontalLayout_8->addWidget(lineEdit);
 
@@ -619,8 +721,8 @@ public:
 
         lineEdit_3 = new QLineEdit(gridLayoutWidget);
         lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
-        sizePolicy5.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
-        lineEdit_3->setSizePolicy(sizePolicy5);
+        sizePolicy9.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy9);
 
         horizontalLayout_8->addWidget(lineEdit_3);
 
@@ -699,133 +801,15 @@ public:
         SW_TCP_SERVER->setFont(font);
         gridWidget_3 = new QWidget(SW_TCP_SERVER);
         gridWidget_3->setObjectName(QStringLiteral("gridWidget_3"));
-        gridWidget_3->setGeometry(QRect(0, 0, 861, 821));
+        gridWidget_3->setGeometry(QRect(0, 0, 871, 831));
         sizePolicy.setHeightForWidth(gridWidget_3->sizePolicy().hasHeightForWidth());
         gridWidget_3->setSizePolicy(sizePolicy);
         gridWidget_3->setMinimumSize(QSize(850, 800));
         gridWidget_3->setMaximumSize(QSize(16777215, 16777215));
         gridLayout_4 = new QGridLayout(gridWidget_3);
-        gridLayout_4->setSpacing(7);
+        gridLayout_4->setSpacing(6);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
-        gridLayout_4->setSizeConstraint(QLayout::SetDefaultConstraint);
-        horizontalLayout_9 = new QHBoxLayout();
-        horizontalLayout_9->setSpacing(6);
-        horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
-        groupBox_2 = new QGroupBox(gridWidget_3);
-        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        sizePolicy1.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
-        groupBox_2->setSizePolicy(sizePolicy1);
-        groupBox_2->setMinimumSize(QSize(750, 200));
-        horizontalLayout_13 = new QHBoxLayout(groupBox_2);
-        horizontalLayout_13->setSpacing(6);
-        horizontalLayout_13->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_13->setObjectName(QStringLiteral("horizontalLayout_13"));
-        verticalLayout_10 = new QVBoxLayout();
-        verticalLayout_10->setSpacing(6);
-        verticalLayout_10->setObjectName(QStringLiteral("verticalLayout_10"));
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        CHB_TCPS_ALL_CLIENT = new QCheckBox(groupBox_2);
-        CHB_TCPS_ALL_CLIENT->setObjectName(QStringLiteral("CHB_TCPS_ALL_CLIENT"));
-
-        horizontalLayout_4->addWidget(CHB_TCPS_ALL_CLIENT);
-
-        label_10 = new QLabel(groupBox_2);
-        label_10->setObjectName(QStringLiteral("label_10"));
-        sizePolicy3.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
-        label_10->setSizePolicy(sizePolicy3);
-
-        horizontalLayout_4->addWidget(label_10);
-
-        CB_TCPS_CONTENT_CLIENT_IP = new QComboBox(groupBox_2);
-        CB_TCPS_CONTENT_CLIENT_IP->setObjectName(QStringLiteral("CB_TCPS_CONTENT_CLIENT_IP"));
-        CB_TCPS_CONTENT_CLIENT_IP->setMinimumSize(QSize(165, 30));
-
-        horizontalLayout_4->addWidget(CB_TCPS_CONTENT_CLIENT_IP);
-
-        LE_TCPS_CONTENT_CLIENT_PORT = new QLabel(groupBox_2);
-        LE_TCPS_CONTENT_CLIENT_PORT->setObjectName(QStringLiteral("LE_TCPS_CONTENT_CLIENT_PORT"));
-        sizePolicy.setHeightForWidth(LE_TCPS_CONTENT_CLIENT_PORT->sizePolicy().hasHeightForWidth());
-        LE_TCPS_CONTENT_CLIENT_PORT->setSizePolicy(sizePolicy);
-
-        horizontalLayout_4->addWidget(LE_TCPS_CONTENT_CLIENT_PORT);
-
-        horizontalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
-
-        horizontalLayout_4->addItem(horizontalSpacer_11);
-
-        PB_TCPS_DISCONTENT_CLIENT = new QPushButton(groupBox_2);
-        PB_TCPS_DISCONTENT_CLIENT->setObjectName(QStringLiteral("PB_TCPS_DISCONTENT_CLIENT"));
-        PB_TCPS_DISCONTENT_CLIENT->setMinimumSize(QSize(90, 35));
-        PB_TCPS_DISCONTENT_CLIENT->setFont(font);
-        PB_TCPS_DISCONTENT_CLIENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/disconnect.png\");"));
-
-        horizontalLayout_4->addWidget(PB_TCPS_DISCONTENT_CLIENT);
-
-
-        verticalLayout_10->addLayout(horizontalLayout_4);
-
-        TE_TCPS_SEND_CONTENT = new QTextEdit(groupBox_2);
-        TE_TCPS_SEND_CONTENT->setObjectName(QStringLiteral("TE_TCPS_SEND_CONTENT"));
-        sizePolicy2.setHeightForWidth(TE_TCPS_SEND_CONTENT->sizePolicy().hasHeightForWidth());
-        TE_TCPS_SEND_CONTENT->setSizePolicy(sizePolicy2);
-        TE_TCPS_SEND_CONTENT->setMinimumSize(QSize(660, 0));
-        TE_TCPS_SEND_CONTENT->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
-        verticalLayout_10->addWidget(TE_TCPS_SEND_CONTENT);
-
-
-        horizontalLayout_13->addLayout(verticalLayout_10);
-
-        verticalLayout_9 = new QVBoxLayout();
-        verticalLayout_9->setSpacing(6);
-        verticalLayout_9->setObjectName(QStringLiteral("verticalLayout_9"));
-        verticalSpacer_6 = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        verticalLayout_9->addItem(verticalSpacer_6);
-
-        label_6 = new QLabel(groupBox_2);
-        label_6->setObjectName(QStringLiteral("label_6"));
-
-        verticalLayout_9->addWidget(label_6);
-
-        SB_TCPS_NUM_SEND = new QSpinBox(groupBox_2);
-        SB_TCPS_NUM_SEND->setObjectName(QStringLiteral("SB_TCPS_NUM_SEND"));
-        SB_TCPS_NUM_SEND->setMinimumSize(QSize(0, 0));
-        SB_TCPS_NUM_SEND->setMinimum(1);
-        SB_TCPS_NUM_SEND->setMaximum(20);
-
-        verticalLayout_9->addWidget(SB_TCPS_NUM_SEND);
-
-        PB_TCPS_SEND = new QPushButton(groupBox_2);
-        PB_TCPS_SEND->setObjectName(QStringLiteral("PB_TCPS_SEND"));
-        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(PB_TCPS_SEND->sizePolicy().hasHeightForWidth());
-        PB_TCPS_SEND->setSizePolicy(sizePolicy6);
-        PB_TCPS_SEND->setMinimumSize(QSize(0, 35));
-        QFont font7;
-        PB_TCPS_SEND->setFont(font7);
-        PB_TCPS_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/send.png\");"));
-
-        verticalLayout_9->addWidget(PB_TCPS_SEND);
-
-        verticalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_9->addItem(verticalSpacer_5);
-
-
-        horizontalLayout_13->addLayout(verticalLayout_9);
-
-
-        horizontalLayout_9->addWidget(groupBox_2);
-
-
-        gridLayout_4->addLayout(horizontalLayout_9, 2, 0, 1, 1);
-
         horizontalLayout_11 = new QHBoxLayout();
         horizontalLayout_11->setSpacing(6);
         horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
@@ -850,8 +834,11 @@ public:
 
         LE_TCPS_LISTEN_PORT = new QLineEdit(groupBox_4);
         LE_TCPS_LISTEN_PORT->setObjectName(QStringLiteral("LE_TCPS_LISTEN_PORT"));
-        sizePolicy6.setHeightForWidth(LE_TCPS_LISTEN_PORT->sizePolicy().hasHeightForWidth());
-        LE_TCPS_LISTEN_PORT->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy10(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy10.setHorizontalStretch(0);
+        sizePolicy10.setVerticalStretch(0);
+        sizePolicy10.setHeightForWidth(LE_TCPS_LISTEN_PORT->sizePolicy().hasHeightForWidth());
+        LE_TCPS_LISTEN_PORT->setSizePolicy(sizePolicy10);
         LE_TCPS_LISTEN_PORT->setMinimumSize(QSize(165, 0));
 
         horizontalLayout_16->addWidget(LE_TCPS_LISTEN_PORT);
@@ -863,6 +850,7 @@ public:
         PB_TCPS_LISTEN_PORT_CREATE = new QPushButton(groupBox_4);
         PB_TCPS_LISTEN_PORT_CREATE->setObjectName(QStringLiteral("PB_TCPS_LISTEN_PORT_CREATE"));
         PB_TCPS_LISTEN_PORT_CREATE->setMinimumSize(QSize(90, 35));
+        QFont font7;
         PB_TCPS_LISTEN_PORT_CREATE->setFont(font7);
         PB_TCPS_LISTEN_PORT_CREATE->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/create.png\");"));
 
@@ -904,8 +892,8 @@ public:
 
         CB_TCPS_LISTEN_PORT_LIST = new QComboBox(groupBox_4);
         CB_TCPS_LISTEN_PORT_LIST->setObjectName(QStringLiteral("CB_TCPS_LISTEN_PORT_LIST"));
-        sizePolicy5.setHeightForWidth(CB_TCPS_LISTEN_PORT_LIST->sizePolicy().hasHeightForWidth());
-        CB_TCPS_LISTEN_PORT_LIST->setSizePolicy(sizePolicy5);
+        sizePolicy9.setHeightForWidth(CB_TCPS_LISTEN_PORT_LIST->sizePolicy().hasHeightForWidth());
+        CB_TCPS_LISTEN_PORT_LIST->setSizePolicy(sizePolicy9);
         CB_TCPS_LISTEN_PORT_LIST->setMinimumSize(QSize(165, 0));
         CB_TCPS_LISTEN_PORT_LIST->setInsertPolicy(QComboBox::NoInsert);
         CB_TCPS_LISTEN_PORT_LIST->setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
@@ -919,8 +907,8 @@ public:
 
         PB_TCPS_LISTENING = new QPushButton(groupBox_4);
         PB_TCPS_LISTENING->setObjectName(QStringLiteral("PB_TCPS_LISTENING"));
-        sizePolicy6.setHeightForWidth(PB_TCPS_LISTENING->sizePolicy().hasHeightForWidth());
-        PB_TCPS_LISTENING->setSizePolicy(sizePolicy6);
+        sizePolicy10.setHeightForWidth(PB_TCPS_LISTENING->sizePolicy().hasHeightForWidth());
+        PB_TCPS_LISTENING->setSizePolicy(sizePolicy10);
         PB_TCPS_LISTENING->setMinimumSize(QSize(90, 35));
         PB_TCPS_LISTENING->setFont(font7);
         PB_TCPS_LISTENING->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/listen.png\");"));
@@ -933,17 +921,13 @@ public:
 
         PB_TCPS_LISTENED = new QPushButton(groupBox_4);
         PB_TCPS_LISTENED->setObjectName(QStringLiteral("PB_TCPS_LISTENED"));
-        sizePolicy5.setHeightForWidth(PB_TCPS_LISTENED->sizePolicy().hasHeightForWidth());
-        PB_TCPS_LISTENED->setSizePolicy(sizePolicy5);
+        sizePolicy9.setHeightForWidth(PB_TCPS_LISTENED->sizePolicy().hasHeightForWidth());
+        PB_TCPS_LISTENED->setSizePolicy(sizePolicy9);
         PB_TCPS_LISTENED->setMinimumSize(QSize(90, 35));
         PB_TCPS_LISTENED->setFont(font7);
         PB_TCPS_LISTENED->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/warn.png\");"));
 
         horizontalLayout_14->addWidget(PB_TCPS_LISTENED);
-
-        horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        horizontalLayout_14->addItem(horizontalSpacer_10);
 
         horizontalSpacer_12 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -952,7 +936,7 @@ public:
         PB_TCPS_LISTEN_PORT_DELETE = new QPushButton(groupBox_4);
         PB_TCPS_LISTEN_PORT_DELETE->setObjectName(QStringLiteral("PB_TCPS_LISTEN_PORT_DELETE"));
         PB_TCPS_LISTEN_PORT_DELETE->setMinimumSize(QSize(90, 35));
-        PB_TCPS_LISTEN_PORT_DELETE->setFont(font4);
+        PB_TCPS_LISTEN_PORT_DELETE->setFont(font5);
         PB_TCPS_LISTEN_PORT_DELETE->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/delete.png\");"));
 
         horizontalLayout_14->addWidget(PB_TCPS_LISTEN_PORT_DELETE);
@@ -1048,14 +1032,14 @@ public:
 
         PB_TCPS_START_RECV_CONTENT = new QPushButton(GB_TCP_SERVER_RECV);
         PB_TCPS_START_RECV_CONTENT->setObjectName(QStringLiteral("PB_TCPS_START_RECV_CONTENT"));
-        PB_TCPS_START_RECV_CONTENT->setMinimumSize(QSize(0, 35));
+        PB_TCPS_START_RECV_CONTENT->setMinimumSize(QSize(90, 35));
         PB_TCPS_START_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/continue.png\");"));
 
         verticalLayout_8->addWidget(PB_TCPS_START_RECV_CONTENT);
 
         PB_TCPS_STOP_RECV_CONTENT = new QPushButton(GB_TCP_SERVER_RECV);
         PB_TCPS_STOP_RECV_CONTENT->setObjectName(QStringLiteral("PB_TCPS_STOP_RECV_CONTENT"));
-        PB_TCPS_STOP_RECV_CONTENT->setMinimumSize(QSize(0, 35));
+        PB_TCPS_STOP_RECV_CONTENT->setMinimumSize(QSize(90, 35));
         PB_TCPS_STOP_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/pause.png\");"));
 
         verticalLayout_8->addWidget(PB_TCPS_STOP_RECV_CONTENT);
@@ -1066,9 +1050,9 @@ public:
 
         PB_TCPS_RECV_CONTENT_CLEAR = new QPushButton(GB_TCP_SERVER_RECV);
         PB_TCPS_RECV_CONTENT_CLEAR->setObjectName(QStringLiteral("PB_TCPS_RECV_CONTENT_CLEAR"));
-        sizePolicy6.setHeightForWidth(PB_TCPS_RECV_CONTENT_CLEAR->sizePolicy().hasHeightForWidth());
-        PB_TCPS_RECV_CONTENT_CLEAR->setSizePolicy(sizePolicy6);
-        PB_TCPS_RECV_CONTENT_CLEAR->setMinimumSize(QSize(0, 35));
+        sizePolicy10.setHeightForWidth(PB_TCPS_RECV_CONTENT_CLEAR->sizePolicy().hasHeightForWidth());
+        PB_TCPS_RECV_CONTENT_CLEAR->setSizePolicy(sizePolicy10);
+        PB_TCPS_RECV_CONTENT_CLEAR->setMinimumSize(QSize(90, 35));
         PB_TCPS_RECV_CONTENT_CLEAR->setBaseSize(QSize(0, 0));
         PB_TCPS_RECV_CONTENT_CLEAR->setLayoutDirection(Qt::LeftToRight);
         PB_TCPS_RECV_CONTENT_CLEAR->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/clear.png\");"));
@@ -1088,6 +1072,82 @@ public:
 
         gridLayout_4->addLayout(horizontalLayout_10, 1, 0, 1, 1);
 
+        horizontalLayout_25 = new QHBoxLayout();
+        horizontalLayout_25->setSpacing(6);
+        horizontalLayout_25->setObjectName(QStringLiteral("horizontalLayout_25"));
+        horizontalLayout_32 = new QHBoxLayout();
+        horizontalLayout_32->setSpacing(6);
+        horizontalLayout_32->setObjectName(QStringLiteral("horizontalLayout_32"));
+        groupBox_9 = new QGroupBox(gridWidget_3);
+        groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
+        sizePolicy1.setHeightForWidth(groupBox_9->sizePolicy().hasHeightForWidth());
+        groupBox_9->setSizePolicy(sizePolicy1);
+        groupBox_9->setMinimumSize(QSize(750, 200));
+        horizontalLayout_35 = new QHBoxLayout(groupBox_9);
+        horizontalLayout_35->setSpacing(6);
+        horizontalLayout_35->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_35->setObjectName(QStringLiteral("horizontalLayout_35"));
+        verticalLayout_20 = new QVBoxLayout();
+        verticalLayout_20->setSpacing(6);
+        verticalLayout_20->setObjectName(QStringLiteral("verticalLayout_20"));
+        TE_TCPC_SEND_CONTENT_2 = new QTextEdit(groupBox_9);
+        TE_TCPC_SEND_CONTENT_2->setObjectName(QStringLiteral("TE_TCPC_SEND_CONTENT_2"));
+        sizePolicy2.setHeightForWidth(TE_TCPC_SEND_CONTENT_2->sizePolicy().hasHeightForWidth());
+        TE_TCPC_SEND_CONTENT_2->setSizePolicy(sizePolicy2);
+        TE_TCPC_SEND_CONTENT_2->setMinimumSize(QSize(660, 0));
+        TE_TCPC_SEND_CONTENT_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+        verticalLayout_20->addWidget(TE_TCPC_SEND_CONTENT_2);
+
+
+        horizontalLayout_35->addLayout(verticalLayout_20);
+
+        verticalLayout_21 = new QVBoxLayout();
+        verticalLayout_21->setSpacing(6);
+        verticalLayout_21->setObjectName(QStringLiteral("verticalLayout_21"));
+        verticalSpacer_12 = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        verticalLayout_21->addItem(verticalSpacer_12);
+
+        label_20 = new QLabel(groupBox_9);
+        label_20->setObjectName(QStringLiteral("label_20"));
+
+        verticalLayout_21->addWidget(label_20);
+
+        SB_TCPC_NUM_SEND_2 = new QSpinBox(groupBox_9);
+        SB_TCPC_NUM_SEND_2->setObjectName(QStringLiteral("SB_TCPC_NUM_SEND_2"));
+        SB_TCPC_NUM_SEND_2->setMinimumSize(QSize(0, 0));
+        SB_TCPC_NUM_SEND_2->setMinimum(1);
+        SB_TCPC_NUM_SEND_2->setMaximum(99);
+
+        verticalLayout_21->addWidget(SB_TCPC_NUM_SEND_2);
+
+        PB_TCPS_SEND = new QPushButton(groupBox_9);
+        PB_TCPS_SEND->setObjectName(QStringLiteral("PB_TCPS_SEND"));
+        sizePolicy10.setHeightForWidth(PB_TCPS_SEND->sizePolicy().hasHeightForWidth());
+        PB_TCPS_SEND->setSizePolicy(sizePolicy10);
+        PB_TCPS_SEND->setMinimumSize(QSize(90, 35));
+        PB_TCPS_SEND->setFont(font7);
+        PB_TCPS_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/send.png\");"));
+
+        verticalLayout_21->addWidget(PB_TCPS_SEND);
+
+        verticalSpacer_13 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_21->addItem(verticalSpacer_13);
+
+
+        horizontalLayout_35->addLayout(verticalLayout_21);
+
+
+        horizontalLayout_32->addWidget(groupBox_9);
+
+
+        horizontalLayout_25->addLayout(horizontalLayout_32);
+
+
+        gridLayout_4->addLayout(horizontalLayout_25, 2, 0, 1, 1);
+
         STACKWIDGET->addWidget(SW_TCP_SERVER);
         SW_TCP_CLIENT = new QWidget();
         SW_TCP_CLIENT->setObjectName(QStringLiteral("SW_TCP_CLIENT"));
@@ -1095,85 +1155,11 @@ public:
         SW_TCP_CLIENT->setSizePolicy(sizePolicy1);
         gridWidget_4 = new QWidget(SW_TCP_CLIENT);
         gridWidget_4->setObjectName(QStringLiteral("gridWidget_4"));
-        gridWidget_4->setGeometry(QRect(0, 0, 861, 821));
+        gridWidget_4->setGeometry(QRect(0, 0, 871, 831));
         gridLayout_5 = new QGridLayout(gridWidget_4);
         gridLayout_5->setSpacing(6);
         gridLayout_5->setContentsMargins(11, 11, 11, 11);
         gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
-        horizontalLayout_15 = new QHBoxLayout();
-        horizontalLayout_15->setSpacing(6);
-        horizontalLayout_15->setObjectName(QStringLiteral("horizontalLayout_15"));
-        horizontalLayout_30 = new QHBoxLayout();
-        horizontalLayout_30->setSpacing(6);
-        horizontalLayout_30->setObjectName(QStringLiteral("horizontalLayout_30"));
-        groupBox_6 = new QGroupBox(gridWidget_4);
-        groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
-        sizePolicy1.setHeightForWidth(groupBox_6->sizePolicy().hasHeightForWidth());
-        groupBox_6->setSizePolicy(sizePolicy1);
-        groupBox_6->setMinimumSize(QSize(750, 200));
-        horizontalLayout_31 = new QHBoxLayout(groupBox_6);
-        horizontalLayout_31->setSpacing(6);
-        horizontalLayout_31->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_31->setObjectName(QStringLiteral("horizontalLayout_31"));
-        verticalLayout_15 = new QVBoxLayout();
-        verticalLayout_15->setSpacing(6);
-        verticalLayout_15->setObjectName(QStringLiteral("verticalLayout_15"));
-        TE_TCPC_SEND_CONTENT = new QTextEdit(groupBox_6);
-        TE_TCPC_SEND_CONTENT->setObjectName(QStringLiteral("TE_TCPC_SEND_CONTENT"));
-        sizePolicy2.setHeightForWidth(TE_TCPC_SEND_CONTENT->sizePolicy().hasHeightForWidth());
-        TE_TCPC_SEND_CONTENT->setSizePolicy(sizePolicy2);
-        TE_TCPC_SEND_CONTENT->setMinimumSize(QSize(630, 0));
-        TE_TCPC_SEND_CONTENT->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
-        verticalLayout_15->addWidget(TE_TCPC_SEND_CONTENT);
-
-
-        horizontalLayout_31->addLayout(verticalLayout_15);
-
-        verticalLayout_16 = new QVBoxLayout();
-        verticalLayout_16->setSpacing(6);
-        verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
-        verticalSpacer_10 = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        verticalLayout_16->addItem(verticalSpacer_10);
-
-        label_16 = new QLabel(groupBox_6);
-        label_16->setObjectName(QStringLiteral("label_16"));
-
-        verticalLayout_16->addWidget(label_16);
-
-        SB_TCPC_NUM_SEND = new QSpinBox(groupBox_6);
-        SB_TCPC_NUM_SEND->setObjectName(QStringLiteral("SB_TCPC_NUM_SEND"));
-        SB_TCPC_NUM_SEND->setMinimumSize(QSize(0, 0));
-
-        verticalLayout_16->addWidget(SB_TCPC_NUM_SEND);
-
-        PB_TCPC_SEND = new QPushButton(groupBox_6);
-        PB_TCPC_SEND->setObjectName(QStringLiteral("PB_TCPC_SEND"));
-        sizePolicy6.setHeightForWidth(PB_TCPC_SEND->sizePolicy().hasHeightForWidth());
-        PB_TCPC_SEND->setSizePolicy(sizePolicy6);
-        PB_TCPC_SEND->setMinimumSize(QSize(0, 35));
-        PB_TCPC_SEND->setFont(font7);
-        PB_TCPC_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/send.png\");"));
-
-        verticalLayout_16->addWidget(PB_TCPC_SEND);
-
-        verticalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_16->addItem(verticalSpacer_11);
-
-
-        horizontalLayout_31->addLayout(verticalLayout_16);
-
-
-        horizontalLayout_30->addWidget(groupBox_6);
-
-
-        horizontalLayout_15->addLayout(horizontalLayout_30);
-
-
-        gridLayout_5->addLayout(horizontalLayout_15, 4, 0, 1, 1);
-
         horizontalLayout_23 = new QHBoxLayout();
         horizontalLayout_23->setSpacing(6);
         horizontalLayout_23->setObjectName(QStringLiteral("horizontalLayout_23"));
@@ -1189,6 +1175,19 @@ public:
         horizontalLayout_33 = new QHBoxLayout();
         horizontalLayout_33->setSpacing(6);
         horizontalLayout_33->setObjectName(QStringLiteral("horizontalLayout_33"));
+        PB_TCPC_ADD_CONNECT = new QPushButton(groupBox_7);
+        PB_TCPC_ADD_CONNECT->setObjectName(QStringLiteral("PB_TCPC_ADD_CONNECT"));
+        sizePolicy10.setHeightForWidth(PB_TCPC_ADD_CONNECT->sizePolicy().hasHeightForWidth());
+        PB_TCPC_ADD_CONNECT->setSizePolicy(sizePolicy10);
+        PB_TCPC_ADD_CONNECT->setMinimumSize(QSize(90, 35));
+        PB_TCPC_ADD_CONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/addConnect-pressed.png\");"));
+
+        horizontalLayout_33->addWidget(PB_TCPC_ADD_CONNECT);
+
+        horizontalSpacer_15 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_33->addItem(horizontalSpacer_15);
+
         label_17 = new QLabel(groupBox_7);
         label_17->setObjectName(QStringLiteral("label_17"));
         sizePolicy.setHeightForWidth(label_17->sizePolicy().hasHeightForWidth());
@@ -1196,34 +1195,32 @@ public:
 
         horizontalLayout_33->addWidget(label_17);
 
-        LE_TCPC_LOCAL_IP = new QLineEdit(groupBox_7);
-        LE_TCPC_LOCAL_IP->setObjectName(QStringLiteral("LE_TCPC_LOCAL_IP"));
-        sizePolicy6.setHeightForWidth(LE_TCPC_LOCAL_IP->sizePolicy().hasHeightForWidth());
-        LE_TCPC_LOCAL_IP->setSizePolicy(sizePolicy6);
-        LE_TCPC_LOCAL_IP->setMinimumSize(QSize(165, 0));
+        CB_TCPC_TARGET_IP = new QComboBox(groupBox_7);
+        CB_TCPC_TARGET_IP->setObjectName(QStringLiteral("CB_TCPC_TARGET_IP"));
+        sizePolicy10.setHeightForWidth(CB_TCPC_TARGET_IP->sizePolicy().hasHeightForWidth());
+        CB_TCPC_TARGET_IP->setSizePolicy(sizePolicy10);
+        CB_TCPC_TARGET_IP->setMinimumSize(QSize(120, 0));
 
-        horizontalLayout_33->addWidget(LE_TCPC_LOCAL_IP);
+        horizontalLayout_33->addWidget(CB_TCPC_TARGET_IP);
 
         horizontalSpacer_14 = new QSpacerItem(30, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
         horizontalLayout_33->addItem(horizontalSpacer_14);
 
-        label_18 = new QLabel(groupBox_7);
-        label_18->setObjectName(QStringLiteral("label_18"));
+        label_19 = new QLabel(groupBox_7);
+        label_19->setObjectName(QStringLiteral("label_19"));
+        sizePolicy.setHeightForWidth(label_19->sizePolicy().hasHeightForWidth());
+        label_19->setSizePolicy(sizePolicy);
 
-        horizontalLayout_33->addWidget(label_18);
+        horizontalLayout_33->addWidget(label_19);
 
-        LE_TCPC_LOCAL_PORT = new QLabel(groupBox_7);
-        LE_TCPC_LOCAL_PORT->setObjectName(QStringLiteral("LE_TCPC_LOCAL_PORT"));
-        sizePolicy2.setHeightForWidth(LE_TCPC_LOCAL_PORT->sizePolicy().hasHeightForWidth());
-        LE_TCPC_LOCAL_PORT->setSizePolicy(sizePolicy2);
-        LE_TCPC_LOCAL_PORT->setMinimumSize(QSize(0, 0));
+        CB_TCPC_TARGET_PORT = new QComboBox(groupBox_7);
+        CB_TCPC_TARGET_PORT->setObjectName(QStringLiteral("CB_TCPC_TARGET_PORT"));
+        sizePolicy10.setHeightForWidth(CB_TCPC_TARGET_PORT->sizePolicy().hasHeightForWidth());
+        CB_TCPC_TARGET_PORT->setSizePolicy(sizePolicy10);
+        CB_TCPC_TARGET_PORT->setMinimumSize(QSize(120, 0));
 
-        horizontalLayout_33->addWidget(LE_TCPC_LOCAL_PORT);
-
-        horizontalSpacer_16 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_33->addItem(horizontalSpacer_16);
+        horizontalLayout_33->addWidget(CB_TCPC_TARGET_PORT);
 
 
         verticalLayout_17->addLayout(horizontalLayout_33);
@@ -1231,24 +1228,22 @@ public:
         horizontalLayout_34 = new QHBoxLayout();
         horizontalLayout_34->setSpacing(6);
         horizontalLayout_34->setObjectName(QStringLiteral("horizontalLayout_34"));
-        label_19 = new QLabel(groupBox_7);
-        label_19->setObjectName(QStringLiteral("label_19"));
-        sizePolicy.setHeightForWidth(label_19->sizePolicy().hasHeightForWidth());
-        label_19->setSizePolicy(sizePolicy);
+        label_18 = new QLabel(groupBox_7);
+        label_18->setObjectName(QStringLiteral("label_18"));
 
-        horizontalLayout_34->addWidget(label_19);
+        horizontalLayout_34->addWidget(label_18);
 
-        LE_TCPC_TARGET_IP = new QLineEdit(groupBox_7);
-        LE_TCPC_TARGET_IP->setObjectName(QStringLiteral("LE_TCPC_TARGET_IP"));
-        sizePolicy6.setHeightForWidth(LE_TCPC_TARGET_IP->sizePolicy().hasHeightForWidth());
-        LE_TCPC_TARGET_IP->setSizePolicy(sizePolicy6);
-        LE_TCPC_TARGET_IP->setMinimumSize(QSize(165, 0));
+        LE_TCPC_LOCAL_PORT = new QLabel(groupBox_7);
+        LE_TCPC_LOCAL_PORT->setObjectName(QStringLiteral("LE_TCPC_LOCAL_PORT"));
+        sizePolicy2.setHeightForWidth(LE_TCPC_LOCAL_PORT->sizePolicy().hasHeightForWidth());
+        LE_TCPC_LOCAL_PORT->setSizePolicy(sizePolicy2);
+        LE_TCPC_LOCAL_PORT->setMinimumSize(QSize(0, 0));
 
-        horizontalLayout_34->addWidget(LE_TCPC_TARGET_IP);
+        horizontalLayout_34->addWidget(LE_TCPC_LOCAL_PORT);
 
-        horizontalSpacer_17 = new QSpacerItem(150, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
+        horizontalSpacer_20 = new QSpacerItem(40, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_34->addItem(horizontalSpacer_17);
+        horizontalLayout_34->addItem(horizontalSpacer_20);
 
         PB_TCPC_CONNECT = new QPushButton(groupBox_7);
         PB_TCPC_CONNECT->setObjectName(QStringLiteral("PB_TCPC_CONNECT"));
@@ -1265,14 +1260,10 @@ public:
         PB_TCPC_DISCONNECT = new QPushButton(groupBox_7);
         PB_TCPC_DISCONNECT->setObjectName(QStringLiteral("PB_TCPC_DISCONNECT"));
         PB_TCPC_DISCONNECT->setMinimumSize(QSize(90, 35));
-        PB_TCPC_DISCONNECT->setFont(font4);
+        PB_TCPC_DISCONNECT->setFont(font5);
         PB_TCPC_DISCONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/c_disconnect.png\");"));
 
         horizontalLayout_34->addWidget(PB_TCPC_DISCONNECT);
-
-        horizontalSpacer_20 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_34->addItem(horizontalSpacer_20);
 
 
         verticalLayout_17->addLayout(horizontalLayout_34);
@@ -1281,7 +1272,7 @@ public:
         horizontalLayout_23->addWidget(groupBox_7);
 
 
-        gridLayout_5->addLayout(horizontalLayout_23, 2, 0, 1, 1);
+        gridLayout_5->addLayout(horizontalLayout_23, 0, 0, 1, 1);
 
         horizontalLayout_22 = new QHBoxLayout();
         horizontalLayout_22->setSpacing(6);
@@ -1302,7 +1293,7 @@ public:
         TE_TCPC_RECV_CONTENT->setObjectName(QStringLiteral("TE_TCPC_RECV_CONTENT"));
         sizePolicy1.setHeightForWidth(TE_TCPC_RECV_CONTENT->sizePolicy().hasHeightForWidth());
         TE_TCPC_RECV_CONTENT->setSizePolicy(sizePolicy1);
-        TE_TCPC_RECV_CONTENT->setMinimumSize(QSize(630, 0));
+        TE_TCPC_RECV_CONTENT->setMinimumSize(QSize(660, 0));
         TE_TCPC_RECV_CONTENT->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         TE_TCPC_RECV_CONTENT->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         TE_TCPC_RECV_CONTENT->setTabChangesFocus(false);
@@ -1318,14 +1309,15 @@ public:
         verticalLayout_13->setObjectName(QStringLiteral("verticalLayout_13"));
         PB_TCPC_START_RECV_CONTENT = new QPushButton(GB_TCP_SERVER_RECV_2);
         PB_TCPC_START_RECV_CONTENT->setObjectName(QStringLiteral("PB_TCPC_START_RECV_CONTENT"));
-        PB_TCPC_START_RECV_CONTENT->setMinimumSize(QSize(0, 35));
+        PB_TCPC_START_RECV_CONTENT->setMinimumSize(QSize(90, 35));
         PB_TCPC_START_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/continue.png\");"));
 
         verticalLayout_13->addWidget(PB_TCPC_START_RECV_CONTENT);
 
         PB_TCPC_STOP_RECV_CONTENT = new QPushButton(GB_TCP_SERVER_RECV_2);
         PB_TCPC_STOP_RECV_CONTENT->setObjectName(QStringLiteral("PB_TCPC_STOP_RECV_CONTENT"));
-        PB_TCPC_STOP_RECV_CONTENT->setMinimumSize(QSize(0, 35));
+        PB_TCPC_STOP_RECV_CONTENT->setEnabled(true);
+        PB_TCPC_STOP_RECV_CONTENT->setMinimumSize(QSize(90, 35));
         PB_TCPC_STOP_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/pause.png\");"));
 
         verticalLayout_13->addWidget(PB_TCPC_STOP_RECV_CONTENT);
@@ -1336,9 +1328,9 @@ public:
 
         PB_TCPC_RECV_CONTENT_CLEAR = new QPushButton(GB_TCP_SERVER_RECV_2);
         PB_TCPC_RECV_CONTENT_CLEAR->setObjectName(QStringLiteral("PB_TCPC_RECV_CONTENT_CLEAR"));
-        sizePolicy6.setHeightForWidth(PB_TCPC_RECV_CONTENT_CLEAR->sizePolicy().hasHeightForWidth());
-        PB_TCPC_RECV_CONTENT_CLEAR->setSizePolicy(sizePolicy6);
-        PB_TCPC_RECV_CONTENT_CLEAR->setMinimumSize(QSize(0, 35));
+        sizePolicy10.setHeightForWidth(PB_TCPC_RECV_CONTENT_CLEAR->sizePolicy().hasHeightForWidth());
+        PB_TCPC_RECV_CONTENT_CLEAR->setSizePolicy(sizePolicy10);
+        PB_TCPC_RECV_CONTENT_CLEAR->setMinimumSize(QSize(90, 35));
         PB_TCPC_RECV_CONTENT_CLEAR->setBaseSize(QSize(0, 0));
         PB_TCPC_RECV_CONTENT_CLEAR->setLayoutDirection(Qt::LeftToRight);
         PB_TCPC_RECV_CONTENT_CLEAR->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/clear.png\");"));
@@ -1356,7 +1348,83 @@ public:
         horizontalLayout_22->addWidget(GB_TCP_SERVER_RECV_2);
 
 
-        gridLayout_5->addLayout(horizontalLayout_22, 3, 0, 1, 1);
+        gridLayout_5->addLayout(horizontalLayout_22, 1, 0, 1, 1);
+
+        horizontalLayout_15 = new QHBoxLayout();
+        horizontalLayout_15->setSpacing(6);
+        horizontalLayout_15->setObjectName(QStringLiteral("horizontalLayout_15"));
+        horizontalLayout_30 = new QHBoxLayout();
+        horizontalLayout_30->setSpacing(6);
+        horizontalLayout_30->setObjectName(QStringLiteral("horizontalLayout_30"));
+        groupBox_6 = new QGroupBox(gridWidget_4);
+        groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
+        sizePolicy1.setHeightForWidth(groupBox_6->sizePolicy().hasHeightForWidth());
+        groupBox_6->setSizePolicy(sizePolicy1);
+        groupBox_6->setMinimumSize(QSize(750, 200));
+        horizontalLayout_31 = new QHBoxLayout(groupBox_6);
+        horizontalLayout_31->setSpacing(6);
+        horizontalLayout_31->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_31->setObjectName(QStringLiteral("horizontalLayout_31"));
+        verticalLayout_15 = new QVBoxLayout();
+        verticalLayout_15->setSpacing(6);
+        verticalLayout_15->setObjectName(QStringLiteral("verticalLayout_15"));
+        TE_TCPS_SEND_CONTENT = new QTextEdit(groupBox_6);
+        TE_TCPS_SEND_CONTENT->setObjectName(QStringLiteral("TE_TCPS_SEND_CONTENT"));
+        sizePolicy2.setHeightForWidth(TE_TCPS_SEND_CONTENT->sizePolicy().hasHeightForWidth());
+        TE_TCPS_SEND_CONTENT->setSizePolicy(sizePolicy2);
+        TE_TCPS_SEND_CONTENT->setMinimumSize(QSize(660, 0));
+        TE_TCPS_SEND_CONTENT->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+        verticalLayout_15->addWidget(TE_TCPS_SEND_CONTENT);
+
+
+        horizontalLayout_31->addLayout(verticalLayout_15);
+
+        verticalLayout_16 = new QVBoxLayout();
+        verticalLayout_16->setSpacing(6);
+        verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
+        verticalSpacer_10 = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        verticalLayout_16->addItem(verticalSpacer_10);
+
+        label_16 = new QLabel(groupBox_6);
+        label_16->setObjectName(QStringLiteral("label_16"));
+
+        verticalLayout_16->addWidget(label_16);
+
+        SB_TCPS_NUM_SEND = new QSpinBox(groupBox_6);
+        SB_TCPS_NUM_SEND->setObjectName(QStringLiteral("SB_TCPS_NUM_SEND"));
+        SB_TCPS_NUM_SEND->setMinimumSize(QSize(0, 0));
+        SB_TCPS_NUM_SEND->setMinimum(1);
+        SB_TCPS_NUM_SEND->setMaximum(99);
+
+        verticalLayout_16->addWidget(SB_TCPS_NUM_SEND);
+
+        PB_TCPC_SEND = new QPushButton(groupBox_6);
+        PB_TCPC_SEND->setObjectName(QStringLiteral("PB_TCPC_SEND"));
+        sizePolicy10.setHeightForWidth(PB_TCPC_SEND->sizePolicy().hasHeightForWidth());
+        PB_TCPC_SEND->setSizePolicy(sizePolicy10);
+        PB_TCPC_SEND->setMinimumSize(QSize(90, 35));
+        PB_TCPC_SEND->setFont(font7);
+        PB_TCPC_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/send.png\");"));
+
+        verticalLayout_16->addWidget(PB_TCPC_SEND);
+
+        verticalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_16->addItem(verticalSpacer_11);
+
+
+        horizontalLayout_31->addLayout(verticalLayout_16);
+
+
+        horizontalLayout_30->addWidget(groupBox_6);
+
+
+        horizontalLayout_15->addLayout(horizontalLayout_30);
+
+
+        gridLayout_5->addLayout(horizontalLayout_15, 2, 0, 1, 1);
 
         STACKWIDGET->addWidget(SW_TCP_CLIENT);
         SW_PDF_EXPORT = new QWidget();
@@ -1387,6 +1455,21 @@ public:
         gridLayout->addLayout(horizontalLayout_5, 2, 0, 1, 1);
 
         ExportScannerInfoClass->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(ExportScannerInfoClass);
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 1095, 26));
+        menu = new QMenu(menuBar);
+        menu->setObjectName(QStringLiteral("menu"));
+        menu_2 = new QMenu(menuBar);
+        menu_2->setObjectName(QStringLiteral("menu_2"));
+        ExportScannerInfoClass->setMenuBar(menuBar);
+
+        menuBar->addAction(menu->menuAction());
+        menuBar->addAction(menu_2->menuAction());
+        menu->addAction(action);
+        menu->addAction(actionExit);
+        menu_2->addAction(action_5);
+        menu_2->addAction(action_6);
 
         retranslateUi(ExportScannerInfoClass);
         QObject::connect(PB_TCPS_LISTEN_PORT_CREATE, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_LISTEN_PORT_CREATE()));
@@ -1395,12 +1478,16 @@ public:
         QObject::connect(PB_TCPS_LISTEN_PORT_DELETE, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_LISTEN_PORT_DELETE()));
         QObject::connect(PB_TCPS_RECV_CONTENT_CLEAR, SIGNAL(clicked()), TE_TCPS_RECV_CONTENT, SLOT(clear()));
         QObject::connect(CB_TCPS_LISTEN_PORT_LIST, SIGNAL(currentIndexChanged(QString)), ExportScannerInfoClass, SLOT(onCurrentIndexChanged_CB_TCPS_LISTEN_PORT_LIST()));
-        QObject::connect(CB_TCPS_CONTENT_CLIENT_IP, SIGNAL(currentIndexChanged(QString)), ExportScannerInfoClass, SLOT(onCurrentindexChanged_CB_TCPS_CONTENT_CLIENT_IP()));
         QObject::connect(PB_TCPS_START_RECV_CONTENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_START_RECV_CONTENT()));
         QObject::connect(PB_TCPS_STOP_RECV_CONTENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_STOP_RECV_CONTENT()));
-        QObject::connect(PB_TCPS_DISCONTENT_CLIENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_DISCONNECT_CLIENT()));
+        QObject::connect(PB_TCPC_RECV_CONTENT_CLEAR, SIGNAL(clicked()), TE_TCPC_RECV_CONTENT, SLOT(clear()));
+        QObject::connect(PB_TCPC_CONNECT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_SEND()));
+        QObject::connect(PB_TCPC_DISCONNECT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_DISCONNECT()));
+        QObject::connect(PB_TCPC_SEND, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_SEND()));
+        QObject::connect(PB_TCPC_START_RECV_CONTENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_START_RECV_CONTENT()));
+        QObject::connect(PB_TCPC_STOP_RECV_CONTENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_STOP_RECV_CONTENT()));
+        QObject::connect(PB_TCPC_ADD_CONNECT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_ADD_CONNECT()));
         QObject::connect(PB_TCPS_SEND, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_SEND_CLIENT()));
-        QObject::connect(CHB_TCPS_ALL_CLIENT, SIGNAL(stateChanged(int)), ExportScannerInfoClass, SLOT(onStateChanged_CHB_TCPS_ALL_CLIENT()));
 
         STACKWIDGET->setCurrentIndex(3);
         PB_TCPS_RECV_CONTENT_CLEAR->setDefault(false);
@@ -1413,17 +1500,24 @@ public:
     void retranslateUi(QMainWindow *ExportScannerInfoClass)
     {
         ExportScannerInfoClass->setWindowTitle(QApplication::translate("ExportScannerInfoClass", "ExportScannerInfo", Q_NULLPTR));
+        action->setText(QApplication::translate("ExportScannerInfoClass", "\346\226\260\345\273\272\347\252\227\345\217\243", Q_NULLPTR));
+        actionExit->setText(QApplication::translate("ExportScannerInfoClass", "Exit", Q_NULLPTR));
+        action_5->setText(QApplication::translate("ExportScannerInfoClass", "\346\225\231\347\250\213", Q_NULLPTR));
+        action_6->setText(QApplication::translate("ExportScannerInfoClass", "\345\205\263\344\272\216", Q_NULLPTR));
         label->setText(QApplication::translate("ExportScannerInfoClass", "\344\277\241\346\201\257\344\274\240\350\276\223\345\212\251\346\211\213", Q_NULLPTR));
         TL_PROMPT_OPERATION_STATUS->setText(QApplication::translate("ExportScannerInfoClass", "\346\223\215\344\275\234\346\240\207\347\255\276", Q_NULLPTR));
         TL_TCP->setText(QApplication::translate("ExportScannerInfoClass", " TCP \350\256\276\347\275\256", Q_NULLPTR));
+        GB_TCP_SETS->setTitle(QString());
         TL_TCP_SERVER->setText(QApplication::translate("ExportScannerInfoClass", "tcp \346\234\215\345\212\241\347\253\257  ", Q_NULLPTR));
         TL_TCP_SERVER_ICON->setText(QString());
         TL_TCP_CLIENT->setText(QApplication::translate("ExportScannerInfoClass", "tcp \345\256\242\346\210\267\347\253\257  ", Q_NULLPTR));
         TL_TCP_CLIENT_ICON->setText(QString());
         TL_PDF->setText(QApplication::translate("ExportScannerInfoClass", " PDF \350\256\276\347\275\256", Q_NULLPTR));
+        TL_PDF_ICON->setText(QString());
         TL_PDF_EXPORT->setText(QApplication::translate("ExportScannerInfoClass", "\345\257\274\345\207\272      ", Q_NULLPTR));
         TL_PDF_EXPORT_ICON->setText(QString());
         TL_FTP->setText(QApplication::translate("ExportScannerInfoClass", " FTP \350\256\276\347\275\256", Q_NULLPTR));
+        groupBox_8->setTitle(QString());
         TL_FTP_SERVER->setText(QApplication::translate("ExportScannerInfoClass", "ftp \346\234\215\345\212\241\347\253\257  ", Q_NULLPTR));
         TL_FTP_SERVER_ICON->setText(QString());
         TL_FTP_CLIENT->setText(QApplication::translate("ExportScannerInfoClass", "ftp \345\256\242\346\210\267\347\253\257  ", Q_NULLPTR));
@@ -1437,13 +1531,6 @@ public:
         checkBox_2->setText(QApplication::translate("ExportScannerInfoClass", "CheckBox", Q_NULLPTR));
         groupBox->setTitle(QApplication::translate("ExportScannerInfoClass", "GroupBox", Q_NULLPTR));
         radioButton->setText(QApplication::translate("ExportScannerInfoClass", "RadioButton", Q_NULLPTR));
-        groupBox_2->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\225\260\346\215\256\345\217\221\351\200\201", Q_NULLPTR));
-        CHB_TCPS_ALL_CLIENT->setText(QApplication::translate("ExportScannerInfoClass", "\345\205\250\351\203\250", Q_NULLPTR));
-        label_10->setText(QApplication::translate("ExportScannerInfoClass", " \345\256\242\346\210\267\347\253\257\357\274\232", Q_NULLPTR));
-        LE_TCPS_CONTENT_CLIENT_PORT->setText(QApplication::translate("ExportScannerInfoClass", "\347\253\257\345\217\243\345\217\267", Q_NULLPTR));
-        PB_TCPS_DISCONTENT_CLIENT->setText(QApplication::translate("ExportScannerInfoClass", "\346\226\255\345\274\200\350\277\236\346\216\245", Q_NULLPTR));
-        label_6->setText(QApplication::translate("ExportScannerInfoClass", " \351\207\215\345\244\215\345\217\221\351\200\201\346\254\241\346\225\260\357\274\232", Q_NULLPTR));
-        PB_TCPS_SEND->setText(QApplication::translate("ExportScannerInfoClass", " \345\217\221\351\200\201", Q_NULLPTR));
         groupBox_4->setTitle(QApplication::translate("ExportScannerInfoClass", "Socket \347\212\266\346\200\201", Q_NULLPTR));
         label_7->setText(QApplication::translate("ExportScannerInfoClass", " \347\253\257\345\217\243\346\267\273\345\212\240\357\274\232", Q_NULLPTR));
         PB_TCPS_LISTEN_PORT_CREATE->setText(QApplication::translate("ExportScannerInfoClass", " \346\267\273\345\212\240", Q_NULLPTR));
@@ -1458,23 +1545,29 @@ public:
         TL_TCPS_LISTEN_COUNT->setText(QApplication::translate("ExportScannerInfoClass", "0", Q_NULLPTR));
         label_11->setText(QApplication::translate("ExportScannerInfoClass", " \350\277\236\346\216\245\346\225\260\357\274\232", Q_NULLPTR));
         TL_TCPS_CLIENT_COUNT->setText(QApplication::translate("ExportScannerInfoClass", "0", Q_NULLPTR));
-        PB_TCPS_START_RECV_CONTENT->setText(QApplication::translate("ExportScannerInfoClass", "\347\273\247\347\273\255\346\216\245\346\224\266", Q_NULLPTR));
-        PB_TCPS_STOP_RECV_CONTENT->setText(QApplication::translate("ExportScannerInfoClass", "\345\205\263\351\227\255\346\216\245\346\224\266", Q_NULLPTR));
+        PB_TCPS_START_RECV_CONTENT->setText(QApplication::translate("ExportScannerInfoClass", " \347\273\247\347\273\255\346\216\245\346\224\266", Q_NULLPTR));
+        PB_TCPS_STOP_RECV_CONTENT->setText(QApplication::translate("ExportScannerInfoClass", " \345\205\263\351\227\255\346\216\245\346\224\266", Q_NULLPTR));
         PB_TCPS_RECV_CONTENT_CLEAR->setText(QApplication::translate("ExportScannerInfoClass", "\346\270\205\347\251\272", Q_NULLPTR));
-        groupBox_6->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\225\260\346\215\256\345\217\221\351\200\201", Q_NULLPTR));
-        label_16->setText(QApplication::translate("ExportScannerInfoClass", " \351\207\215\345\244\215\345\217\221\351\200\201\346\254\241\346\225\260\357\274\232", Q_NULLPTR));
-        PB_TCPC_SEND->setText(QApplication::translate("ExportScannerInfoClass", " \345\217\221\351\200\201", Q_NULLPTR));
+        groupBox_9->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\225\260\346\215\256\345\217\221\351\200\201", Q_NULLPTR));
+        label_20->setText(QApplication::translate("ExportScannerInfoClass", " \351\207\215\345\244\215\345\217\221\351\200\201\346\254\241\346\225\260\357\274\232", Q_NULLPTR));
+        PB_TCPS_SEND->setText(QApplication::translate("ExportScannerInfoClass", " \345\217\221\351\200\201", Q_NULLPTR));
         groupBox_7->setTitle(QApplication::translate("ExportScannerInfoClass", "Socket \347\212\266\346\200\201", Q_NULLPTR));
-        label_17->setText(QApplication::translate("ExportScannerInfoClass", "   IP  \345\234\260\345\235\200\357\274\232", Q_NULLPTR));
-        label_18->setText(QApplication::translate("ExportScannerInfoClass", "\345\275\223\345\211\215\347\253\257\345\217\243\357\274\232", Q_NULLPTR));
-        LE_TCPC_LOCAL_PORT->setText(QApplication::translate("ExportScannerInfoClass", "null", Q_NULLPTR));
+        PB_TCPC_ADD_CONNECT->setText(QApplication::translate("ExportScannerInfoClass", "\345\210\233\345\273\272\350\277\236\346\216\245", Q_NULLPTR));
+        label_17->setText(QApplication::translate("ExportScannerInfoClass", "  IP  \345\234\260\345\235\200\357\274\232", Q_NULLPTR));
         label_19->setText(QApplication::translate("ExportScannerInfoClass", " \347\233\256\346\240\207\347\253\257\345\217\243\357\274\232", Q_NULLPTR));
+        label_18->setText(QApplication::translate("ExportScannerInfoClass", " \345\275\223\345\211\215\347\253\257\345\217\243\357\274\232", Q_NULLPTR));
+        LE_TCPC_LOCAL_PORT->setText(QApplication::translate("ExportScannerInfoClass", "null", Q_NULLPTR));
         PB_TCPC_CONNECT->setText(QApplication::translate("ExportScannerInfoClass", " \350\277\236\346\216\245", Q_NULLPTR));
         PB_TCPC_DISCONNECT->setText(QApplication::translate("ExportScannerInfoClass", " \346\226\255\345\274\200", Q_NULLPTR));
         GB_TCP_SERVER_RECV_2->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\225\260\346\215\256\346\216\245\346\224\266\345\217\212\346\217\220\347\244\272", Q_NULLPTR));
-        PB_TCPC_START_RECV_CONTENT->setText(QApplication::translate("ExportScannerInfoClass", "\347\273\247\347\273\255\346\216\245\346\224\266", Q_NULLPTR));
-        PB_TCPC_STOP_RECV_CONTENT->setText(QApplication::translate("ExportScannerInfoClass", "\345\205\263\351\227\255\346\216\245\346\224\266", Q_NULLPTR));
-        PB_TCPC_RECV_CONTENT_CLEAR->setText(QApplication::translate("ExportScannerInfoClass", "\346\270\205\347\251\272", Q_NULLPTR));
+        PB_TCPC_START_RECV_CONTENT->setText(QApplication::translate("ExportScannerInfoClass", " \347\273\247\347\273\255\346\216\245\346\224\266", Q_NULLPTR));
+        PB_TCPC_STOP_RECV_CONTENT->setText(QApplication::translate("ExportScannerInfoClass", " \345\205\263\351\227\255\346\216\245\346\224\266", Q_NULLPTR));
+        PB_TCPC_RECV_CONTENT_CLEAR->setText(QApplication::translate("ExportScannerInfoClass", " \346\270\205\347\251\272", Q_NULLPTR));
+        groupBox_6->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\225\260\346\215\256\345\217\221\351\200\201", Q_NULLPTR));
+        label_16->setText(QApplication::translate("ExportScannerInfoClass", " \351\207\215\345\244\215\345\217\221\351\200\201\346\254\241\346\225\260\357\274\232", Q_NULLPTR));
+        PB_TCPC_SEND->setText(QApplication::translate("ExportScannerInfoClass", " \345\217\221\351\200\201", Q_NULLPTR));
+        menu->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\226\207\344\273\266", Q_NULLPTR));
+        menu_2->setTitle(QApplication::translate("ExportScannerInfoClass", "\345\270\256\345\212\251", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -115,6 +115,7 @@
   <ItemGroup>
     <ClCompile Include="ClickableLabel.cpp" />
     <ClCompile Include="ExportScannerInfo.cpp" />
+    <ClCompile Include="TCPC_AddConnect.cpp" />
     <ClCompile Include="main.cpp">
       <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ExportScannerInfo.ui" />
+    <QtUic Include="TCPC_AddConnect.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ExportScannerInfo.qrc" />
@@ -148,6 +150,11 @@
     <ClInclude Include="belien\identification.h" />
     <ClInclude Include="belien\log.h" />
     <ClInclude Include="belien\singleton.h" />
+    <QtMoc Include="TCPC_AddConnect.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
+    </QtMoc>
+    <ClInclude Include="IpAndPort.h" />
     <ClInclude Include="TcpClient.h" />
     <QtMoc Include="TcpServer.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>

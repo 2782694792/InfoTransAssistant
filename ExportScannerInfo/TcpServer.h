@@ -4,7 +4,6 @@
 #include <QtNetwork/qtcpserver.h>
 #include <qmutex.h>
 #include <qset.h>
-#include <qvector.h>
 #include "belien\identification.h"
 #include "belien\log.h"
 using namespace belien::identification;
@@ -28,15 +27,15 @@ signals:
 public slots:
     void onNewConnection(); // 发现新连接
     void onReadyRead();     // 开始读连接请求数据
-    TPServer doDisconnected(); // 断开连接
+    TP doDisconnected(); // 断开连接
 
 public:
-    TPServer startListen();    // 开始监听
-    TPServer stopListen();     // 停止监听
-    TPServer disconnectedOne(QString addr, int port); // 断开指定客户端连接
-    TPServer disconnectedAll(); // 断开所有客户端连接
+    TP startListen();    // 开始监听
+    TP stopListen();     // 停止监听
+    TP disconnectedOne(QString addr, int port); // 断开指定客户端连接
+    TP disconnectedAll(); // 断开所有客户端连接
 
-    TPServer getStatus() {
+    TP getStatus() {
         return m_status;
     }                            // 获取服务端当前状态
 	bool isListen(); // 获取监听状态
@@ -47,10 +46,10 @@ public:
     int  getClientsCount();      // 获取连接的客户端数量
     void getClientsInfo(QStringList& addrs, QList< int >& ports);
 
-    TPServer sendDataToClient(int repeatNum, const std::string & message); // 发送数据到所有客户端
-    TPServer sendDataToClient(QString addr, int port, int repeatNum, const std::string & message); // 指定次数发送数据到指定客户端
+    TP sendDataToClient(int repeatNum, const std::string & message); // 发送数据到所有客户端
+    TP sendDataToClient(QString addr, int port, int repeatNum, const std::string & message); // 指定次数发送数据到指定客户端
 
-    TPServer record_result(TPServer, const QTcpSocket*,
+    TP record_result(TP, const QTcpSocket*,
                            const QByteArray& data = NULL); // 记录客户端操作结果
 
     QString getLog() {
@@ -65,7 +64,7 @@ public:
 private:
     QTcpServer*         m_server;  // 当前服务端
     QSet< QTcpSocket* > m_clients; // 客户端集合
-    TPServer            m_status;  // 当前服务器状态
+    TP					m_status;  // 当前服务器状态
     QString             m_log;     // 日志记录
 
 public:

@@ -8,8 +8,14 @@
 #include <QPainter>
 #include <QtWidgets/QMainWindow>
 #include <vector>
+#include <QSpacerItem>
+#include <QPropertyAnimation>
+#include "TCPC_AddConnect.h"
 // #include <thread>
 // const int numThreads = std::thread::hardware_concurrency();
+
+//#define test_ctrl
+
 static int listenNum = 0;
 
 class ExportScannerInfo : public QMainWindow {
@@ -17,8 +23,6 @@ class ExportScannerInfo : public QMainWindow {
 
 public:
     ExportScannerInfo(QWidget* parent = Q_NULLPTR);
-
-    void getTcpsRest(const QString& result);
 
 private:
     ClickableLabel* label;
@@ -31,7 +35,8 @@ signals:
 private slots:
     void onClickableLabel_Clicked();             // label 点击切换界面
 
-    void onClicked_PB_TCPS_LISTEN_PORT_CREATE(); // 端口添加
+#pragma region TCPS_SLOTS
+	void onClicked_PB_TCPS_LISTEN_PORT_CREATE(); // 端口添加
     void onClicked_PB_TCPS_LISTEN_PORT_DELETE(); // 端口删除
     void onCurrentIndexChanged_CB_TCPS_LISTEN_PORT_LIST(); // 端口切换
 
@@ -51,6 +56,27 @@ private slots:
 
 	void onClicked_PB_TCPS_SEND_CLIENT(); // 发送客户端
 
+    void getTcpsRest(const QString& result);
+#pragma endregion
+
+#pragma region TCPC_SLOTS
+	void onClicked_PB_TCPC_ADD_CONNECT(); // 创建连接
+
+	void onClicked_PB_TCPC_CONNECT(); // 客户端连接
+
+	void onClicked_PB_TCPC_DISCONNECT(); // 客户端断开
+
+	void onClicked_PB_TCPC_START_RECV_CONTENT(); // 客户端开始接收
+
+	void onClicked_PB_TCPC_STOP_RECV_CONTENT(); // 客户端停止接收
+
+	void onClicked_PB_TCPC_SEND(); // 客户端开始发送
+
+    void doStartLogTcpcConnection(const std::vector<Connection>& connection); // 记录连接信息
+
+#pragma endregion
+
+
 public:
 #ifdef test_eventFilter
     bool eventFilter(QObject* obj, QEvent* event) override; // 事件过滤器
@@ -63,6 +89,10 @@ private:
     void init_default_widget();             // 初始化界面效果
     void init_member();                     // 初始化成员变量
     void init_ctrl_visible(bool isVisible); // 初始化控件显示
+
+#ifdef test_ctrl
+	void test_ctrl_init();
+#endif
 
     void isListen_change_control_status();
 
@@ -84,4 +114,9 @@ private:
     QStringList               m_ClientAddr; // 客户端地址
     QList< int >              m_ClientPort; // 客户端端口
 	QString					  m_log;
+	QSpacerItem	*			  m_spacerItem;
+	QPropertyAnimation *	  m_animation;
+
+	FORM_TCPC_ADD_CONNECT * m_form_tcpc_add_connect;
+	std::vector<Connection>   m_tcpcConnection;
 };
