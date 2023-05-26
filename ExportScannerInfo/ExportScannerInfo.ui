@@ -1991,6 +1991,9 @@ QLabel:pressed {
                     </item>
                     <item>
                      <widget class="QComboBox" name="CB_TCPC_TARGET_PORT">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -2002,6 +2005,9 @@ QLabel:pressed {
                         <width>165</width>
                         <height>0</height>
                        </size>
+                      </property>
+                      <property name="editable">
+                       <bool>false</bool>
                       </property>
                      </widget>
                     </item>
@@ -2634,12 +2640,12 @@ QLabel:pressed {
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>114</y>
+     <x>1005</x>
+     <y>617</y>
     </hint>
     <hint type="destinationlabel">
-     <x>871</x>
-     <y>109</y>
+     <x>896</x>
+     <y>293</y>
     </hint>
    </hints>
   </connection>
@@ -2650,8 +2656,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_SEND()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>114</y>
+     <x>913</x>
+     <y>205</y>
     </hint>
     <hint type="destinationlabel">
      <x>1080</x>
@@ -2666,8 +2672,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_DISCONNECT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>114</y>
+     <x>1047</x>
+     <y>205</y>
     </hint>
     <hint type="destinationlabel">
      <x>1078</x>
@@ -2682,8 +2688,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_SEND()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>114</y>
+     <x>1006</x>
+     <y>785</y>
     </hint>
     <hint type="destinationlabel">
      <x>1079</x>
@@ -2698,8 +2704,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_START_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>114</y>
+     <x>1005</x>
+     <y>298</y>
     </hint>
     <hint type="destinationlabel">
      <x>1080</x>
@@ -2714,8 +2720,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_STOP_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>114</y>
+     <x>1005</x>
+     <y>340</y>
     </hint>
     <hint type="destinationlabel">
      <x>1083</x>
@@ -2730,8 +2736,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_ADD_CONNECT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>321</x>
-     <y>114</y>
+     <x>346</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -2803,6 +2809,22 @@ QLabel:pressed {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>CB_TCPC_TARGET_IP</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>ExportScannerInfoClass</receiver>
+   <slot>onCurrentIndexChanged_CB_TCPC_TARGET_IP()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>635</x>
+     <y>137</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1080</x>
+     <y>67</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onClicked_PB_TCPS_LISTEN_PORT_CREATE()</slot>
@@ -2823,5 +2845,6 @@ QLabel:pressed {
   <slot>onClicked_PB_TCPC_START_RECV_CONTENT()</slot>
   <slot>onClicked_PB_TCPC_STOP_RECV_CONTENT()</slot>
   <slot>onClicked_PB_TCPC_ADD_CONNECT()</slot>
+  <slot>onCurrentIndexChanged_CB_TCPC_TARGET_IP()</slot>
  </slots>
 </ui>

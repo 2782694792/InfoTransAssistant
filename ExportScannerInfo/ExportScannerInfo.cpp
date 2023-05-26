@@ -25,10 +25,6 @@ ExportScannerInfo::ExportScannerInfo(QWidget* parent) : QMainWindow(parent) {
 	init_ctrl_visible(false);
 	init_member();
 
-#ifdef test_ctrl
-	test_ctrl_init();
-#endif
-
 #ifdef test_eventFilter
 	init_register_eventFilter();
 #endif
@@ -175,6 +171,12 @@ void ExportScannerInfo::init_sidebar_label(TextLabelID tlid) {
 
 void ExportScannerInfo::init_member() {
 	label = new ClickableLabel();
+	
+	m_form_tcpc_add_connect = new FORM_TCPC_ADD_CONNECT(this);
+	m_form_tcpc_add_connect->hide();
+	connect(m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::startLogTcpcConnection, this,
+		&ExportScannerInfo::doStartLogTcpcConnection);
+	connect(this, &ExportScannerInfo::updateConnectionInfo, m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo);
 }
 
 void ExportScannerInfo::onClickableLabel_Clicked() {
@@ -337,6 +339,14 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_DELETE() {
 
 #ifdef cross_thread_start
 	if (!m_tcps[temp]->isRunning()) {
+		{
+			auto i = m_tcps.begin();
+			i += temp;
+			m_tcps.erase(i);
+
+			int     lastIndex = ui.CB_TCPS_LISTEN_PORT_LIST->currentIndex();
+			ui.CB_TCPS_LISTEN_PORT_LIST->removeItem(lastIndex); // 删除当前选择的item
+		}
 		return;
 	}
 
@@ -349,7 +359,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_DELETE() {
 	m_tcps[temp]->wait();
 	m_tcps[temp]->closeServer();
 #endif
-	
+
 	isListen_change_control_status();
 
 	prompt_operation_status(false, QString::number(m_tcps[temp]->m_port) + QString::fromLocal8Bit(std::string(" 已删除端口号").data()));
@@ -702,29 +712,35 @@ void ExportScannerInfo::prompt_operation_status(
 
 #pragma region TCP 客户端连接处理
 
+// 添加连接
 void ExportScannerInfo::onClicked_PB_TCPC_ADD_CONNECT(){
-	m_form_tcpc_add_connect = new FORM_TCPC_ADD_CONNECT;
-
-	connect(m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::startLogTcpcConnection, this,
-		&ExportScannerInfo::doStartLogTcpcConnection);
-
 	m_form_tcpc_add_connect->setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
 	m_form_tcpc_add_connect->setModal(true);
-
-	m_form_tcpc_add_connect->show();
-	m_form_tcpc_add_connect->exec();
+	
+	emit updateConnectionInfo(m_tcpcConnection);
+	if (m_tcpcConnection.size() > 0)
+	{
+		//emit updateConnectionInfo(m_tcpcConnection);
+	}
+	//m_form_tcpc_add_connect->doUpdateConnectionInfo(m_tcpcConnection);
+	//m_form_tcpc_add_connect->show();
 }
 
+// 获取请求添加的连接信息
 void ExportScannerInfo::doStartLogTcpcConnection(const std::vector<Connection>& connection){
 	if (connection.size() > 0)
 	{
 		ui.CB_TCPC_TARGET_IP->clear();
 		ui.CB_TCPC_TARGET_PORT->clear();
+		m_tcpcConnection.clear();
+
+		m_tcpcConnection.resize(connection.size());
+		m_tcpcConnection.insert(m_tcpcConnection.begin(), connection.begin(), connection.end());
 
 		for (auto var : connection)
 		{
-			ui.CB_TCPC_TARGET_IP->addItem(var.getIP());
 			ui.CB_TCPC_TARGET_PORT->addItem(QString::number(var.getPort()));
+			ui.CB_TCPC_TARGET_IP->addItem(var.getIP());
 		}
 
 		int lastIndex = ui.CB_TCPC_TARGET_IP->count() - 1;
@@ -732,11 +748,14 @@ void ExportScannerInfo::doStartLogTcpcConnection(const std::vector<Connection>& 
 		lastIndex = ui.CB_TCPC_TARGET_PORT->count() - 1;
 		ui.CB_TCPC_TARGET_PORT->setCurrentIndex(lastIndex);
 	}
-
-	m_form_tcpc_add_connect = nullptr;
 }
 
+void ExportScannerInfo::onCurrentIndexChanged_CB_TCPC_TARGET_IP(){
+	int index = ui.CB_TCPC_TARGET_IP->currentIndex();
+	ui.CB_TCPC_TARGET_PORT->setCurrentIndex(index);
+}
 
+// 连接服务端
 void ExportScannerInfo::onClicked_PB_TCPC_CONNECT(){
 
 }

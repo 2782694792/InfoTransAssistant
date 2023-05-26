@@ -7,19 +7,18 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QtWidgets/QMainWindow>
-#include <vector>
 #include <QSpacerItem>
 #include <QPropertyAnimation>
 #include "TCPC_AddConnect.h"
-// #include <thread>
+#include <thread>
+#include <mutex>
 // const int numThreads = std::thread::hardware_concurrency();
 
-//#define test_ctrl
-
 static int listenNum = 0;
+static std::mutex m_mx;
 
 class ExportScannerInfo : public QMainWindow {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     ExportScannerInfo(QWidget* parent = Q_NULLPTR);
@@ -31,6 +30,8 @@ private:
 
 signals:
     void startGetTcpsLog();
+
+	void updateConnectionInfo(const std::vector<class Connection>& connection);
 
 private slots:
     void onClickableLabel_Clicked();             // label 点击切换界面
@@ -72,10 +73,11 @@ private slots:
 
 	void onClicked_PB_TCPC_SEND(); // 客户端开始发送
 
-    void doStartLogTcpcConnection(const std::vector<Connection>& connection); // 记录连接信息
+    void doStartLogTcpcConnection(const std::vector<class Connection>& connection); // 记录连接信息
+
+	void onCurrentIndexChanged_CB_TCPC_TARGET_IP(); // 目标 ip 端口更改
 
 #pragma endregion
-
 
 public:
 #ifdef test_eventFilter
@@ -89,11 +91,7 @@ private:
     void init_default_widget();             // 初始化界面效果
     void init_member();                     // 初始化成员变量
     void init_ctrl_visible(bool isVisible); // 初始化控件显示
-
-#ifdef test_ctrl
-	void test_ctrl_init();
-#endif
-
+	
     void isListen_change_control_status();
 
     void prompt_operation_status(
@@ -117,6 +115,7 @@ private:
 	QSpacerItem	*			  m_spacerItem;
 	QPropertyAnimation *	  m_animation;
 
-	FORM_TCPC_ADD_CONNECT * m_form_tcpc_add_connect;
-	std::vector<Connection>   m_tcpcConnection;
+	class FORM_TCPC_ADD_CONNECT*    m_form_tcpc_add_connect;
+	std::vector<class Connection>   m_tcpcConnection;
+	std::thread m_addConnectionThread;
 };

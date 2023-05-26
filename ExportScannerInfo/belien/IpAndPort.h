@@ -17,14 +17,9 @@ namespace belien {
 			friend Singleton < IpAndPort > ;
 
 		public:
-			IpAndPort()
-			{
-			}
+			IpAndPort()	{}
 
-			~IpAndPort()
-			{
-			}
-
+			~IpAndPort() {}
 
 			bool isValidPort(int port) {
 				// 首先判断端口号是否在 0 到 65535 之间

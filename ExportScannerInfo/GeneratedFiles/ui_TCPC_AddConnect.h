@@ -41,13 +41,13 @@ public:
     {
         if (FORM_TCPC_ADD_CONNECT->objectName().isEmpty())
             FORM_TCPC_ADD_CONNECT->setObjectName(QStringLiteral("FORM_TCPC_ADD_CONNECT"));
-        FORM_TCPC_ADD_CONNECT->resize(350, 300);
+        FORM_TCPC_ADD_CONNECT->resize(400, 300);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(FORM_TCPC_ADD_CONNECT->sizePolicy().hasHeightForWidth());
         FORM_TCPC_ADD_CONNECT->setSizePolicy(sizePolicy);
-        FORM_TCPC_ADD_CONNECT->setMinimumSize(QSize(350, 300));
+        FORM_TCPC_ADD_CONNECT->setMinimumSize(QSize(400, 300));
         QFont font;
         font.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
         FORM_TCPC_ADD_CONNECT->setFont(font);

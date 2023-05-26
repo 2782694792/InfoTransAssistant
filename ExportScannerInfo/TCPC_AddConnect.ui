@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
+    <width>400</width>
     <height>300</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>350</width>
+    <width>400</width>
     <height>300</height>
    </size>
   </property>
@@ -189,8 +189,8 @@
    <slot>onClicked_PB_TARGET_CONNECT_INFO_INSERT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>457</x>
-     <y>19</y>
+     <x>386</x>
+     <y>32</y>
     </hint>
     <hint type="destinationlabel">
      <x>498</x>
@@ -205,8 +205,8 @@
    <slot>onClicked_PB_TARGET_CONNECT_INFO_DELETE()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>464</x>
-     <y>59</y>
+     <x>386</x>
+     <y>91</y>
     </hint>
     <hint type="destinationlabel">
      <x>496</x>
@@ -221,8 +221,8 @@
    <slot>onClicked_PB_TARGET_CONNECT_INFO_REFRESH()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>451</x>
-     <y>261</y>
+     <x>386</x>
+     <y>286</y>
     </hint>
     <hint type="destinationlabel">
      <x>495</x>

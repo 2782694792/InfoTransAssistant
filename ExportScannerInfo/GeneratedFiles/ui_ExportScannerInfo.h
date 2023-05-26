@@ -1274,9 +1274,11 @@ public:
 
         CB_TCPC_TARGET_PORT = new QComboBox(groupBox_7);
         CB_TCPC_TARGET_PORT->setObjectName(QStringLiteral("CB_TCPC_TARGET_PORT"));
+        CB_TCPC_TARGET_PORT->setEnabled(false);
         sizePolicy10.setHeightForWidth(CB_TCPC_TARGET_PORT->sizePolicy().hasHeightForWidth());
         CB_TCPC_TARGET_PORT->setSizePolicy(sizePolicy10);
         CB_TCPC_TARGET_PORT->setMinimumSize(QSize(165, 0));
+        CB_TCPC_TARGET_PORT->setEditable(false);
 
         horizontalLayout_33->addWidget(CB_TCPC_TARGET_PORT);
 
@@ -1549,6 +1551,7 @@ public:
         QObject::connect(CHB_TCPS_ALL_CLIENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onStateChanged_CHB_TCPS_ALL_CLIENT()));
         QObject::connect(PB_TCPS_DISCONNECT_CLIENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_DISCONNECT_CLIENT()));
         QObject::connect(CB_TCPS_CONNECT_CLIENT_IP, SIGNAL(currentIndexChanged(QString)), ExportScannerInfoClass, SLOT(onCurrentIndexChanged_CB_TCPS_CONNECT_CLIENT_IP()));
+        QObject::connect(CB_TCPC_TARGET_IP, SIGNAL(currentIndexChanged(QString)), ExportScannerInfoClass, SLOT(onCurrentIndexChanged_CB_TCPC_TARGET_IP()));
 
         STACKWIDGET->setCurrentIndex(3);
         PB_TCPS_RECV_CONTENT_CLEAR->setDefault(false);

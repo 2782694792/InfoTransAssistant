@@ -53,9 +53,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ExportScannerInfo.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="ClickableLabel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -63,6 +60,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="TCPC_AddConnect.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ExportScannerInfo.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -97,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="belien\IpAndPort.h">
       <Filter>belien</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionInfo.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

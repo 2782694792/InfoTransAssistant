@@ -3,14 +3,14 @@
 #include "ui_TCPC_AddConnect.h"
 #include <QTableWidgetItem>
 #include <vector>
+#include "ExportScannerInfo.h"
+#include "ConnectionInfo.h"
 #include "belien\identification.h"
 #include "belien\log.h"
 #include "belien\IpAndPort.h"
 using namespace belien::identification;
 using namespace belien::log;
 using namespace belien::ip_port;
-
-class Connection;
 
 namespace Ui {
     class FORM_TCPC_ADD_CONNECT;
@@ -21,6 +21,9 @@ class FORM_TCPC_ADD_CONNECT :
 {
     Q_OBJECT;
 
+protected:
+	void showEvent(QShowEvent *event) override;
+
 public:
 	explicit FORM_TCPC_ADD_CONNECT(QWidget *parent = nullptr);
 	~FORM_TCPC_ADD_CONNECT();
@@ -28,7 +31,10 @@ public:
 signals:
     void startLogTcpcConnection(const std::vector<Connection>& connection); // 返回记录连接信息
 
-	private slots:
+public slots:
+	void doUpdateConnectionInfo(const std::vector<Connection>& connection);
+
+private slots:
 	void onClicked_PB_TARGET_CONNECT_INFO_INSERT(); // 插入新行
 
 	void onClicked_PB_TARGET_CONNECT_INFO_DELETE(); // 删除新行
@@ -37,30 +43,6 @@ signals:
 
 private:
     Ui::FORM_TCPC_ADD_CONNECT ui;
-	
 	std::vector<Connection> m_connection;
 
-};
-
-class Connection {
-public:
-    Connection() :
-        m_ip("127.0.0.1"), m_port(5000), m_connected(false) {}
-
-    Connection(const QString& ip, int port, bool connected = false) :
-        m_ip(ip), m_port(port), m_connected(connected) {}
-
-    void setIP(const QString& ip) { m_ip = ip; }
-    QString getIP() const { return m_ip; }
-
-    void setPort(int port) { m_port = port; }
-    int getPort() const { return m_port; }
-
-    void setConnected(bool connected) { m_connected = connected; }
-    bool isConnected() const { return m_connected; }
-
-private:
-    QString m_ip;
-    int m_port;
-    bool m_connected;
 };
