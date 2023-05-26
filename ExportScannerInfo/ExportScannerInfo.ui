@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1095</width>
-    <height>920</height>
+    <width>1090</width>
+    <height>910</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1050,8 +1050,8 @@ QLabel:pressed {
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>871</width>
-              <height>831</height>
+              <width>861</width>
+              <height>821</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -1144,7 +1144,7 @@ QLabel:pressed {
                      <widget class="QPushButton" name="PB_TCPS_LISTEN_PORT_CREATE">
                       <property name="minimumSize">
                        <size>
-                        <width>90</width>
+                        <width>110</width>
                         <height>35</height>
                        </size>
                       </property>
@@ -1358,7 +1358,7 @@ QLabel:pressed {
                      <widget class="QPushButton" name="PB_TCPS_LISTEN_PORT_DELETE">
                       <property name="minimumSize">
                        <size>
-                        <width>90</width>
+                        <width>110</width>
                         <height>35</height>
                        </size>
                       </property>
@@ -1629,9 +1629,121 @@ QLabel:pressed {
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_35">
                     <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_20">
+                     <layout class="QVBoxLayout" name="verticalLayout_9">
                       <item>
-                       <widget class="QTextEdit" name="TE_TCPC_SEND_CONTENT_2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_4">
+                        <item>
+                         <widget class="QCheckBox" name="CHB_TCPS_ALL_CLIENT">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>100</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="text">
+                           <string>全部</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_12">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="text">
+                           <string>客户端：</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QComboBox" name="CB_TCPS_CONNECT_CLIENT_IP">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>165</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="LE_TCPS_CONTENT_CLIENT_PORT">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="text">
+                           <string>端口号</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <spacer name="horizontalSpacer_10">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeType">
+                           <enum>QSizePolicy::Preferred</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>20</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="PB_TCPS_DISCONNECT_CLIENT">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>90</width>
+                            <height>35</height>
+                           </size>
+                          </property>
+                          <property name="font">
+                           <font/>
+                          </property>
+                          <property name="autoFillBackground">
+                           <bool>false</bool>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">qproperty-icon: url(&quot;./images/disConnect.png&quot;);</string>
+                          </property>
+                          <property name="text">
+                           <string>断开连接</string>
+                          </property>
+                          <property name="default">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <widget class="QTextEdit" name="TE_TCPS_SEND_CONTENT">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                           <horstretch>0</horstretch>
@@ -1677,7 +1789,7 @@ QLabel:pressed {
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSpinBox" name="SB_TCPC_NUM_SEND_2">
+                       <widget class="QSpinBox" name="SB_TCPS_NUM_SEND">
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
@@ -1757,8 +1869,8 @@ QLabel:pressed {
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>871</width>
-              <height>831</height>
+              <width>861</width>
+              <height>821</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_5">
@@ -1794,7 +1906,7 @@ QLabel:pressed {
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>90</width>
+                        <width>110</width>
                         <height>35</height>
                        </size>
                       </property>
@@ -1842,7 +1954,7 @@ QLabel:pressed {
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>120</width>
+                        <width>165</width>
                         <height>0</height>
                        </size>
                       </property>
@@ -1887,7 +1999,7 @@ QLabel:pressed {
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>120</width>
+                        <width>165</width>
                         <height>0</height>
                        </size>
                       </property>
@@ -1914,7 +2026,7 @@ QLabel:pressed {
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>60</width>
                         <height>0</height>
                        </size>
                       </property>
@@ -1940,7 +2052,7 @@ QLabel:pressed {
                      <widget class="QPushButton" name="PB_TCPC_CONNECT">
                       <property name="minimumSize">
                        <size>
-                        <width>90</width>
+                        <width>100</width>
                         <height>35</height>
                        </size>
                       </property>
@@ -1975,7 +2087,7 @@ QLabel:pressed {
                      <widget class="QPushButton" name="PB_TCPC_DISCONNECT">
                       <property name="minimumSize">
                        <size>
-                        <width>90</width>
+                        <width>100</width>
                         <height>35</height>
                        </size>
                       </property>
@@ -2183,7 +2295,7 @@ QLabel:pressed {
                     <item>
                      <layout class="QVBoxLayout" name="verticalLayout_15">
                       <item>
-                       <widget class="QTextEdit" name="TE_TCPS_SEND_CONTENT">
+                       <widget class="QTextEdit" name="TE_TCPC_SEND_CONTENT">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                           <horstretch>0</horstretch>
@@ -2229,7 +2341,7 @@ QLabel:pressed {
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSpinBox" name="SB_TCPS_NUM_SEND">
+                       <widget class="QSpinBox" name="SB_TCPC_NUM_SEND">
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
@@ -2333,7 +2445,7 @@ QLabel:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1095</width>
+     <width>1090</width>
      <height>26</height>
     </rect>
    </property>
@@ -2410,7 +2522,7 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_LISTENING()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>632</x>
+     <x>587</x>
      <y>203</y>
     </hint>
     <hint type="destinationlabel">
@@ -2426,7 +2538,7 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_LISTENED()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>767</x>
+     <x>722</x>
      <y>203</y>
     </hint>
     <hint type="destinationlabel">
@@ -2442,7 +2554,7 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_LISTEN_PORT_DELETE()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1057</x>
+     <x>1030</x>
      <y>203</y>
     </hint>
     <hint type="destinationlabel">
@@ -2458,7 +2570,7 @@ QLabel:pressed {
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1057</x>
+     <x>1047</x>
      <y>612</y>
     </hint>
     <hint type="destinationlabel">
@@ -2474,7 +2586,7 @@ QLabel:pressed {
    <slot>onCurrentIndexChanged_CB_TCPS_LISTEN_PORT_LIST()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>487</x>
+     <x>442</x>
      <y>198</y>
     </hint>
     <hint type="destinationlabel">
@@ -2490,7 +2602,7 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_START_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1057</x>
+     <x>1047</x>
      <y>445</y>
     </hint>
     <hint type="destinationlabel">
@@ -2506,11 +2618,11 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_STOP_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1057</x>
+     <x>1047</x>
      <y>487</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1091</x>
+     <x>1089</x>
      <y>433</y>
     </hint>
    </hints>
@@ -2522,12 +2634,12 @@ QLabel:pressed {
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1048</x>
-     <y>600</y>
+     <x>311</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
-     <x>642</x>
-     <y>438</y>
+     <x>871</x>
+     <y>109</y>
     </hint>
    </hints>
   </connection>
@@ -2538,8 +2650,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_SEND()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>926</x>
-     <y>189</y>
+     <x>311</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>1080</x>
@@ -2554,8 +2666,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_DISCONNECT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1048</x>
-     <y>189</y>
+     <x>311</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>1078</x>
@@ -2570,8 +2682,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_SEND()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1056</x>
-     <y>785</y>
+     <x>311</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>1079</x>
@@ -2586,8 +2698,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_START_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1057</x>
-     <y>298</y>
+     <x>311</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>1080</x>
@@ -2602,8 +2714,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_STOP_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1057</x>
-     <y>340</y>
+     <x>311</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>1083</x>
@@ -2618,8 +2730,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_ADD_CONNECT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>280</x>
-     <y>131</y>
+     <x>321</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -2631,7 +2743,7 @@ QLabel:pressed {
    <sender>PB_TCPS_SEND</sender>
    <signal>clicked()</signal>
    <receiver>ExportScannerInfoClass</receiver>
-   <slot>onClicked_PB_TCPS_SEND_CLIENT()</slot>
+   <slot>onClicked_PB_TCPS_SEND()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1000</x>
@@ -2643,6 +2755,54 @@ QLabel:pressed {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>CHB_TCPS_ALL_CLIENT</sender>
+   <signal>clicked()</signal>
+   <receiver>ExportScannerInfoClass</receiver>
+   <slot>onStateChanged_CHB_TCPS_ALL_CLIENT()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>273</x>
+     <y>687</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>698</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PB_TCPS_DISCONNECT_CLIENT</sender>
+   <signal>clicked()</signal>
+   <receiver>ExportScannerInfoClass</receiver>
+   <slot>onClicked_PB_TCPS_DISCONNECT_CLIENT()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>828</x>
+     <y>689</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1085</x>
+     <y>692</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CB_TCPS_CONNECT_CLIENT_IP</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>ExportScannerInfoClass</receiver>
+   <slot>onCurrentIndexChanged_CB_TCPS_CONNECT_CLIENT_IP()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>487</x>
+     <y>685</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>664</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onClicked_PB_TCPS_LISTEN_PORT_CREATE()</slot>
@@ -2650,11 +2810,11 @@ QLabel:pressed {
   <slot>onCurrentIndexChanged_CB_TCPS_LISTEN_PORT_LIST()</slot>
   <slot>onClicked_PB_TCPS_LISTENING()</slot>
   <slot>onClicked_PB_TCPS_LISTENED()</slot>
-  <slot>onCurrentindexChanged_CB_TCPS_CONTENT_CLIENT_IP()</slot>
+  <slot>onCurrentIndexChanged_CB_TCPS_CONNECT_CLIENT_IP()</slot>
   <slot>onClicked_PB_TCPS_START_RECV_CONTENT()</slot>
   <slot>onClicked_PB_TCPS_STOP_RECV_CONTENT()</slot>
   <slot>onClicked_PB_TCPS_DISCONNECT_CLIENT()</slot>
-  <slot>onClicked_PB_TCPS_SEND_CLIENT()</slot>
+  <slot>onClicked_PB_TCPS_SEND()</slot>
   <slot>onStateChanged_CHB_TCPS_ALL_CLIENT()</slot>
   <slot>onClicked_CHB_TEST()</slot>
   <slot>onClicked_PB_TCPC_CONNECT()</slot>

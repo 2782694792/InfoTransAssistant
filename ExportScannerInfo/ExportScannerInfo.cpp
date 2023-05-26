@@ -84,8 +84,6 @@ void ExportScannerInfo::init_qss() {
 }
 
 void ExportScannerInfo::init_ctrl_visible(bool isVisible) {
-	ui.PB_TCPS_DISCONTENT_CLIENT->setVisible(isVisible);
-
 	ui.TL_FTP->setVisible(isVisible);
 	ui.TL_FTP_CLIENT->setVisible(isVisible);
 	ui.TL_FTP_SERVER->setVisible(isVisible);
@@ -284,7 +282,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
 	std::string tempstr = TPStr.PORT_ILLEGAL.toStdString();
 	bool        isCreate = false;
 
-	if (isValidPort(ui.LE_TCPS_LISTEN_PORT->text().toInt())) {
+	if (IpPort.isValidPort(ui.LE_TCPS_LISTEN_PORT->text().toInt())) {
 		QString text = ui.LE_TCPS_LISTEN_PORT->text();
 
 		int i = 0;
@@ -338,21 +336,29 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_DELETE() {
 	}
 
 #ifdef cross_thread_start
-	if (m_tcps[temp]->isRunning()) {
-		m_tcps[temp]->terminate();
+	if (!m_tcps[temp]->isRunning()) {
+		return;
+	}
+
+	m_tcps[temp]->terminate();
+
+	if (m_tcps[temp]->isListen())
+	{
+		listenNum--;
 	}
 	m_tcps[temp]->wait();
 	m_tcps[temp]->closeServer();
+#endif
+	
+	isListen_change_control_status();
 
 	prompt_operation_status(false, QString::number(m_tcps[temp]->m_port) + QString::fromLocal8Bit(std::string(" 已删除端口号").data()));
-#endif
 
 	auto i = m_tcps.begin();
 	i += temp;
 	m_tcps.erase(i);
 
-	QString text = ui.CB_TCPS_LISTEN_PORT_LIST->currentText();
-	int     lastIndex = ui.CB_TCPS_LISTEN_PORT_LIST->count() - 1;
+	int     lastIndex = ui.CB_TCPS_LISTEN_PORT_LIST->currentIndex();
 	ui.CB_TCPS_LISTEN_PORT_LIST->removeItem(lastIndex); // 删除当前选择的item
 
 	onUpdateClients();
@@ -380,7 +386,8 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTENING() {
 
 	/// 2 开始监听
 #ifdef cross_thread_start
-	emit startGetTcpsLog(); // m_tcps[temp]->start();
+	//emit startGetTcpsLog();
+	m_tcps[temp]->start();
 	m_tcps[temp]->setPriority(QThread::LowPriority);
 #endif
 
@@ -443,18 +450,18 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTENED() {
 		return;
 	}
 
-	/// 3 停止监听
-	m_tcps[temp]->stopListen();
-	listenNum -= 1;
-	isListen_change_control_status();
-
-	/// 4 关闭线程
 #ifdef cross_thread_start
 	if (m_tcps[temp]->isRunning()) {
+		/// 3 停止监听
+		m_tcps[temp]->stopListen();
+		listenNum -= 1;
+		isListen_change_control_status();
+
+		/// 4 关闭线程
 		m_tcps[temp]->terminate();
+		m_tcps[temp]->wait();
+		//m_tcps[temp]->exit();
 	}
-	m_tcps[temp]->wait();
-	m_tcps[temp]->exit();
 #endif
 
 #ifdef uncross_thread_start
@@ -495,8 +502,9 @@ void ExportScannerInfo::onClicked_PB_TCPS_STOP_RECV_CONTENT() {
 	LOGE_("");
 }
 
-void ExportScannerInfo::onCurrentindexChanged_CB_TCPS_CONTENT_CLIENT_IP() {
-	QString ip = ui.CB_TCPS_CONTENT_CLIENT_IP->currentText();
+// 更改指定客户端
+void ExportScannerInfo::onCurrentIndexChanged_CB_TCPS_CONNECT_CLIENT_IP() {
+	QString ip = ui.CB_TCPS_CONNECT_CLIENT_IP->currentText();
 
 	int i = 0;
 	for each (auto var in m_ClientAddr) {
@@ -508,15 +516,17 @@ void ExportScannerInfo::onCurrentindexChanged_CB_TCPS_CONTENT_CLIENT_IP() {
 	}
 }
 
+// 选择所有客户端
 void ExportScannerInfo::onStateChanged_CHB_TCPS_ALL_CLIENT(){
-	ui.CB_TCPS_CONTENT_CLIENT_IP->setEnabled(true);
+	ui.CB_TCPS_CONNECT_CLIENT_IP->setEnabled(true);
 
 	if (ui.CHB_TCPS_ALL_CLIENT->isChecked()) // 所有
 	{
-		ui.CB_TCPS_CONTENT_CLIENT_IP->setEnabled(false);
+		ui.CB_TCPS_CONNECT_CLIENT_IP->setEnabled(false);
 	}
 }
 
+// 断开客户端
 void ExportScannerInfo::onClicked_PB_TCPS_DISCONNECT_CLIENT(){
 	int temp = currentTCPS();
 	if (temp < 0) { // 无服务端
@@ -533,13 +543,14 @@ void ExportScannerInfo::onClicked_PB_TCPS_DISCONNECT_CLIENT(){
 	}
 	else
 	{
-		m_tcps[temp]->disconnectedOne(ui.CB_TCPS_CONTENT_CLIENT_IP->currentText(), ui.LE_TCPS_CONTENT_CLIENT_PORT->text().toInt());
+		m_tcps[temp]->disconnectedOne(ui.CB_TCPS_CONNECT_CLIENT_IP->currentText(), ui.LE_TCPS_CONTENT_CLIENT_PORT->text().toInt());
 	}
 
 	LOGI_("");
 }
 
-void ExportScannerInfo::onClicked_PB_TCPS_SEND_CLIENT(){
+// 指定发送
+void ExportScannerInfo::onClicked_PB_TCPS_SEND(){
 	int temp = currentTCPS();
 	if (temp < 0) {
 		return;
@@ -549,22 +560,27 @@ void ExportScannerInfo::onClicked_PB_TCPS_SEND_CLIENT(){
 		return;
 	}
 
+	TP isSuccess = TP::SEND_FAILURE;
+	QString mess = "";
+
 	if (ui.CHB_TCPS_ALL_CLIENT->isChecked()) // 所有
 	{
 		int num = ui.SB_TCPS_NUM_SEND->text().toInt();
-		QString mess = ui.TE_TCPS_SEND_CONTENT->toPlainText();
+		mess = ui.TE_TCPS_SEND_CONTENT->toPlainText();
 
-		m_tcps[temp]->sendDataToClient(num, mess.toStdString().data());
+		isSuccess = m_tcps[temp]->sendDataToClient(num, mess.toStdString().data());
 	}
 	else // 指定客户端
 	{
-		QString ip = ui.CB_TCPS_CONTENT_CLIENT_IP->currentText();
+		QString ip = ui.CB_TCPS_CONNECT_CLIENT_IP->currentText();
 		int port = ui.LE_TCPS_CONTENT_CLIENT_PORT->text().toInt();
 		int num = ui.SB_TCPS_NUM_SEND->text().toInt();
-		QString mess = ui.TE_TCPS_SEND_CONTENT->toPlainText();
+		mess = ui.TE_TCPS_SEND_CONTENT->toPlainText();
 
-		m_tcps[temp]->sendDataToClient(ip, port, num, mess.toStdString().data());
+		isSuccess = m_tcps[temp]->sendDataToClient(ip, port, num, mess.toStdString().data());
 	}
+
+	prompt_operation_status(isSuccess == TP::SEND_SUCCESS, (isSuccess == TP::SEND_SUCCESS ? TPStr.SEND_SUCCESS : TPStr.SEND_FAILURE).toStdString().data());
 
 	LOGI_("");
 }
@@ -622,7 +638,7 @@ void ExportScannerInfo::getTcpsRest(const QString& result) {
 
 // 客户端信息更新
 void ExportScannerInfo::onUpdateClients() {
-	ui.CB_TCPS_CONTENT_CLIENT_IP->clear();
+	ui.CB_TCPS_CONNECT_CLIENT_IP->clear();
 	ui.LE_TCPS_CONTENT_CLIENT_PORT->clear();
 
 	int temp = currentTCPS();
@@ -639,7 +655,7 @@ void ExportScannerInfo::onUpdateClients() {
 		LOGI("%s: %d", var.toStdString().data(), port);
 		i++;
 
-		ui.CB_TCPS_CONTENT_CLIENT_IP->addItem(var);
+		ui.CB_TCPS_CONNECT_CLIENT_IP->addItem(var);
 	}
 
 	// 2. 更新客户端连接数量
@@ -647,6 +663,7 @@ void ExportScannerInfo::onUpdateClients() {
 		QString::number(m_tcps[temp]->getClientsCount()));
 }
 
+// 更新客户端请求数据的接收状态
 void ExportScannerInfo::onUpdateTcpsRecvOrNone(){
 	int temp = currentTCPS();
 	if (temp < 0) {
@@ -687,7 +704,7 @@ void ExportScannerInfo::prompt_operation_status(
 
 void ExportScannerInfo::onClicked_PB_TCPC_ADD_CONNECT(){
 	m_form_tcpc_add_connect = new FORM_TCPC_ADD_CONNECT;
-	
+
 	connect(m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::startLogTcpcConnection, this,
 		&ExportScannerInfo::doStartLogTcpcConnection);
 

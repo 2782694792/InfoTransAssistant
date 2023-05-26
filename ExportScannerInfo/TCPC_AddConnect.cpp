@@ -65,7 +65,7 @@ void FORM_TCPC_ADD_CONNECT::onClicked_PB_TARGET_CONNECT_INFO_REFRESH(){
 			{
 				QString ip = item->text();
 				int port = item1->text().toInt();
-				if (isIPValid(ip) && isValidPort(port))
+				if (IpPort.isIPValid(ip) && IpPort.isValidPort(port))
 				{
 					m_connection.push_back(Connection(ip, port));
 					iserror = false;

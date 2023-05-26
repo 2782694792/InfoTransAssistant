@@ -31,9 +31,6 @@
     <Filter Include="belien">
       <UniqueIdentifier>{aef9ee3a-ddfa-4d9f-ba06-3c90f5229733}</UniqueIdentifier>
     </Filter>
-    <Filter Include="common">
-      <UniqueIdentifier>{c1285b81-9b60-40b8-a9a1-af45b61ae9fc}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExportScannerInfo.cpp">
@@ -98,8 +95,8 @@
     <ClInclude Include="TcpClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IpAndPort.h">
-      <Filter>common</Filter>
+    <ClInclude Include="belien\IpAndPort.h">
+      <Filter>belien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

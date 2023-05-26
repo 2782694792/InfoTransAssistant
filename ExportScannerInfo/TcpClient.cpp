@@ -74,31 +74,33 @@ bool TcpClient::SendDataToServer()
 }
 
 // 处理server端传送过来的消息
-bool TcpClient::ProcessMsg()
+const char * TcpClient::ProcessMsg()
 {
+	char	m_recvBuff[MAX_PACKET_SIZE + 1];
 	int nRecv = ::recv(m_client, m_recvBuff, MAX_PACKET_SIZE + 1, 0);
 
 	for (int i = 0; i < 64; i++)
 	{
-		printf("%c", m_recvBuff[i]);
+		printf("%d", m_recvBuff[i]);
 	}
 
-	return true;
+	return m_recvBuff;
 }
 
 // 关闭socket库
 bool TcpClient::CloseSocket()
 {
-	// 关闭套接字
-	::closesocket(m_client);
+	::closesocket(m_client); // 关闭套接字
 
 	return true;
 }
 
-void TcpClient::getLocalPort() {
+// 获取本地端口
+const std::string & TcpClient::getLocalPort() {
     struct sockaddr_in local_addr;
     int len = sizeof(local_addr);
     memset(&local_addr, 0, len);
     getsockname(m_client, (struct sockaddr*) &local_addr, &len);
-    std::cout << "Local Port: " << ntohs(local_addr.sin_port) << std::endl;
+
+	return std::to_string(ntohs(local_addr.sin_port));
 }

@@ -2,7 +2,6 @@
 #define BELIEN_LOG_H
 
 #include <ctime>
-#include <string>
 
 #define belien_qt
 
@@ -19,6 +18,7 @@ namespace belien {
 namespace log {
 
 #ifdef belien_vs
+#include <string>
 #define LOGI(format, ...)                                                   \
     fprintf(stderr, "[INFO]%s [%s:%d %s()] " format "\n", getTime().data(), \
             __FILE__, __LINE__, __func__, ##__VA_ARGS__)

@@ -6,8 +6,10 @@
 #include <qset.h>
 #include "belien\identification.h"
 #include "belien\log.h"
+#include "belien\IpAndPort.h"
 using namespace belien::identification;
 using namespace belien::log;
+using namespace belien::ip_port;
 
 class TcpServer : public QThread {
     Q_OBJECT
@@ -18,7 +20,7 @@ public:
     ~TcpServer();
 
 protected:
-    void run() override;
+    //void run() override;
 
 signals:
     void logReady(const QString& log); // 准备记录客户端操作日志

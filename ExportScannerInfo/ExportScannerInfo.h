@@ -48,13 +48,13 @@ private slots:
 
     void onUpdateClients(); // 更新客户端信息，禁止获取 socket
 
-    void onCurrentindexChanged_CB_TCPS_CONTENT_CLIENT_IP(); // 客户端指定信息
+    void onCurrentIndexChanged_CB_TCPS_CONNECT_CLIENT_IP(); // 客户端指定信息
 
 	void onStateChanged_CHB_TCPS_ALL_CLIENT(); // 选择所有客户端
 
 	void onClicked_PB_TCPS_DISCONNECT_CLIENT(); // 断开客户端
 
-	void onClicked_PB_TCPS_SEND_CLIENT(); // 发送客户端
+	void onClicked_PB_TCPS_SEND(); // 发送客户端
 
     void getTcpsRest(const QString& result);
 #pragma endregion

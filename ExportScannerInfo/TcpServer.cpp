@@ -16,10 +16,10 @@ TcpServer::~TcpServer() {
 	}
 }
 
-void TcpServer::run() {
-	// moveToThread(this);
-	LOGI_(QString::fromLocal8Bit("线程运行").toStdString().data());
-}
+//void TcpServer::run() {
+//	// moveToThread(this);
+//	LOGI_(QString::fromLocal8Bit("线程运行").toStdString().data());
+//}
 
 bool TcpServer::isListen(){
 	if (m_server == nullptr)
@@ -96,6 +96,10 @@ void TcpServer::onReadyRead() {
 		m_mx.lock();
 
 		QByteArray data = socket->readAll();
+		if (IpPort.isValidData(data)) {
+			LOGE_(DataStr.INVALID_SIZE.toStdString().data());
+			return;
+		}
 
 		if (m_status == TP::STOP_RECVED_REQUEST_DATA) // 停止接收
 		{
@@ -318,12 +322,11 @@ TP TcpServer::record_result(TP rest, const QTcpSocket* client,
 		m_log = id2.arg(TPStr.SENDING);
 		break;
 	case belien::identification::TP::SEND_SUCCESS:
-		m_log = id2.arg(QString::fromLocal8Bit(data) + TPStr.SEND_SUCCESS);
+		m_log = id2.arg(QString::fromLocal8Bit(data));
 		isEmit = true;
 		break;
 	case belien::identification::TP::SEND_FAILURE:
 		m_log = id2.arg(QString::fromLocal8Bit(data) + TPStr.SEND_FAILURE);
-		isEmit = true;
 		break;
 	case belien::identification::TP::REQUEST_CONNECT:
 		break;
