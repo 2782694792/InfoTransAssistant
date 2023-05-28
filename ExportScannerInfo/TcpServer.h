@@ -4,12 +4,13 @@
 #include <QtNetwork/qtcpserver.h>
 #include <qmutex.h>
 #include <qset.h>
+
 #include "belien\identification.h"
 #include "belien\log.h"
 #include "belien\IpAndPort.h"
 using namespace belien::identification;
 using namespace belien::log;
-using namespace belien::ip_port;
+using namespace belien::ipport;
 
 class TcpServer : public QThread {
     Q_OBJECT

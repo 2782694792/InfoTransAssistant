@@ -88,8 +88,8 @@ void ExportScannerInfo::init_ctrl_visible(bool isVisible) {
 	ui.PB_TCPS_STOP_RECV_CONTENT->setEnabled(isVisible);
 
 	// 添加QSpacerItem到垂直布局中，用于占据空间
-	m_spacerItem = new QSpacerItem(0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding);
-	ui.VLAYOUT_PDF_SETS->addItem(m_spacerItem);
+	//m_spacerItem = new QSpacerItem(0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding);
+	//ui.VLAYOUT_PDF_SETS->addItem(m_spacerItem);
 }
 
 void ExportScannerInfo::clear_sidebar_label() {
@@ -171,9 +171,17 @@ void ExportScannerInfo::init_sidebar_label(TextLabelID tlid) {
 
 void ExportScannerInfo::init_member() {
 	label = new ClickableLabel();
-	
+
+	m_mainInfo[0] = "";
+	m_mainInfo[1] = "";
+	m_mainInfo[2] = "";
+	m_mainInfo[3] = "";
+	m_mainInfo[4] = "";
+	m_mainInfo[5] = "";
+
 	m_form_tcpc_add_connect = new FORM_TCPC_ADD_CONNECT(this);
 	m_form_tcpc_add_connect->hide();
+
 	connect(m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::startLogTcpcConnection, this,
 		&ExportScannerInfo::doStartLogTcpcConnection);
 	connect(this, &ExportScannerInfo::updateConnectionInfo, m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo);
@@ -181,6 +189,10 @@ void ExportScannerInfo::init_member() {
 
 void ExportScannerInfo::onClickableLabel_Clicked() {
 	TextLabelID tempID = TextLabelID::UNKNOWN;
+
+	int i = ui.STACKWIDGET->currentIndex(); // 0 tcps 1 tcpc 2 pdfexport
+	QString info = ui.TL_PROMPT_OPERATION_STATUS->text();
+	m_mainInfo[i] = info;
 
 	auto* label = static_cast<ClickableLabel*>(sender());
 	if (label == ui.TL_TCP_SERVER) {
@@ -235,6 +247,9 @@ void ExportScannerInfo::onClickableLabel_Clicked() {
 
 	}
 
+	i = ui.STACKWIDGET->currentIndex();
+	prompt_operation_status(false, m_mainInfo[i]);
+
 	init_sidebar_label(tempID);
 }
 
@@ -284,7 +299,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
 	std::string tempstr = TPStr.PORT_ILLEGAL.toStdString();
 	bool        isCreate = false;
 
-	if (IpPort.isValidPort(ui.LE_TCPS_LISTEN_PORT->text().toInt())) {
+	if (TCPCheck.isValidPort(ui.LE_TCPS_LISTEN_PORT->text().toInt())) {
 		QString text = ui.LE_TCPS_LISTEN_PORT->text();
 
 		int i = 0;
@@ -483,7 +498,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTENED() {
 	t_cv.notify_all(); // 通知其他线程
 #endif
 
-	LOGE_("");
+	LOGE_(TPStr.NOT_LISTENED.toStdString().data());
 }
 
 // 继续接收请求数据
@@ -496,7 +511,9 @@ void ExportScannerInfo::onClicked_PB_TCPS_START_RECV_CONTENT() {
 	m_tcps[temp]->startRecvRequestData();
 	onUpdateTcpsRecvOrNone();
 
-	LOGI_("");
+	//connect(m_tcps[temp], &TcpServer::logReady, this,	&ExportScannerInfo::getTcpsRest);
+
+	LOGI_(TPStr.RECVING_REQUEST_DATA);
 }
 
 // 停止接收
@@ -508,8 +525,10 @@ void ExportScannerInfo::onClicked_PB_TCPS_STOP_RECV_CONTENT() {
 
 	m_tcps[temp]->stopRecvRequestData();
 	onUpdateTcpsRecvOrNone();
+	
+	//disconnect(m_tcps[temp], &TcpServer::logReady, this,	&ExportScannerInfo::getTcpsRest);
 
-	LOGE_("");
+	LOGE_(TPStr.STOP_RECVED_REQUEST_DATA);
 }
 
 // 更改指定客户端
@@ -556,7 +575,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_DISCONNECT_CLIENT(){
 		m_tcps[temp]->disconnectedOne(ui.CB_TCPS_CONNECT_CLIENT_IP->currentText(), ui.LE_TCPS_CONTENT_CLIENT_PORT->text().toInt());
 	}
 
-	LOGI_("");
+	LOGI_(TPStr.DISCONNECT.toStdString().data());
 }
 
 // 指定发送
@@ -601,8 +620,6 @@ int ExportScannerInfo::currentTCPS() const {
 	if (text.isEmpty()) {
 		return -1;
 	}
-
-	TcpServer tcps;
 
 	int i = 0;
 	for each (auto var in m_tcps) {
@@ -716,14 +733,16 @@ void ExportScannerInfo::prompt_operation_status(
 void ExportScannerInfo::onClicked_PB_TCPC_ADD_CONNECT(){
 	m_form_tcpc_add_connect->setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
 	m_form_tcpc_add_connect->setModal(true);
-	
-	emit updateConnectionInfo(m_tcpcConnection);
+
 	if (m_tcpcConnection.size() > 0)
 	{
-		//emit updateConnectionInfo(m_tcpcConnection);
+		emit updateConnectionInfo(m_tcpcConnection);
+		//m_form_tcpc_add_connect->doUpdateConnectionInfo(m_tcpcConnection);
 	}
-	//m_form_tcpc_add_connect->doUpdateConnectionInfo(m_tcpcConnection);
-	//m_form_tcpc_add_connect->show();
+	else
+	{
+		m_form_tcpc_add_connect->show();
+	}
 }
 
 // 获取请求添加的连接信息
@@ -733,7 +752,6 @@ void ExportScannerInfo::doStartLogTcpcConnection(const std::vector<Connection>& 
 		ui.CB_TCPC_TARGET_IP->clear();
 		ui.CB_TCPC_TARGET_PORT->clear();
 		m_tcpcConnection.clear();
-
 		m_tcpcConnection.resize(connection.size());
 		m_tcpcConnection.insert(m_tcpcConnection.begin(), connection.begin(), connection.end());
 
@@ -750,30 +768,183 @@ void ExportScannerInfo::doStartLogTcpcConnection(const std::vector<Connection>& 
 	}
 }
 
+// 指定连接
 void ExportScannerInfo::onCurrentIndexChanged_CB_TCPC_TARGET_IP(){
-	int index = ui.CB_TCPC_TARGET_IP->currentIndex();
+	int index = ui.CB_TCPC_TARGET_IP->currentIndex(); // 更新对方端口
 	ui.CB_TCPC_TARGET_PORT->setCurrentIndex(index);
+
+	isConnect_change_control_status();
 }
 
 // 连接服务端
 void ExportScannerInfo::onClicked_PB_TCPC_CONNECT(){
+	int index = ui.CB_TCPC_TARGET_IP->currentIndex();
+	if (index < 0)
+	{
+		return;
+	}
 
+	// 连接一个携带一个 socket，存在多个，序列集合指定序列连接信息集合
+	bool isBlock = ui.CB_TCPC_CONNECT_MODE->currentIndex() == 0 ? false : true;
+	int timeout = ui.HS_TCPC_CONNECT_TIMEOUT->value();
+	TcpClient * client = new TcpClient(m_tcpcConnection[index].getIP().toStdString().data(), m_tcpcConnection[index].getPort(), isBlock, timeout);
+	m_tcpc.push_back(client);
+
+	connect(client, &TcpClient::logReady, this,
+		&ExportScannerInfo::getTcpcRest);
+
+	if (client->ConectToServer())
+	{
+		m_tcpcConnection[index].setConnected(true);
+		prompt_operation_status(true, TPStr.CONNECT);
+		LOGI_(TPStr.CONNECT);
+	}
+	else
+	{
+		m_tcpc.pop_back();
+		m_tcpcConnection[index].setConnected(false);
+		client = nullptr;
+		prompt_operation_status(false, TPStr.UNCONNECT);
+		LOGE_(TPStr.UNCONNECT);
+	}
+
+	isConnect_change_control_status();
 }
 
+// 断开连接
 void ExportScannerInfo::onClicked_PB_TCPC_DISCONNECT(){
+	int index = currentTCPC();
+	if (index < 0)
+	{
+		return;
+	}
 
+	auto it = m_tcpc.begin();
+	auto client = (it + index);
+	(*client)->DisConnect();
+	m_tcpcConnection[ui.CB_TCPC_TARGET_PORT->currentIndex()].setConnected(false);
+	m_tcpc.erase(client);
+
+	isConnect_change_control_status();
 }
 
+// 接收服务端
+void ExportScannerInfo::recvServerMsg(){
+	// 1 全局线程池
+
+	// 2 连接服务器后添加任务 add_task
+	/// RecvServerMsg()
+}
+
+// 开始接收
 void ExportScannerInfo::onClicked_PB_TCPC_START_RECV_CONTENT(){
-
+	int index = currentTCPC();
+	if (index < 0)
+	{
+		return;
+	}
+	
+	auto it = m_tcpc.begin() + index;
+	connect((*it), &TcpClient::logReady, this,
+		&ExportScannerInfo::getTcpcRest);
 }
 
+// 停止接收
 void ExportScannerInfo::onClicked_PB_TCPC_STOP_RECV_CONTENT(){
+	int index = currentTCPC();
+	if (index < 0)
+	{
+		return;
+	}
 
+	auto it = m_tcpc.begin() + index;
+	disconnect((*it), &TcpClient::logReady, this,
+		&ExportScannerInfo::getTcpcRest);
 }
 
 void ExportScannerInfo::onClicked_PB_TCPC_SEND(){
 
+}
+
+void ExportScannerInfo::isConnect_change_control_status(){
+	int index = ui.CB_TCPC_TARGET_IP->currentIndex();
+	if (index < 0)
+	{
+		return;
+	}
+
+	bool temp = m_tcpcConnection[index].isConnected(); // 更新连接状态
+	ui.PB_TCPC_CONNECT->setEnabled(!temp);
+	ui.PB_TCPC_DISCONNECT->setEnabled(temp);
+
+	prompt_operation_status(temp, temp ? TPStr.CONNECT : TPStr.UNCONNECT); // 更新操作标签
+
+	ui.PB_TCPC_START_RECV_CONTENT->setEnabled(!temp);
+	ui.PB_TCPC_STOP_RECV_CONTENT->setEnabled(temp); // 更新接收
+
+	if (m_tcpc.size() <= 0)
+	{
+		return;
+	}
+
+	index = currentTCPC();
+	if (index < 0)
+	{
+		return;
+	}
+	std::string temps = m_tcpc[index]->getLocalPort();
+	ui.LE_TCPC_LOCAL_PORT->setText(QString::fromLocal8Bit(temps.data()));// 更新本地端口
+}
+
+// 当前客户端
+int ExportScannerInfo::currentTCPC() const {
+	int index = -1;
+	index = ui.CB_TCPC_TARGET_IP->currentIndex();
+	if (index < 0)
+	{
+		return -1;
+	}
+
+	//bool temp = m_tcpcConnection[index].isConnected();
+	//prompt_operation_status(temp, temp ?
+	//	TPStr.CONNECT.toStdString().data() : TPStr.UNCONNECT.toStdString().data());
+	//if (temp)
+	//{
+	//	LOGI_(TPStr.CONNECT.toStdString().data());
+	//}
+	//else
+	//{
+	//	LOGE_(TPStr.UNCONNECT.toStdString().data());
+	//}
+
+	QString ip = ui.CB_TCPC_TARGET_IP->currentText();
+	int port = ui.CB_TCPC_TARGET_PORT->currentText().toInt();
+	int i = 0;
+	for (auto var : m_tcpc)
+	{
+		if (var->getIp() == ip.toStdString() && var->getPort() == port)
+		{
+			return i;
+		}
+		i++;
+	}
+
+	return -1;
+}
+
+// 信号槽(线程)获取tcp客户端接收的数据
+void ExportScannerInfo::getTcpcRest(const QString & result) {
+	if (result.size() > 0) {
+		LOGI_(result.toStdString().data());
+		ui.TE_TCPC_RECV_CONTENT->append(result.toStdString().data());
+		prompt_operation_status(true, "");
+
+		m_log = result.toStdString().data();
+	}
+	else {
+		prompt_operation_status(false, QString::fromLocal8Bit("接收为空"));
+		LOGE_("");
+	}
 }
 
 #pragma endregion

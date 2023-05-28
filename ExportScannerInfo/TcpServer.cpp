@@ -96,7 +96,7 @@ void TcpServer::onReadyRead() {
 		m_mx.lock();
 
 		QByteArray data = socket->readAll();
-		if (IpPort.isValidData(data)) {
+		if (TCPCheck.isValidData(data)) {
 			LOGE_(DataStr.INVALID_SIZE.toStdString().data());
 			return;
 		}
@@ -205,11 +205,15 @@ TP TcpServer::doDisconnected() {
 TP TcpServer::disconnectedOne(QString addr, int port){
 	for each (auto var in m_clients)
 	{
+		if (m_clients.size() <= 0)
+		{
+			break;
+		}
+
 		if (var->peerAddress().toString() == addr.toStdString().data() && port == var->peerPort())
 		{
 			m_clients.remove(var);
 			var->deleteLater();
-			return record_result(TP::DISCONNECT, var);
 		}
 	}
 
@@ -223,6 +227,11 @@ TP TcpServer::disconnectedAll(){
 
 		for (auto socket : m_clients)
 		{
+			if (m_clients.size() <= 0)
+			{
+				break;
+			}
+
 			fail = false;
 			m_clients.remove(socket);
 			socket->deleteLater();

@@ -1,16 +1,19 @@
 #pragma once
-#include "qdialog.h"
 #include "ui_TCPC_AddConnect.h"
+
 #include <QTableWidgetItem>
 #include <vector>
+#include "qdialog.h"
 #include "ExportScannerInfo.h"
 #include "ConnectionInfo.h"
+#include "ReadOnlyDelegate.h"
+
 #include "belien\identification.h"
 #include "belien\log.h"
 #include "belien\IpAndPort.h"
 using namespace belien::identification;
 using namespace belien::log;
-using namespace belien::ip_port;
+using namespace belien::ipport;
 
 namespace Ui {
     class FORM_TCPC_ADD_CONNECT;

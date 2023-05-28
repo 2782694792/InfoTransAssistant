@@ -2,17 +2,20 @@
 #define BELIEN_IPANDPORT_H
 
 #include <string>
-#include <QString>
-#include <QRegularExpression>
 #include "singleton.h"
+
+#if BELIEN_QT==1
+#include <QRegularExpression>
+#include <QtNetwork\qhostaddress.h>
+#endif
 
 #define MAX_PACKET_SIZE		64 * 1024			// 数据包的最大长度,单位是sizeof(char)
 #define	MAXFILEDIRLENGTH	256				// 存放文件路径的最大长度
 
 namespace belien {
-	namespace ip_port {
-		
-#define IpPort IpAndPort::GetInstance()
+	namespace ipport {
+
+#define TCPCheck IpAndPort::GetInstance()
 		class IpAndPort : public Singleton < IpAndPort > {
 			friend Singleton < IpAndPort > ;
 
@@ -36,14 +39,25 @@ namespace belien {
 				return true;
 			}
 
+			bool isValidData(const std::string & data){
+				if (data.size() > MAX_PACKET_SIZE) {
+					return false;
+				}
+				return true;
+			}			
+
+#if BELIEN_QT==1
 			bool isIPValid(const QString& ip) {
-				QRegularExpression regExp("^((([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5]))$");
-				QRegularExpressionMatch match = regExp.match(ip);
-				return match.hasMatch();
-			}
-			
-			bool isIPValid(const std::string & ip) {
-				return isIPValid(QString::fromLocal8Bit(ip.data()));
+				//QRegularExpression regExp("^((([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5]))$");
+				//QRegularExpressionMatch match = regExp.match(ip);
+				//return match.hasMatch();
+				QHostAddress addr(ip);
+				if (addr.isNull() || addr.protocol() != QAbstractSocket::IPv4Protocol) {
+					return false;
+				}
+				else {
+					return true;
+				}
 			}
 
 			bool isValidData(const QByteArray & data){
@@ -52,14 +66,11 @@ namespace belien {
 				}
 				return true;
 			}
-			
-			bool isValidData(const std::string & data){
-				if (data.size() > MAX_PACKET_SIZE) {
-					return false;
-				}
-				return true;
-			}
 
+			bool isIPValid(const std::string & ip) {
+				return isIPValid(QString::fromLocal8Bit(ip.data()));
+			}
+#endif 
 		};
 	}
 }
