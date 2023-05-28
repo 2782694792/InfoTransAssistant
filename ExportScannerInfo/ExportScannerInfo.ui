@@ -234,7 +234,7 @@
                   <property name="font">
                    <font>
                     <family>微软雅黑</family>
-                    <pointsize>9</pointsize>
+                    <pointsize>11</pointsize>
                    </font>
                   </property>
                   <property name="styleSheet">
@@ -1095,6 +1095,12 @@ QLabel:pressed {
                  <layout class="QVBoxLayout" name="verticalLayout_11">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_16">
+                    <property name="leftMargin">
+                     <number>5</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>12</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_7">
                       <property name="sizePolicy">
@@ -1104,7 +1110,7 @@ QLabel:pressed {
                        </sizepolicy>
                       </property>
                       <property name="text">
-                       <string> 端口添加：</string>
+                       <string>端口添加：</string>
                       </property>
                      </widget>
                     </item>
@@ -1221,6 +1227,12 @@ QLabel:pressed {
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <property name="leftMargin">
+                     <number>5</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>12</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_8">
                       <property name="sizePolicy">
@@ -1230,7 +1242,7 @@ QLabel:pressed {
                        </sizepolicy>
                       </property>
                       <property name="text">
-                       <string> 端口选择：</string>
+                       <string>端口选择：</string>
                       </property>
                      </widget>
                     </item>
@@ -1437,12 +1449,18 @@ QLabel:pressed {
                   </item>
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_8">
+                    <property name="leftMargin">
+                     <number>12</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>12</number>
+                    </property>
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_6">
                       <item>
                        <widget class="QLabel" name="label_13">
                         <property name="text">
-                         <string> 监听数：</string>
+                         <string>监听数：</string>
                         </property>
                        </widget>
                       </item>
@@ -1473,7 +1491,7 @@ QLabel:pressed {
                          </sizepolicy>
                         </property>
                         <property name="text">
-                         <string> 连接数：</string>
+                         <string>连接数：</string>
                         </property>
                        </widget>
                       </item>
@@ -1765,26 +1783,19 @@ QLabel:pressed {
                     </item>
                     <item>
                      <layout class="QVBoxLayout" name="verticalLayout_21">
-                      <item>
-                       <spacer name="verticalSpacer_12">
-                        <property name="orientation">
-                         <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeType">
-                         <enum>QSizePolicy::Minimum</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>20</width>
-                          <height>10</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
+                      <property name="leftMargin">
+                       <number>12</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>12</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>12</number>
+                      </property>
                       <item>
                        <widget class="QLabel" name="label_20">
                         <property name="text">
-                         <string> 重复发送次数：</string>
+                         <string>重复发送次数：</string>
                         </property>
                        </widget>
                       </item>
@@ -1896,6 +1907,12 @@ QLabel:pressed {
                  <layout class="QVBoxLayout" name="verticalLayout_17">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_33">
+                    <property name="leftMargin">
+                     <number>5</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>12</number>
+                    </property>
                     <item>
                      <widget class="QPushButton" name="PB_TCPC_ADD_CONNECT">
                       <property name="sizePolicy">
@@ -1914,7 +1931,7 @@ QLabel:pressed {
                        <string notr="true">qproperty-icon: url(&quot;./images/addConnect-pressed.png&quot;);</string>
                       </property>
                       <property name="text">
-                       <string>创建连接</string>
+                       <string> 连接管理</string>
                       </property>
                      </widget>
                     </item>
@@ -1954,7 +1971,7 @@ QLabel:pressed {
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>165</width>
+                        <width>140</width>
                         <height>0</height>
                        </size>
                       </property>
@@ -2002,7 +2019,7 @@ QLabel:pressed {
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>165</width>
+                        <width>0</width>
                         <height>0</height>
                        </size>
                       </property>
@@ -2011,14 +2028,26 @@ QLabel:pressed {
                       </property>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_34">
+                    <item>
+                     <spacer name="horizontalSpacer_11">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Preferred</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>30</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
                     <item>
                      <widget class="QLabel" name="label_18">
                       <property name="text">
-                       <string> 当前端口：</string>
+                       <string>当前端口：</string>
                       </property>
                      </widget>
                     </item>
@@ -2038,6 +2067,80 @@ QLabel:pressed {
                       </property>
                       <property name="text">
                        <string>null</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_34">
+                    <property name="leftMargin">
+                     <number>6</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>12</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_6">
+                      <property name="text">
+                       <string>模式：</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="CB_TCPC_CONNECT_MODE">
+                      <item>
+                       <property name="text">
+                        <string>非阻塞</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>阻塞</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_16">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Preferred</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_10">
+                      <property name="text">
+                       <string>超时(毫秒)：</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="HS_TCPC_CONNECT_TIMEOUT">
+                      <property name="maximum">
+                       <number>2000</number>
+                      </property>
+                      <property name="value">
+                       <number>2000</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_14">
+                      <property name="text">
+                       <string>2000</string>
                       </property>
                      </widget>
                     </item>
@@ -2172,6 +2275,12 @@ QLabel:pressed {
                   </item>
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_13">
+                    <property name="leftMargin">
+                     <number>12</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>12</number>
+                    </property>
                     <item>
                      <widget class="QPushButton" name="PB_TCPC_START_RECV_CONTENT">
                       <property name="minimumSize">
@@ -2323,26 +2432,16 @@ QLabel:pressed {
                     </item>
                     <item>
                      <layout class="QVBoxLayout" name="verticalLayout_16">
-                      <item>
-                       <spacer name="verticalSpacer_10">
-                        <property name="orientation">
-                         <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeType">
-                         <enum>QSizePolicy::Minimum</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>20</width>
-                          <height>10</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
+                      <property name="leftMargin">
+                       <number>12</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>12</number>
+                      </property>
                       <item>
                        <widget class="QLabel" name="label_16">
                         <property name="text">
-                         <string> 重复发送次数：</string>
+                         <string>重复发送次数：</string>
                         </property>
                        </widget>
                       </item>
@@ -2452,7 +2551,7 @@ QLabel:pressed {
      <x>0</x>
      <y>0</y>
      <width>1090</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -2512,8 +2611,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_LISTEN_PORT_CREATE()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>630</x>
-     <y>159</y>
+     <x>633</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -2528,8 +2627,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_LISTENING()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>587</x>
-     <y>203</y>
+     <x>617</x>
+     <y>187</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -2544,8 +2643,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_LISTENED()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>722</x>
-     <y>203</y>
+     <x>745</x>
+     <y>187</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -2560,8 +2659,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_LISTEN_PORT_DELETE()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1030</x>
-     <y>203</y>
+     <x>1037</x>
+     <y>187</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -2576,12 +2675,12 @@ QLabel:pressed {
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1047</x>
-     <y>612</y>
+     <x>1037</x>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
-     <x>896</x>
-     <y>357</y>
+     <x>889</x>
+     <y>595</y>
     </hint>
    </hints>
   </connection>
@@ -2592,8 +2691,8 @@ QLabel:pressed {
    <slot>onCurrentIndexChanged_CB_TCPS_LISTEN_PORT_LIST()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>442</x>
-     <y>198</y>
+     <x>479</x>
+     <y>182</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2608,8 +2707,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_START_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1047</x>
-     <y>445</y>
+     <x>1037</x>
+     <y>425</y>
     </hint>
     <hint type="destinationlabel">
      <x>1086</x>
@@ -2624,8 +2723,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_STOP_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1047</x>
-     <y>487</y>
+     <x>1037</x>
+     <y>466</y>
     </hint>
     <hint type="destinationlabel">
      <x>1089</x>
@@ -2640,12 +2739,12 @@ QLabel:pressed {
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1005</x>
-     <y>617</y>
+     <x>1037</x>
+     <y>600</y>
     </hint>
     <hint type="destinationlabel">
-     <x>896</x>
-     <y>293</y>
+     <x>889</x>
+     <y>536</y>
     </hint>
    </hints>
   </connection>
@@ -2656,8 +2755,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_SEND()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>913</x>
-     <y>205</y>
+     <x>905</x>
+     <y>189</y>
     </hint>
     <hint type="destinationlabel">
      <x>1080</x>
@@ -2672,8 +2771,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_DISCONNECT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1047</x>
-     <y>205</y>
+     <x>1037</x>
+     <y>189</y>
     </hint>
     <hint type="destinationlabel">
      <x>1078</x>
@@ -2688,8 +2787,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_SEND()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1006</x>
-     <y>785</y>
+     <x>1036</x>
+     <y>744</y>
     </hint>
     <hint type="destinationlabel">
      <x>1079</x>
@@ -2704,8 +2803,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_START_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1005</x>
-     <y>298</y>
+     <x>1037</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>1080</x>
@@ -2720,8 +2819,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_STOP_RECV_CONTENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1005</x>
-     <y>340</y>
+     <x>1037</x>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>1083</x>
@@ -2736,8 +2835,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPC_ADD_CONNECT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>346</x>
-     <y>159</y>
+     <x>343</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -2752,8 +2851,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_SEND()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1000</x>
-     <y>765</y>
+     <x>1036</x>
+     <y>750</y>
     </hint>
     <hint type="destinationlabel">
      <x>1086</x>
@@ -2768,8 +2867,8 @@ QLabel:pressed {
    <slot>onStateChanged_CHB_TCPS_ALL_CLIENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>273</x>
-     <y>687</y>
+     <x>331</x>
+     <y>676</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -2784,8 +2883,8 @@ QLabel:pressed {
    <slot>onClicked_PB_TCPS_DISCONNECT_CLIENT()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>828</x>
-     <y>689</y>
+     <x>889</x>
+     <y>682</y>
     </hint>
     <hint type="destinationlabel">
      <x>1085</x>
@@ -2800,8 +2899,8 @@ QLabel:pressed {
    <slot>onCurrentIndexChanged_CB_TCPS_CONNECT_CLIENT_IP()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>487</x>
-     <y>685</y>
+     <x>568</x>
+     <y>677</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -2822,6 +2921,22 @@ QLabel:pressed {
     <hint type="destinationlabel">
      <x>1080</x>
      <y>67</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>HS_TCPC_CONNECT_TIMEOUT</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_14</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>571</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>666</x>
+     <y>176</y>
     </hint>
    </hints>
   </connection>

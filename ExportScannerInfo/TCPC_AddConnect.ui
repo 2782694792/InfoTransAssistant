@@ -28,7 +28,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>创建连接</string>
+   <string>连接管理</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -84,12 +84,26 @@
            <set>AlignCenter</set>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>是否连接</string>
+          </property>
+          <property name="textAlignment">
+           <set>AlignCenter</set>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
        <item>
         <widget class="QPushButton" name="PB_TARGET_CONNECT_INFO_INSERT">
          <property name="sizePolicy">

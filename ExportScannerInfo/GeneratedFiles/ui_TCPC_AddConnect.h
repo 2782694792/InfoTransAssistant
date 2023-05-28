@@ -58,8 +58,8 @@ public:
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         TW_TARGET_CONNECT_INFO = new QTableWidget(FORM_TCPC_ADD_CONNECT);
-        if (TW_TARGET_CONNECT_INFO->columnCount() < 2)
-            TW_TARGET_CONNECT_INFO->setColumnCount(2);
+        if (TW_TARGET_CONNECT_INFO->columnCount() < 3)
+            TW_TARGET_CONNECT_INFO->setColumnCount(3);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         __qtablewidgetitem->setTextAlignment(Qt::AlignCenter);
         __qtablewidgetitem->setFont(font);
@@ -68,6 +68,9 @@ public:
         __qtablewidgetitem1->setTextAlignment(Qt::AlignCenter);
         __qtablewidgetitem1->setFont(font);
         TW_TARGET_CONNECT_INFO->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        __qtablewidgetitem2->setTextAlignment(Qt::AlignCenter);
+        TW_TARGET_CONNECT_INFO->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         TW_TARGET_CONNECT_INFO->setObjectName(QStringLiteral("TW_TARGET_CONNECT_INFO"));
         TW_TARGET_CONNECT_INFO->setMinimumSize(QSize(240, 0));
         TW_TARGET_CONNECT_INFO->setFrameShadow(QFrame::Sunken);
@@ -83,6 +86,7 @@ public:
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(2, -1, 2, -1);
         PB_TARGET_CONNECT_INFO_INSERT = new QPushButton(FORM_TCPC_ADD_CONNECT);
         PB_TARGET_CONNECT_INFO_INSERT->setObjectName(QStringLiteral("PB_TARGET_CONNECT_INFO_INSERT"));
         QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -137,11 +141,13 @@ public:
 
     void retranslateUi(QWidget *FORM_TCPC_ADD_CONNECT)
     {
-        FORM_TCPC_ADD_CONNECT->setWindowTitle(QApplication::translate("FORM_TCPC_ADD_CONNECT", "\345\210\233\345\273\272\350\277\236\346\216\245", Q_NULLPTR));
+        FORM_TCPC_ADD_CONNECT->setWindowTitle(QApplication::translate("FORM_TCPC_ADD_CONNECT", "\350\277\236\346\216\245\347\256\241\347\220\206", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem = TW_TARGET_CONNECT_INFO->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("FORM_TCPC_ADD_CONNECT", "\347\233\256\346\240\207 IP", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem1 = TW_TARGET_CONNECT_INFO->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QApplication::translate("FORM_TCPC_ADD_CONNECT", "\347\233\256\346\240\207\347\253\257\345\217\243", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem2 = TW_TARGET_CONNECT_INFO->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QApplication::translate("FORM_TCPC_ADD_CONNECT", "\346\230\257\345\220\246\350\277\236\346\216\245", Q_NULLPTR));
         PB_TARGET_CONNECT_INFO_INSERT->setText(QApplication::translate("FORM_TCPC_ADD_CONNECT", "+", Q_NULLPTR));
         PB_TARGET_CONNECT_INFO_DELETE->setText(QApplication::translate("FORM_TCPC_ADD_CONNECT", "-", Q_NULLPTR));
         PB_TARGET_CONNECT_INFO_REFRESH->setText(QApplication::translate("FORM_TCPC_ADD_CONNECT", "\345\272\224\347\224\250", Q_NULLPTR));
