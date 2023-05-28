@@ -1586,7 +1586,7 @@ public:
         QObject::connect(PB_TCPS_START_RECV_CONTENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_START_RECV_CONTENT()));
         QObject::connect(PB_TCPS_STOP_RECV_CONTENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPS_STOP_RECV_CONTENT()));
         QObject::connect(PB_TCPC_RECV_CONTENT_CLEAR, SIGNAL(clicked()), TE_TCPC_RECV_CONTENT, SLOT(clear()));
-        QObject::connect(PB_TCPC_CONNECT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_SEND()));
+        QObject::connect(PB_TCPC_CONNECT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_CONNECT()));
         QObject::connect(PB_TCPC_DISCONNECT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_DISCONNECT()));
         QObject::connect(PB_TCPC_SEND, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_SEND()));
         QObject::connect(PB_TCPC_START_RECV_CONTENT, SIGNAL(clicked()), ExportScannerInfoClass, SLOT(onClicked_PB_TCPC_START_RECV_CONTENT()));

@@ -7,10 +7,9 @@
 
 #include "belien\identification.h"
 #include "belien\log.h"
-#include "belien\IpAndPort.h"
+#include "belien\tcpCheck.hpp"
 using namespace belien::identification;
-using namespace belien::log;
-using namespace belien::ipport;
+using namespace belien::tcpcheck;
 
 class TcpServer : public QThread {
     Q_OBJECT

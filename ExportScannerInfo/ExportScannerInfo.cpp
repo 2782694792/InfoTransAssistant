@@ -98,23 +98,23 @@ void ExportScannerInfo::clear_sidebar_label() {
 
 	ui.TL_FTP_SERVER->setStyleSheet(strColor);
 	ui.TL_FTP_SERVER->setPalette(label_palette);
-	ui.TL_FTP_SERVER_ICON->setStyleSheet("");
+	ui.TL_FTP_SERVER_ICON->setStyleSheet("QLabel:hover {color: #2980B9;}");
 
 	ui.TL_FTP_CLIENT->setStyleSheet(strColor);
 	ui.TL_FTP_CLIENT->setPalette(label_palette);
-	ui.TL_FTP_CLIENT_ICON->setStyleSheet("");
+	ui.TL_FTP_CLIENT_ICON->setStyleSheet("QLabel:hover {color: #2980B9;}");
 
 	ui.TL_TCP_SERVER->setStyleSheet(strColor);
 	ui.TL_TCP_SERVER->setPalette(label_palette);
-	ui.TL_TCP_SERVER_ICON->setStyleSheet("");
+	ui.TL_TCP_SERVER_ICON->setStyleSheet("QLabel:hover {color: #2980B9;}");
 
 	ui.TL_TCP_CLIENT->setStyleSheet(strColor);
 	ui.TL_TCP_CLIENT->setPalette(label_palette);
-	ui.TL_TCP_CLIENT_ICON->setStyleSheet("");
+	ui.TL_TCP_CLIENT_ICON->setStyleSheet("QLabel:hover {color: #2980B9;}");
 
 	ui.TL_PDF_EXPORT->setStyleSheet(strColor);
 	ui.TL_PDF_EXPORT->setPalette(label_palette);
-	ui.TL_PDF_EXPORT_ICON->setStyleSheet("");
+	ui.TL_PDF_EXPORT_ICON->setStyleSheet("QLabel:hover {color: #2980B9;}");
 }
 
 void ExportScannerInfo::init_sidebar_label(TextLabelID tlid) {

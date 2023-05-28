@@ -1,29 +1,31 @@
 #ifndef BELIEN_QTNTIFICATION_H
 #define BELIEN_QTNTIFICATION_H
 
-#define BELIEN_QT 1
+#include "Header.h"
+#include "singleton.h"
 
-#if BELIEN_QT!=1
+#ifdef BELIEN_ENUM_STRING
 #include <string>
-#else
+#endif
+#ifdef BELIEN_ENUM_QSTRING
 #include <qstring.h>
 #endif
-
-#include "singleton.h"
 
 namespace belien {
 namespace identification {
     // 函数操作
-    enum class Function : short { SUCCESS, FAILURE };
-
-    class FunctionStr : public Singleton< FunctionStr > {
-        friend Singleton< FunctionStr >;
+    enum class Func : short { SUCCESS, FAILURE };
+	
+#define FuncStr Function_Str::GetInstance()
+    class Function_Str : public Singleton< Function_Str > {
+        friend Singleton< Function_Str >;
 
     public:
-#if BELIEN_QT!=1
-        const char * SUCCESS = "操作成功";
-        const char * FAILURE = "操作失败";
-#else
+#ifdef BELIEN_ENUM_STRING
+        const std::string SUCCESS = "操作成功";
+        const std::string FAILURE = "操作失败";
+#endif
+#ifdef BELIEN_ENUM_QSTRING
         const QString SUCCESS = QString::fromLocal8Bit("操作成功");
         const QString FAILURE = QString::fromLocal8Bit("操作失败");
 #endif
@@ -44,14 +46,15 @@ namespace identification {
         friend Singleton< Data_Str >;
 
     public:
-#if BELIEN_QT!=1
-        const char * INVALID_ARGUMENT = " 无效的参数";
-        const char * INVALID_TYPE     = "无效的类型";
-        const char * INVALID_SIZE     = "无效的大小";
-        const char * INVALID_FORMAT   = "无效的格式";
-        const char * INVALID_DATA     = "无效的数据";
-        const char * INVALID_STATE    = "无效的状态";
-#else
+#ifdef BELIEN_ENUM_STRING
+        const std::string INVALID_ARGUMENT = " 无效的参数";
+        const std::string INVALID_TYPE     = "无效的类型";
+        const std::string INVALID_SIZE     = "无效的大小";
+        const std::string INVALID_FORMAT   = "无效的格式";
+        const std::string INVALID_DATA     = "无效的数据";
+        const std::string INVALID_STATE    = "无效的状态";
+#endif
+#ifdef BELIEN_ENUM_QSTRING
         const QString INVALID_ARGUMENT = QString::fromLocal8Bit("无效的参数");
         const QString INVALID_TYPE = QString::fromLocal8Bit("无效的类型");
         const QString INVALID_SIZE = QString::fromLocal8Bit("无效的大小");
@@ -61,9 +64,7 @@ namespace identification {
 #endif
     };
 
-
 #pragma region 传输协议
-
     enum class TP : short {
 		PORT_ILLEGAL,
 		PORT_ADDED,
@@ -91,26 +92,27 @@ namespace identification {
         friend Singleton< TP_Str >;
 
     public:
-#if BELIEN_QT!=1
-        const char * PORT_ILLEGAL             = "非法端口号";
-        const char * PORT_ADDED               = "端口号已存在";
-        const char * PORT_ADDING_SUCCESS      = "端口号添加成功";
-		const char * SOCKET_INIT_FAILURE      = "初始化失败";
-		const char * SOCKET_INIT_SUCCESS      = "初始化成功";
-		const char * SOCKET_NON_BLOCKING      = "连接非阻塞";
-		const char * SOCKET_BLOCKING          = "连接阻塞";
-        const char * LISTENING                = "监听中...";
-        const char * NOT_LISTENED             = "未监听";
-        const char * REQUEST_CONNECT          = "请求连接";
-        const char * CONNECT                  = "连接成功";
-        const char * UNCONNECT                = "未连接";
-        const char * DISCONNECT               = "连接断开";
-        const char * RECVING_REQUEST_DATA     = "接收请求数据";
-        const char * STOP_RECVED_REQUEST_DATA = "已停止数据接收";
-        const char * SENDING                  = "发送中...";
-        const char * SEND_SUCCESS             = "发送成功";
-        const char * SEND_FAILURE             = "发送失败"; 
-#else
+#ifdef BELIEN_ENUM_STRING
+        const std::string PORT_ILLEGAL             = "非法端口号";
+        const std::string PORT_ADDED               = "端口号已存在";
+        const std::string PORT_ADDING_SUCCESS      = "端口号添加成功";
+		const std::string SOCKET_INIT_FAILURE      = "初始化失败";
+		const std::string SOCKET_INIT_SUCCESS      = "初始化成功";
+		const std::string SOCKET_NON_BLOCKING      = "连接非阻塞";
+		const std::string SOCKET_BLOCKING          = "连接阻塞";
+        const std::string LISTENING                = "监听中...";
+        const std::string NOT_LISTENED             = "未监听";
+        const std::string REQUEST_CONNECT          = "请求连接";
+        const std::string CONNECT                  = "连接成功";
+        const std::string UNCONNECT                = "未连接";
+        const std::string DISCONNECT               = "连接断开";
+        const std::string RECVING_REQUEST_DATA     = "接收请求数据";
+        const std::string STOP_RECVED_REQUEST_DATA = "已停止数据接收";
+        const std::string SENDING                  = "发送中...";
+        const std::string SEND_SUCCESS             = "发送成功";
+        const std::string SEND_FAILURE             = "发送失败"; 
+#endif
+#ifdef BELIEN_ENUM_QSTRING
         const QString PORT_ILLEGAL = QString::fromLocal8Bit("非法端口号");
         const QString PORT_ADDED = QString::fromLocal8Bit("端口号已存在");
         const QString PORT_ADDING_SUCCESS =

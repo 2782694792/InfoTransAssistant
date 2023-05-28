@@ -2,9 +2,10 @@
 #define BELIEN_IPANDPORT_H
 
 #include <string>
+#include "Header.h"
 #include "singleton.h"
 
-#if BELIEN_QT==1
+#ifdef BELIEN_TCP_CHECK
 #include <QRegularExpression>
 #include <QtNetwork\qhostaddress.h>
 #endif
@@ -13,16 +14,16 @@
 #define	MAXFILEDIRLENGTH	256				// 存放文件路径的最大长度
 
 namespace belien {
-	namespace ipport {
+	namespace tcpcheck {
 
-#define TCPCheck IpAndPort::GetInstance()
-		class IpAndPort : public Singleton < IpAndPort > {
-			friend Singleton < IpAndPort > ;
+#define TCPCheck TcpCheck::GetInstance()
+		class TcpCheck : public Singleton < TcpCheck > {
+			friend Singleton < TcpCheck > ;
 
 		public:
-			IpAndPort()	{}
+			TcpCheck()	{}
 
-			~IpAndPort() {}
+			~TcpCheck() {}
 
 			bool isValidPort(int port) {
 				// 首先判断端口号是否在 0 到 65535 之间
@@ -46,7 +47,7 @@ namespace belien {
 				return true;
 			}			
 
-#if BELIEN_QT==1
+#ifdef BELIEN_TCP_CHECK
 			bool isIPValid(const QString& ip) {
 				//QRegularExpression regExp("^((([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5]))$");
 				//QRegularExpressionMatch match = regExp.match(ip);

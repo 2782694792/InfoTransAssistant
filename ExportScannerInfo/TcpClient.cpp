@@ -264,14 +264,16 @@ TP TcpClient::record_result(TP result, const SOCKET* client,
 	{
 		std::vector<std::string> idv2{ m_ip, std::to_string(m_port), localport, log.toLocal8Bit().data() };
 		id2 = replace_string(temp, idv2);
-		emit logReady(QString::fromLocal8Bit(id2.data()));
+		m_log = QString::fromLocal8Bit(id2.data());
 	}
 	else
 	{
 		std::vector<std::string> idv{ localport, m_ip, std::to_string(m_port), log.toLocal8Bit().data() };
 		id = replace_string(temp, idv);
-		emit logReady(QString::fromLocal8Bit(id.data()));
+		m_log = QString::fromLocal8Bit(id.data());
 	}
-
+	
+	emit logReady(m_log);
+	
 	return result;
 }

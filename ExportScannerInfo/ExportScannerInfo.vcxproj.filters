@@ -31,6 +31,9 @@
     <Filter Include="belien">
       <UniqueIdentifier>{aef9ee3a-ddfa-4d9f-ba06-3c90f5229733}</UniqueIdentifier>
     </Filter>
+    <Filter Include="belien\work">
+      <UniqueIdentifier>{44784839-71f1-4b37-817b-d042e40911db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExportScannerInfo.cpp">
@@ -68,6 +71,9 @@
     <QtMoc Include="ExportScannerInfo.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="TcpClient.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ExportScannerInfo.ui">
@@ -95,17 +101,26 @@
     <ClInclude Include="belien\log.h">
       <Filter>belien</Filter>
     </ClInclude>
-    <ClInclude Include="TcpClient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="belien\IpAndPort.h">
-      <Filter>belien</Filter>
-    </ClInclude>
     <ClInclude Include="ConnectionInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ReadOnlyDelegate.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="belien\Header.h">
+      <Filter>belien</Filter>
+    </ClInclude>
+    <ClInclude Include="belien\tcpCheck.hpp">
+      <Filter>belien</Filter>
+    </ClInclude>
+    <ClInclude Include="belien\work\sync_deque.hpp">
+      <Filter>belien\work</Filter>
+    </ClInclude>
+    <ClInclude Include="belien\work_deque\woker.hpp">
+      <Filter>belien\work</Filter>
+    </ClInclude>
+    <ClInclude Include="belien\work_deque\thread_pool.hpp">
+      <Filter>belien\work</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,10 +10,9 @@
 
 #include "belien\identification.h"
 #include "belien\log.h"
-#include "belien\IpAndPort.h"
+#include "belien\tcpCheck.hpp"
 using namespace belien::identification;
-using namespace belien::log;
-using namespace belien::ipport;
+using namespace belien::tcpcheck;
 
 class TcpClient:public QObject
 {
@@ -55,4 +54,5 @@ private:
 	int m_timeout;
 	std::string m_localPort;
 	char	m_recvBuff[MAX_PACKET_SIZE + 1];
+	QString m_log;
 };

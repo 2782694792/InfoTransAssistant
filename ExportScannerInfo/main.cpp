@@ -1,7 +1,5 @@
 #include "ExportScannerInfo.h"
 #include <QtWidgets/QApplication>
-#include <QString>
-#include <QtNetwork\qhostinfo.h>
 #include <QGuiApplication>
 #include <QScreen>
 
