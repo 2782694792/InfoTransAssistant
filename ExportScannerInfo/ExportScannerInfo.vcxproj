@@ -115,6 +115,7 @@
   <ItemGroup>
     <ClCompile Include="ClickableLabel.cpp" />
     <ClCompile Include="ExportScannerInfo.cpp" />
+    <ClCompile Include="ReadOnlyDelegate.cpp" />
     <ClCompile Include="TCPC_AddConnect.cpp" />
     <ClCompile Include="main.cpp">
       <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
@@ -159,6 +160,7 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
     </QtMoc>
     <ClInclude Include="ConnectionInfo.h" />
+    <ClInclude Include="ReadOnlyDelegate.h" />
     <ClInclude Include="TcpClient.h" />
     <QtMoc Include="TcpServer.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>

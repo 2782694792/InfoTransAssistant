@@ -51,6 +51,9 @@
     <ClCompile Include="TCPC_AddConnect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ReadOnlyDelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ClickableLabel.h">
@@ -99,6 +102,9 @@
       <Filter>belien</Filter>
     </ClInclude>
     <ClInclude Include="ConnectionInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadOnlyDelegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

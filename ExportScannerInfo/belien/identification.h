@@ -3,9 +3,9 @@
 
 #define BELIEN_QT 1
 
-#if BELIEN_QT==0
+#if BELIEN_QT!=1
 #include <string>
-#elif BELIEN_QT==1
+#else
 #include <qstring.h>
 #endif
 
@@ -20,10 +20,10 @@ namespace identification {
         friend Singleton< FunctionStr >;
 
     public:
-#if BELIEN_QT==0
+#if BELIEN_QT!=1
         const char * SUCCESS = "操作成功";
         const char * FAILURE = "操作失败";
-#elif BELIEN_QT==1
+#else
         const QString SUCCESS = QString::fromLocal8Bit("操作成功");
         const QString FAILURE = QString::fromLocal8Bit("操作失败");
 #endif
@@ -44,14 +44,14 @@ namespace identification {
         friend Singleton< Data_Str >;
 
     public:
-#if BELIEN_QT==0
+#if BELIEN_QT!=1
         const char * INVALID_ARGUMENT = " 无效的参数";
         const char * INVALID_TYPE     = "无效的类型";
         const char * INVALID_SIZE     = "无效的大小";
         const char * INVALID_FORMAT   = "无效的格式";
         const char * INVALID_DATA     = "无效的数据";
         const char * INVALID_STATE    = "无效的状态";
-#elif BELIEN_QT==1
+#else
         const QString INVALID_ARGUMENT = QString::fromLocal8Bit("无效的参数");
         const QString INVALID_TYPE = QString::fromLocal8Bit("无效的类型");
         const QString INVALID_SIZE = QString::fromLocal8Bit("无效的大小");
@@ -91,7 +91,7 @@ namespace identification {
         friend Singleton< TP_Str >;
 
     public:
-#if BELIEN_QT==0 
+#if BELIEN_QT!=1
         const char * PORT_ILLEGAL             = "非法端口号";
         const char * PORT_ADDED               = "端口号已存在";
         const char * PORT_ADDING_SUCCESS      = "端口号添加成功";
@@ -110,7 +110,7 @@ namespace identification {
         const char * SENDING                  = "发送中...";
         const char * SEND_SUCCESS             = "发送成功";
         const char * SEND_FAILURE             = "发送失败"; 
-#elif BELIEN_QT==1
+#else
         const QString PORT_ILLEGAL = QString::fromLocal8Bit("非法端口号");
         const QString PORT_ADDED = QString::fromLocal8Bit("端口号已存在");
         const QString PORT_ADDING_SUCCESS =
