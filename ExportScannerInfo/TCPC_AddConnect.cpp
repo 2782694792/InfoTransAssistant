@@ -37,21 +37,34 @@ void FORM_TCPC_ADD_CONNECT::showEvent(QShowEvent *event) {
 }
 
 void FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo(const std::vector<Connection>& connection){
-	m_connection.clear();
-	m_connection.insert(m_connection.begin(), connection.begin(), connection.end());
-
-	QTableWidget *tableWidget = findChild<QTableWidget *>("TW_TARGET_CONNECT_INFO");
-	if (m_connection.size() > 0)
+	std::vector<Connection> connectionInfo = connection;
+	int count = connectionInfo.size();
+	if (count > 0)
 	{
-		for (int row = 0; row < m_connection.size(); row++) {
+		QTableWidget *tableWidget = findChild<QTableWidget *>("TW_TARGET_CONNECT_INFO");
+		
+		// 清除子项行
+		//tableWidget->clearContents();
+		for (int i = tableWidget->rowCount() - 1; i >= 0; --i) {
+			tableWidget->removeRow(i); // 从最后一行开始逆序删除
+		}
+
+		// 添加子项行
+		for (int i = 0; i < count; i++)
+		{
+			tableWidget->insertRow(i);
+		}
+
+		// 设置单元格值
+		for (int row = 0; row < count; row++) {
 			QTableWidgetItem *item1 = new QTableWidgetItem(
-				tr("%1").arg(m_connection[row].getIP())
+				tr("%1").arg(connectionInfo[row].getIP())
 				);
 			QTableWidgetItem *item2 = new QTableWidgetItem(
-				tr("%1").arg(m_connection[row].getPort())
+				tr("%1").arg(connectionInfo[row].getPort())
 				);
 			QTableWidgetItem *item3 = new QTableWidgetItem(
-				tr("%1").arg(m_connection[row].isConnected() ? "true" : "false")
+				tr("%1").arg(connectionInfo[row].isConnected() ? "true" : "false")
 				);
 			tableWidget->setItem(row, 0, item1);
 			tableWidget->setItem(row, 1, item2);
@@ -68,20 +81,8 @@ void FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo(const std::vector<Connection>
 void FORM_TCPC_ADD_CONNECT::onClicked_PB_TARGET_CONNECT_INFO_INSERT(){
 	auto tableWidget = ui.TW_TARGET_CONNECT_INFO;
 
-	// 断开连接
-	//disconnect(tableWidget, &QTableWidget::cellChanged, this, &FORM_TCPC_ADD_CONNECT::onCellChanged_TW_TARGET_CONNECT_INFO);
-
 	int rowCount = tableWidget->rowCount();
 
-	//size_t thread_num = std::thread::hardware_concurrency();
-	//ui.TW_TARGET_CONNECT_INFO->setRowCount((int)thread_num); 
-	//if (rowCount > (int)thread_num)
-	//{
-	//	QMessageBox::critical(NULL, "Critical", tr(QString::fromLocal8Bit("当前连接数量超过电脑支持，添加失败！").toStdString().data()));
-	//	
-	//	return;
-	//}
-	int columnCount = tableWidget->columnCount();
 	tableWidget->insertRow(rowCount);
 	QTableWidgetItem *item3 = new QTableWidgetItem(
 		tr("%1").arg("false"));
@@ -120,6 +121,8 @@ void FORM_TCPC_ADD_CONNECT::onClicked_PB_TARGET_CONNECT_INFO_REFRESH(){
 	bool iserror = true;
 
 	if (rowCount > 0) {
+		m_connection.clear();
+
 		for (int row = 0; row < rowCount; row++)
 		{
 			QTableWidgetItem* item = tableWidget->item(row, 0);

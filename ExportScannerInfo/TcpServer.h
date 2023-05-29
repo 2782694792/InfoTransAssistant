@@ -57,9 +57,6 @@ public:
     QString getLog() {
         return m_log;
     } // 获取记录日志
-	void    clearLog() {
-        m_log.clear();
-    } // 清空日志记录
 
     void closeServer(); // 关闭当前服务器
 	

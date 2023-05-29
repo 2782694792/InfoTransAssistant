@@ -1,7 +1,7 @@
 #include "TcpClient.h"
 #include <regex>
 #include <vector>
-//#include <QtNetwork\qtcpsocket.h>
+#include <qpushbutton.h>
 
 #define	SERVER_PORT				4096			// 端口号
 #define SERVER_IP			"127.0.0.1"	// server端的IP地址
@@ -19,12 +19,12 @@ static std::string replace_string(const std::string& content, const std::vector<
 	return result;
 }
 
-TcpClient::TcpClient(QObject* parent = nullptr) :QObject(parent)
+TcpClient::TcpClient(QObject* parent) : m_parent(parent)
 {
 	InitSocket();
 }
 
-TcpClient::TcpClient(const char * ip, int port, bool isBlocking, int timeout = 0) : m_ip(ip), m_port(port), QObject(nullptr), m_isBlocking(isBlocking), m_timeout(timeout)
+TcpClient::TcpClient(const char * ip, int port, bool isBlocking, int timeout = 0, QObject* parent) : m_ip(ip), m_port(port), m_parent(nullptr), m_isBlocking(isBlocking), m_timeout(timeout)
 {
 	InitSocket();
 }
@@ -153,6 +153,7 @@ void TcpClient::RecvServerMsg()
 	}
 
 	int nRecv = 0;
+	m_stopRecv = false;
 	memset(m_recvBuff, 0, MAX_PACKET_SIZE);
 	do {
 		nRecv = ::recv(m_client, m_recvBuff, MAX_PACKET_SIZE + 1, 0);
@@ -162,22 +163,39 @@ void TcpClient::RecvServerMsg()
 			record_result(TP::RECV_SUCCESS, &m_client, recvbuf);
 		}
 		else if (nRecv == 0){
-			DisConnect();
+			if (!m_stopRecv)
+			{
+				DisConnect(); // 关闭套接字
+				emit readyDisconnectFromServer();
+			}
 			break;
-			//record_result(TP::DISCONNECT, &m_client, TPStr.DISCONNECT);
 		}
 		else{
 			//LOGE_(TPStr.RECV_FAILURE.toStdString());
 		}
-	} while (true);
+	} while (!m_stopRecv);
 }
+
+//void TcpClient::DisconnectToParent(){
+//	QPushButton * p_disconnect = m_parent.findChild<QPushButton*>("PB_TCPC_DISCONNECT");
+//	QPushButton * p_connect = m_parent.findChild<QPushButton*>("PB_TCPC_CONNECT");
+//	QPushButton * p_startrecv = m_parent.findChild<QPushButton*>("PB_TCPC_START_RECV_CONTENT");
+//	QPushButton * p_stoprecv = m_parent.findChild<QPushButton*>("PB_TCPC_STOP_RECV_CONTENT");
+//
+//	p_disconnect->setEnabled(false);
+//	p_connect->setEnabled(true);
+//	p_startrecv->setEnabled(false);
+//	p_stoprecv->setEnabled(false);
+//}
 
 // 关闭socket库
 bool TcpClient::DisConnect()
 {
-	record_result(TP::DISCONNECT, &m_client, TPStr.DISCONNECT);
+	m_stopRecv = true;
 
+	record_result(TP::DISCONNECT, &m_client, TPStr.DISCONNECT);
 	::closesocket(m_client); // 关闭套接字
+	m_stopRecv = false;
 
 	return true;
 }
@@ -207,6 +225,8 @@ TP TcpClient::record_result(TP result, const SOCKET* client,
 		temp = std::string("[%1: %2] > [%3] %4\n"); // 目标 > 本地
 		temp2 = std::string("[%1] > [%2: %3] %4\n"); // 目标 > 本地
 	}
+
+	memset(m_recvBuff, 0, MAX_PACKET_SIZE);
 
 	switch (result)
 	{
@@ -241,7 +261,6 @@ TP TcpClient::record_result(TP result, const SOCKET* client,
 	case belien::identification::TP::RECV_SUCCESS:
 		log = data;
 		isrecv = true;
-		memset(m_recvBuff, 0, MAX_PACKET_SIZE);
 		break;
 	case belien::identification::TP::RECV_FAILURE:
 		log = TPStr.RECV_FAILURE;
@@ -274,8 +293,8 @@ TP TcpClient::record_result(TP result, const SOCKET* client,
 		std::vector<std::string> idv{ localport, m_ip, std::to_string(m_port), log.toLocal8Bit().data() };
 		id = replace_string(temp2, idv);
 	}
-	m_log = QString::fromLocal8Bit(id.data());
-	emit logReady(m_log);
+	log = QString::fromLocal8Bit(id.data());
+	emit logReady(log);
 
 	return result;
 }

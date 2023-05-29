@@ -33,7 +33,6 @@ bool TcpServer::isListen(){
 TP TcpServer::startListen() {
 	m_server = new QTcpServer(this);
 	m_clients.clear();
-	clearLog();
 
 	/// 1 重复监听
 	if (m_server->isListening()) {
@@ -88,8 +87,6 @@ void TcpServer::stopRecvRequestData() {
 }
 
 void TcpServer::onReadyRead() {
-	clearLog();
-
 	QTcpSocket* socket = static_cast<QTcpSocket*>(sender());
 	// if (1) (socket->waitForReadyRead())
 	{
@@ -107,7 +104,7 @@ void TcpServer::onReadyRead() {
 		}
 		else // RECVING_REQUEST_DATA
 		{
-			record_result(TP::RECVING_REQUEST_DATA, socket, data);
+			record_result(TP::RECV_SUCCESS, socket, data);
 		}
 
 		m_mx.unlock();
@@ -210,14 +207,20 @@ TP TcpServer::disconnectedOne(QString addr, int port){
 			break;
 		}
 
-		if (var->peerAddress().toString() == addr.toStdString().data() && port == var->peerPort())
+		QString source = var->peerAddress().toString();
+		bool b = source == addr && port == var->peerPort();
+		if (b)
 		{
+			record_result(TP::DISCONNECT, var);
+
 			m_clients.remove(var);
 			var->deleteLater();
+
+			break;
 		}
 	}
 
-	return record_result(TP::UNCONNECT, nullptr);
+	return TP::DISCONNECT;
 }
 
 TP TcpServer::disconnectedAll(){
@@ -278,7 +281,7 @@ void TcpServer::getClientsInfo(QStringList& addrs, QList< int >& ports) {
 
 TP TcpServer::record_result(TP rest, const QTcpSocket* client,
 	const QByteArray& data) {
-	QString id = "", id2 = "";
+	QString id = "", id2 = "", log = "";
 
 	if (client != nullptr) {
 		std::string temp = client->peerAddress().toString().toStdString();
@@ -304,43 +307,50 @@ TP TcpServer::record_result(TP rest, const QTcpSocket* client,
 	switch (m_status) {
 	case belien::identification::TP::CONNECT:
 		isEmit = true;
-		m_log = id.arg(TPStr.CONNECT);
+		log = id.arg(TPStr.CONNECT);
 		emit updateClientsReady();
 		break;
 	case belien::identification::TP::DISCONNECT:
 		isEmit = true;
-		m_log = id.arg(TPStr.DISCONNECT);
+		log = id.arg(TPStr.DISCONNECT);
 		emit updateClientsReady();
+
+		disconnect(client, &QTcpSocket::readyRead, this, &TcpServer::onReadyRead);
+		disconnect(client, &QTcpSocket::disconnected, this,
+			&TcpServer::doDisconnected);
 		break;
-	case belien::identification::TP::RECVING_REQUEST_DATA:
+	case belien::identification::TP::RECV_SUCCESS:
 		if (!data.isEmpty()) {
+			m_log = data;
 			isEmit = true;
-			m_log = id.arg(QString::fromLocal8Bit(data));
+			log = id.arg(QString::fromLocal8Bit(data));
 		}
 		break;
+	case belien::identification::TP::RECVING_REQUEST_DATA:
+		break;
 	case belien::identification::TP::STOP_RECVED_REQUEST_DATA:
-		m_log = id.arg(TPStr.STOP_RECVED_REQUEST_DATA);
+		log = id.arg(TPStr.STOP_RECVED_REQUEST_DATA);
 		break;
 	case belien::identification::TP::LISTENING:
-		m_log = id.arg(TPStr.LISTENING);
+		log = id.arg(TPStr.LISTENING);
 		break;
 	case belien::identification::TP::NOT_LISTENED:
-		m_log = id.arg(TPStr.NOT_LISTENED);
+		log = id.arg(TPStr.NOT_LISTENED);
 		break;
 	case belien::identification::TP::SENDING:
-		m_log = id2.arg(TPStr.SENDING);
+		log = id2.arg(TPStr.SENDING);
 		break;
 	case belien::identification::TP::SEND_SUCCESS:
-		m_log = id2.arg(QString::fromLocal8Bit(data));
+		log = id2.arg(QString::fromLocal8Bit(data));
 		isEmit = true;
 		break;
 	case belien::identification::TP::SEND_FAILURE:
-		m_log = id2.arg(QString::fromLocal8Bit(data) + TPStr.SEND_FAILURE);
+		log = id2.arg(QString::fromLocal8Bit(data) + TPStr.SEND_FAILURE);
 		break;
 	case belien::identification::TP::REQUEST_CONNECT:
 		break;
 	case belien::identification::TP::UNCONNECT:
-		m_log = id.arg(TPStr.UNCONNECT);
+		log = id.arg(TPStr.UNCONNECT);
 		break;
 	case belien::identification::TP::PORT_ILLEGAL:
 		break;
@@ -348,9 +358,9 @@ TP TcpServer::record_result(TP rest, const QTcpSocket* client,
 		break;
 	}
 
-	LOGI_(m_log.toStdString().data());
+	LOGI_(log.toStdString().data());
 	if (isEmit) {
-		emit logReady(m_log);
+		emit logReady(log);
 	}
 
 	return m_status;

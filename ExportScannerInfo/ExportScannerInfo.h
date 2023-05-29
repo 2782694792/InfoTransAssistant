@@ -125,6 +125,10 @@ private slots:
 	
 	void getTcpcRest(const QString & result);  // 获取客户端接收的服务端消息
 
+	void onCurrentIndexChanged_CB_TCPC_CONNECT_MODE(); // （非）阻塞模式变换
+
+	void doDisconnectFromServer(); // 来自服务器的连接断开
+
 private:
     int currentTCPC() const; // 返回集合索引当前服务端
 

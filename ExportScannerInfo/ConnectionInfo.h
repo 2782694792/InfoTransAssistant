@@ -5,7 +5,7 @@
 class Connection {
 public:
     Connection() :
-        m_ip("127.0.0.1"), m_port(5000), m_connected(false) {}
+        m_ip("127.0.0.1"), m_port(-1), m_connected(false) {}
 
     Connection(const QString& ip, int port, bool connected = false) :
         m_ip(ip), m_port(port), m_connected(connected) {}

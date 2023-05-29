@@ -751,9 +751,10 @@ void ExportScannerInfo::doStartLogTcpcConnection(const std::vector<Connection>& 
 	{
 		ui.CB_TCPC_TARGET_IP->clear();
 		ui.CB_TCPC_TARGET_PORT->clear();
+		std::vector<Connection> connection2 = connection;
 		m_tcpcConnection.clear();
-		m_tcpcConnection.resize(connection.size());
-		m_tcpcConnection.insert(m_tcpcConnection.begin(), connection.begin(), connection.end());
+		//m_tcpcConnection.resize(connection.size());
+		m_tcpcConnection.swap(connection2);
 
 		for (auto var : connection)
 		{
@@ -776,10 +777,20 @@ void ExportScannerInfo::onCurrentIndexChanged_CB_TCPC_TARGET_IP(){
 	isConnect_change_control_status();
 }
 
+// 模式变换
+void ExportScannerInfo::onCurrentIndexChanged_CB_TCPC_CONNECT_MODE(){
+	ui.HS_TCPC_CONNECT_TIMEOUT->setEnabled(true);
+
+	if (ui.CB_TCPC_CONNECT_MODE->currentIndex() == 1)
+	{
+		ui.HS_TCPC_CONNECT_TIMEOUT->setEnabled(false);
+	}
+}
+
 // 连接服务端
 void ExportScannerInfo::onClicked_PB_TCPC_CONNECT(){
-	int index = ui.CB_TCPC_TARGET_IP->currentIndex();
-	if (index < 0)
+	int temp = ui.CB_TCPC_TARGET_IP->currentIndex();
+	if (temp < 0)
 	{
 		return;
 	}
@@ -787,39 +798,53 @@ void ExportScannerInfo::onClicked_PB_TCPC_CONNECT(){
 	// 连接一个携带一个 socket，存在多个，序列集合指定序列连接信息集合
 	bool isBlock = ui.CB_TCPC_CONNECT_MODE->currentIndex() == 0 ? false : true;
 	int timeout = ui.HS_TCPC_CONNECT_TIMEOUT->value();
-	TcpClient * client = new TcpClient(m_tcpcConnection[index].getIP().toStdString().data(), m_tcpcConnection[index].getPort(), isBlock, timeout);
+	TcpClient * client = new TcpClient(m_tcpcConnection[temp].getIP().toStdString().data(), m_tcpcConnection[temp].getPort(), isBlock, timeout, this);
 	m_tcpc.push_back(client);
 
 	connect(client, &TcpClient::logReady, this,
 		&ExportScannerInfo::getTcpcRest);
 
+	connect(client, &TcpClient::readyDisconnectFromServer, this,
+		&ExportScannerInfo::doDisconnectFromServer);
+
+
 	if (client->ConectToServer())
 	{
-		m_tcpcConnection[index].setConnected(true);
+		m_tcpcConnection[temp].setConnected(true);
 		prompt_operation_status(true, TPStr.CONNECT);
 		LOGI_(TPStr.CONNECT);
+
+#pragma region 异步接收
+		std::async(std::launch::async, &TcpClient::RecvServerMsg, m_tcpc[currentTCPC()]); // 异步任务
+
+		m_pool.add_task([&](){
+			int index = currentTCPC();
+			m_tcpc[index]->RecvServerMsg(); // 任务退出即被断开
+		});
+#pragma endregion
 	}
 	else
 	{
 		m_tcpc.pop_back();
-		m_tcpcConnection[index].setConnected(false);
+		m_tcpcConnection[temp].setConnected(false);
 		client = nullptr;
 		prompt_operation_status(false, TPStr.UNCONNECT);
 		LOGE_(TPStr.UNCONNECT);
 	}
 
 	isConnect_change_control_status();
-	
-#pragma region 接收
+}
 
-	std::async(std::launch::async, &TcpClient::RecvServerMsg, m_tcpc[currentTCPC()]); // 异步任务
+void ExportScannerInfo::doDisconnectFromServer(){
+	int index = currentTCPC();
+	m_tcpcConnection[ui.CB_TCPC_TARGET_IP->currentIndex()].setConnected(false);
+	isConnect_change_control_status();
 
-	m_pool.add_task([&](){
-		m_tcpc[currentTCPC()]->RecvServerMsg();
-	});
+	auto it = m_tcpc.begin();
+	auto client = (it + index);
+	m_tcpc.erase(client);
 
-#pragma endregion
-
+	LOGE_(TPStr.DISCONNECT);
 
 }
 
@@ -835,6 +860,10 @@ void ExportScannerInfo::onClicked_PB_TCPC_DISCONNECT(){
 	auto client = (it + index);
 	(*client)->DisConnect();
 	m_tcpcConnection[ui.CB_TCPC_TARGET_PORT->currentIndex()].setConnected(false);
+
+	QObject::disconnect(*client, &TcpClient::logReady, this,
+		&ExportScannerInfo::getTcpcRest);
+
 	m_tcpc.erase(client);
 
 	isConnect_change_control_status();
@@ -859,6 +888,9 @@ void ExportScannerInfo::onClicked_PB_TCPC_START_RECV_CONTENT(){
 	auto it = m_tcpc.begin() + index;
 	connect((*it), &TcpClient::logReady, this,
 		&ExportScannerInfo::getTcpcRest);
+
+	ui.PB_TCPC_START_RECV_CONTENT->setEnabled(false);
+	ui.PB_TCPC_STOP_RECV_CONTENT->setEnabled(true);
 }
 
 // 停止接收
@@ -872,12 +904,17 @@ void ExportScannerInfo::onClicked_PB_TCPC_STOP_RECV_CONTENT(){
 	auto it = m_tcpc.begin() + index;
 	disconnect((*it), &TcpClient::logReady, this,
 		&ExportScannerInfo::getTcpcRest);
+
+	ui.PB_TCPC_START_RECV_CONTENT->setEnabled(true);
+	ui.PB_TCPC_STOP_RECV_CONTENT->setEnabled(false);
 }
 
+// 发送服务端
 void ExportScannerInfo::onClicked_PB_TCPC_SEND(){
 
 }
 
+// 连接状态改变窗口控件
 void ExportScannerInfo::isConnect_change_control_status(){
 	int index = ui.CB_TCPC_TARGET_IP->currentIndex();
 	if (index < 0)

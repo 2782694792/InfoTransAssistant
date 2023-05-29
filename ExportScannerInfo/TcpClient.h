@@ -18,17 +18,21 @@ class TcpClient:public QObject
 {
     Q_OBJECT
 public:
-	TcpClient(QObject* parent);
-	explicit TcpClient(const char * ip, int port, bool isBlocking, int timeout);
+	TcpClient(QObject* parent = nullptr);
+	explicit TcpClient(const char * ip, int port, bool isBlocking, int timeout, QObject* parent = nullptr);
 	~TcpClient();
 	
 signals:
     void logReady(const QString & log); // 准备记录客户端操作日志
 
+	void readyDisconnectFromServer(); // 开始断开连接
+
 public:
 	std::string getIp(){ return m_ip; };
 
 	int getPort(){ return m_port; };
+
+	std::string getRecvMsg(){ return std::string(m_recvBuff); }
 	
 	bool InitSocket(); // 初始化socket库
 
@@ -37,6 +41,8 @@ public:
 	bool SendDataToServer(const char * data);	// 把用户输入的数据传送到server端
 	
 	void RecvServerMsg();	// 处理server端传送过来的消息
+
+	void DisconnectToParent(); // 关闭连接处理父类窗口
 	
 	bool DisConnect();	// 关闭socket库
 
@@ -47,11 +53,13 @@ private:
 		const QString & data);
 
 private:
+	QObject m_parent;
+
+	SOCKET	m_client;
 	std::string m_ip; 
 	int m_port;
-	SOCKET	m_client;
-	bool m_isBlocking;
+	bool m_isBlocking; // 阻塞
 	int m_timeout;
-	char	m_recvBuff[MAX_PACKET_SIZE + 1];
-	QString m_log;
+	char	m_recvBuff[MAX_PACKET_SIZE + 1]; // 接收消息记录
+	bool m_stopRecv;
 };

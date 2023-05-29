@@ -1,0 +1,1 @@
+QLabel#tipLabel {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #444444, stop: 0.6 #555555, stop: 1.0 #666666); color: white; border-radius: 5px; padding: 10px; font-size: 14px; animation: water 1s alternate infinite;}@keyframes water {to {background-position: 100% 0;}}

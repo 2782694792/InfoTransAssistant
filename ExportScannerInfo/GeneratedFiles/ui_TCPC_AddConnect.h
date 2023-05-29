@@ -41,7 +41,7 @@ public:
     {
         if (FORM_TCPC_ADD_CONNECT->objectName().isEmpty())
             FORM_TCPC_ADD_CONNECT->setObjectName(QStringLiteral("FORM_TCPC_ADD_CONNECT"));
-        FORM_TCPC_ADD_CONNECT->resize(400, 300);
+        FORM_TCPC_ADD_CONNECT->resize(512, 300);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
