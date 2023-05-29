@@ -13,7 +13,7 @@ static std::string getTime() {
 	return time_str;
 }
 
-#ifndef BELIEN_LOG_QDENUG
+#ifdef BELIEN_LOG_FPRINTF
 
 #define LOGI(format, ...)                                                   \
     fprintf(stderr, "[INFO]%s [%s:%d %s()] " format "\n", getTime().data(), \

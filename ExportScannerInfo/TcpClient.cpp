@@ -48,10 +48,11 @@ bool TcpClient::InitSocket()
 	}
 
 	// 初始化socket套接字
-	if (SOCKET_ERROR == (m_client = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP))) // 指定地址族、套接字类型、协议
+	if (INVALID_SOCKET == (m_client = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP))) // 指定地址族、套接字类型、协议
 	{
 		LOGE_(TPStr.SOCKET_INIT_FAILURE.toStdString());
-
+		// 释放winsock库
+		::WSACleanup();
 		return false;
 	}
 
@@ -93,40 +94,10 @@ bool TcpClient::ConectToServer()
 	}
 
 	int rest = ::connect(m_client, (struct sockaddr*)&servAddr, sizeof(sockaddr_in));
-	
-	struct sockaddr_in local_addr;
-	int len = sizeof(local_addr);
-	memset(&local_addr, 0, len);
-	getsockname(m_client, (struct sockaddr*) &local_addr, &len);
-	m_localPort = std::to_string(ntohs(local_addr.sin_port));
-	//if (SOCKET_ERROR == rest)
-	//{		
-	//	record_result(TP::UNCONNECT, &m_client, TPStr.UNCONNECT);
-	//}
-
-	/*iResult = ioctlsocket(m_client, FIONBIO, &iMode);
-	if (iResult != NO_ERROR)
+	if (rest == SOCKET_ERROR)
 	{
-	if (m_isBlocking)
-	{
-	LOGE_(TPStr.SOCKET_BLOCKING.toStdString());
+		//closesocket(m_client);
 	}
-	else
-	{
-	LOGI_(TPStr.SOCKET_NON_BLOCKING.toStdString());
-	}
-	}
-	else
-	{
-	if (m_isBlocking)
-	{
-	LOGI_(TPStr.SOCKET_BLOCKING.toStdString());
-	}
-	else
-	{
-	LOGI_(TPStr.SOCKET_NON_BLOCKING.toStdString());
-	}
-	}*/
 
 	fd_set Write, Err;
 	FD_ZERO(&Write);
@@ -142,6 +113,8 @@ bool TcpClient::ConectToServer()
 	if (!FD_ISSET(m_client, &Write))
 	{
 		record_result(TP::UNCONNECT, &m_client, TPStr.UNCONNECT);
+		closesocket(m_client);
+		m_client = INVALID_SOCKET;
 
 		return false;
 	}
@@ -172,14 +145,31 @@ bool TcpClient::SendDataToServer(const char * data)
 // 处理server端传送过来的消息
 void TcpClient::RecvServerMsg()
 {
-	int nRecv = ::recv(m_client, m_recvBuff, MAX_PACKET_SIZE + 1, 0);
+	if (m_client == INVALID_SOCKET) {
+		record_result(TP::UNCONNECT, &m_client, TPStr.UNCONNECT);
+		WSACleanup();
 
-	for (int i = 0; i < 64; i++)
-	{
-		printf("%d", m_recvBuff[i]);
+		return;
 	}
 
-	record_result(TP::RECVING_REQUEST_DATA, &m_client, m_recvBuff);
+	int nRecv = 0;
+	memset(m_recvBuff, 0, MAX_PACKET_SIZE);
+	do {
+		nRecv = ::recv(m_client, m_recvBuff, MAX_PACKET_SIZE + 1, 0);
+		if (nRecv > 0) {
+			LOGI("(%d Bytes) %.*s\n", nRecv, nRecv, m_recvBuff);
+			QString recvbuf = QString("%1").arg(m_recvBuff);
+			record_result(TP::RECV_SUCCESS, &m_client, recvbuf);
+		}
+		else if (nRecv == 0){
+			DisConnect();
+			break;
+			//record_result(TP::DISCONNECT, &m_client, TPStr.DISCONNECT);
+		}
+		else{
+			//LOGE_(TPStr.RECV_FAILURE.toStdString());
+		}
+	} while (true);
 }
 
 // 关闭socket库
@@ -194,7 +184,15 @@ bool TcpClient::DisConnect()
 
 // 获取本地端口
 std::string TcpClient::getLocalPort() {
-	return m_localPort;
+	std::string localPort;
+
+	struct sockaddr_in local_addr;
+	int len = sizeof(local_addr);
+	memset(&local_addr, 0, len);
+	getsockname(m_client, (struct sockaddr*) &local_addr, &len);
+	localPort = std::to_string(ntohs(local_addr.sin_port));
+
+	return localPort;
 }
 
 // 记录客户端操作结果
@@ -206,9 +204,8 @@ TP TcpClient::record_result(TP result, const SOCKET* client,
 	bool isrecv = false;
 
 	if (client != nullptr) {
-		temp = std::string("[%1] > [%2: %3] %4\n"); // 本地 > 目标
-
-		temp2 = std::string("[%1: %2] > [%3] %4\n"); // 目标 > 本地
+		temp = std::string("[%1: %2] > [%3] %4\n"); // 目标 > 本地
+		temp2 = std::string("[%1] > [%2: %3] %4\n"); // 目标 > 本地
 	}
 
 	switch (result)
@@ -239,8 +236,15 @@ TP TcpClient::record_result(TP result, const SOCKET* client,
 		log = TPStr.DISCONNECT;
 		break;
 	case belien::identification::TP::RECVING_REQUEST_DATA:
+		log = TPStr.RECVING_REQUEST_DATA;
+		break;
+	case belien::identification::TP::RECV_SUCCESS:
 		log = data;
 		isrecv = true;
+		memset(m_recvBuff, 0, MAX_PACKET_SIZE);
+		break;
+	case belien::identification::TP::RECV_FAILURE:
+		log = TPStr.RECV_FAILURE;
 		break;
 	case belien::identification::TP::STOP_RECVED_REQUEST_DATA:
 		break;
@@ -262,18 +266,16 @@ TP TcpClient::record_result(TP result, const SOCKET* client,
 
 	if (isrecv)
 	{
-		std::vector<std::string> idv2{ m_ip, std::to_string(m_port), localport, log.toLocal8Bit().data() };
-		id2 = replace_string(temp, idv2);
-		m_log = QString::fromLocal8Bit(id2.data());
+		std::vector<std::string> idv{ m_ip, std::to_string(m_port), localport, log.toLocal8Bit().data() };
+		id = replace_string(temp, idv);
 	}
 	else
 	{
 		std::vector<std::string> idv{ localport, m_ip, std::to_string(m_port), log.toLocal8Bit().data() };
-		id = replace_string(temp, idv);
-		m_log = QString::fromLocal8Bit(id.data());
+		id = replace_string(temp2, idv);
 	}
-	
+	m_log = QString::fromLocal8Bit(id.data());
 	emit logReady(m_log);
-	
+
 	return result;
 }

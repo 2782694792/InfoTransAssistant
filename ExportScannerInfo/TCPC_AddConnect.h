@@ -3,6 +3,7 @@
 
 #include <QTableWidgetItem>
 #include <vector>
+#include <QtWidgets/QMainWindow>
 #include "qdialog.h"
 #include "ExportScannerInfo.h"
 #include "ConnectionInfo.h"

@@ -6,6 +6,7 @@
 #include <vector>
 #include <functional>
 #include <algorithm>
+#include <future>
 #include "sync_deque.hpp"
 using namespace belien::syncdeque;
 
@@ -21,6 +22,8 @@ public:
 	worker_t(workers_ptr workers, int work_num) : workers_(workers), work_num_(work_num), enable_(true)
 	{
 		thread_ = std::thread(&worker_t::execute, this);
+		//thread_.detach();
+		std::async(std::launch::async, &worker_t::execute, this); // 异步任务方式
 	}
 
 	~worker_t()

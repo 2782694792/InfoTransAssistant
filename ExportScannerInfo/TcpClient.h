@@ -29,7 +29,7 @@ public:
 	std::string getIp(){ return m_ip; };
 
 	int getPort(){ return m_port; };
-
+	
 	bool InitSocket(); // 初始化socket库
 
 	bool ConectToServer(); // 与server端连接进行传输
@@ -52,7 +52,6 @@ private:
 	SOCKET	m_client;
 	bool m_isBlocking;
 	int m_timeout;
-	std::string m_localPort;
 	char	m_recvBuff[MAX_PACKET_SIZE + 1];
 	QString m_log;
 };

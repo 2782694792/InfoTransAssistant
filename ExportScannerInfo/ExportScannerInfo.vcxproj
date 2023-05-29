@@ -113,6 +113,7 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="belien\work_deque\test.cpp" />
     <ClCompile Include="ClickableLabel.cpp" />
     <ClCompile Include="ExportScannerInfo.cpp" />
     <ClCompile Include="ReadOnlyDelegate.cpp" />

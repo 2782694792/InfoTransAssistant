@@ -73,15 +73,17 @@ namespace identification {
 		SOCKET_INIT_SUCCESS,
 		SOCKET_NON_BLOCKING,
 		SOCKET_BLOCKING,
-        LISTENING,
-        NOT_LISTENED,
-        REQUEST_CONNECT,
-        CONNECT,
-        UNCONNECT,
-        DISCONNECT,
-        RECVING_REQUEST_DATA,
-        STOP_RECVED_REQUEST_DATA,
-        RESPONSE_CONNECT_REQUEST,
+		LISTENING,
+		NOT_LISTENED,
+		REQUEST_CONNECT,
+		CONNECT,
+		UNCONNECT,
+		DISCONNECT,
+		RECVING_REQUEST_DATA,
+		STOP_RECVED_REQUEST_DATA,
+		RESPONSE_CONNECT_REQUEST,
+		RECV_SUCCESS,
+		RECV_FAILURE,
         SENDING,
         SEND_SUCCESS,
         SEND_FAILURE
@@ -108,6 +110,8 @@ namespace identification {
         const std::string DISCONNECT               = "连接断开";
         const std::string RECVING_REQUEST_DATA     = "接收请求数据";
         const std::string STOP_RECVED_REQUEST_DATA = "已停止数据接收";
+		const std::string RECV_SUCCESS			   = "接收成功";
+		const std::string RECV_FAILURE			   = "接收失败";
         const std::string SENDING                  = "发送中...";
         const std::string SEND_SUCCESS             = "发送成功";
         const std::string SEND_FAILURE             = "发送失败"; 
@@ -133,6 +137,8 @@ namespace identification {
             QString::fromLocal8Bit("正在接收请求数据");
         const QString STOP_RECVED_REQUEST_DATA =
             QString::fromLocal8Bit("已停止数据接收");
+		const QString RECV_SUCCESS			   = "接收成功";
+		const QString RECV_FAILURE			   = "接收失败";
         const QString SENDING      = QString::fromLocal8Bit("发送中...");
         const QString SEND_SUCCESS = QString::fromLocal8Bit("发送成功");
         const QString SEND_FAILURE = QString::fromLocal8Bit("发送失败");

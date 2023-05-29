@@ -380,7 +380,7 @@ public:
         TL_TCP_SERVER->setMinimumSize(QSize(0, 30));
         QFont font5;
         font5.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
-        font5.setPointSize(11);
+        font5.setPointSize(9);
         TL_TCP_SERVER->setFont(font5);
         TL_TCP_SERVER->setStyleSheet(QStringLiteral("QLabel:hover {color: #2980B9;}"));
         TL_TCP_SERVER->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -951,10 +951,7 @@ public:
         PB_TCPS_LISTEN_PORT_DELETE = new QPushButton(groupBox_4);
         PB_TCPS_LISTEN_PORT_DELETE->setObjectName(QStringLiteral("PB_TCPS_LISTEN_PORT_DELETE"));
         PB_TCPS_LISTEN_PORT_DELETE->setMinimumSize(QSize(110, 35));
-        QFont font8;
-        font8.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
-        font8.setPointSize(9);
-        PB_TCPS_LISTEN_PORT_DELETE->setFont(font8);
+        PB_TCPS_LISTEN_PORT_DELETE->setFont(font5);
         PB_TCPS_LISTEN_PORT_DELETE->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/delete.png\");"));
 
         horizontalLayout_14->addWidget(PB_TCPS_LISTEN_PORT_DELETE);
@@ -1367,7 +1364,7 @@ public:
         PB_TCPC_DISCONNECT = new QPushButton(groupBox_7);
         PB_TCPC_DISCONNECT->setObjectName(QStringLiteral("PB_TCPC_DISCONNECT"));
         PB_TCPC_DISCONNECT->setMinimumSize(QSize(100, 35));
-        PB_TCPC_DISCONNECT->setFont(font8);
+        PB_TCPC_DISCONNECT->setFont(font5);
         PB_TCPC_DISCONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/c_disconnect.png\");"));
 
         horizontalLayout_34->addWidget(PB_TCPC_DISCONNECT);
@@ -1562,7 +1559,7 @@ public:
         ExportScannerInfoClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ExportScannerInfoClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1090, 23));
+        menuBar->setGeometry(QRect(0, 0, 1090, 26));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);

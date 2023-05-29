@@ -525,7 +525,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_STOP_RECV_CONTENT() {
 
 	m_tcps[temp]->stopRecvRequestData();
 	onUpdateTcpsRecvOrNone();
-	
+
 	//disconnect(m_tcps[temp], &TcpServer::logReady, this,	&ExportScannerInfo::getTcpsRest);
 
 	LOGE_(TPStr.STOP_RECVED_REQUEST_DATA);
@@ -809,6 +809,18 @@ void ExportScannerInfo::onClicked_PB_TCPC_CONNECT(){
 	}
 
 	isConnect_change_control_status();
+	
+#pragma region 接收
+
+	std::async(std::launch::async, &TcpClient::RecvServerMsg, m_tcpc[currentTCPC()]); // 异步任务
+
+	m_pool.add_task([&](){
+		m_tcpc[currentTCPC()]->RecvServerMsg();
+	});
+
+#pragma endregion
+
+
 }
 
 // 断开连接
@@ -843,7 +855,7 @@ void ExportScannerInfo::onClicked_PB_TCPC_START_RECV_CONTENT(){
 	{
 		return;
 	}
-	
+
 	auto it = m_tcpc.begin() + index;
 	connect((*it), &TcpClient::logReady, this,
 		&ExportScannerInfo::getTcpcRest);

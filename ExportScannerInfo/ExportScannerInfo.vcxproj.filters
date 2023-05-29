@@ -57,6 +57,9 @@
     <ClCompile Include="ReadOnlyDelegate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="belien\work_deque\test.cpp">
+      <Filter>belien\work</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ClickableLabel.h">

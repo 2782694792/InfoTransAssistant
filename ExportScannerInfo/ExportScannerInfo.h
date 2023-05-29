@@ -7,9 +7,10 @@
 #include <QtWidgets/QMainWindow>
 #include <QSpacerItem>
 #include <QPropertyAnimation>
-#include <thread>
-#include <mutex>
 #include <map>
+#include <thread>
+#include <future>
+#include "belien\work_deque\thread_pool.hpp"
 
 #include "ClickableLabel.h"
 #include "TcpServer.h"
@@ -17,7 +18,6 @@
 #include "TCPC_AddConnect.h"
 
 static int listenNum = 0;
-static std::mutex m_mx;
 
 class ExportScannerInfo : public QMainWindow {
     Q_OBJECT
@@ -52,6 +52,7 @@ private:
     Ui::ExportScannerInfoClass ui;
     ClickableLabel* label;
 	QString m_mainInfo[6];
+	thread_pool m_pool;
 
 #pragma region TCP 服务端
 signals:
@@ -135,7 +136,6 @@ private:
     std::vector< TcpClient* > m_tcpc;       // 客户端集合
 	class FORM_TCPC_ADD_CONNECT*    m_form_tcpc_add_connect; // 客户端连接管理窗口
 	std::vector<class Connection>   m_tcpcConnection; // 客户端连接类
-	std::thread m_addConnectionThread; // 
 
 #pragma endregion
 	

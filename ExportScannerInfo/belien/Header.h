@@ -4,8 +4,6 @@
 
 #define BELIEN_QT 0
 
-
-
 #if BELIEN_QT==0
 #define BELIEN_ENUM_QSTRING
 #define BELIEN_TCP_CHECK
@@ -13,10 +11,8 @@
 
 #elif BELIEN_QT==1
 #define BELIEN_ENUM_STRING
+#define BELIEN_LOG_FPRINTF
 
 #endif // BELIEN_QT==0
-
-
-
 
 #endif

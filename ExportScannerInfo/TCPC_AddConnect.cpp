@@ -18,7 +18,7 @@ QDialog(parent)
 	//}
 
 	ReadOnlyDelegate* readOnlyDelegate = new ReadOnlyDelegate(this);
-    ui.TW_TARGET_CONNECT_INFO->setItemDelegateForColumn(2, readOnlyDelegate);
+	ui.TW_TARGET_CONNECT_INFO->setItemDelegateForColumn(2, readOnlyDelegate);
 }
 
 FORM_TCPC_ADD_CONNECT::~FORM_TCPC_ADD_CONNECT()
@@ -51,7 +51,7 @@ void FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo(const std::vector<Connection>
 				tr("%1").arg(m_connection[row].getPort())
 				);
 			QTableWidgetItem *item3 = new QTableWidgetItem(
-				tr("%1").arg(m_connection[row].isConnected()?"true":"false")
+				tr("%1").arg(m_connection[row].isConnected() ? "true" : "false")
 				);
 			tableWidget->setItem(row, 0, item1);
 			tableWidget->setItem(row, 1, item2);
@@ -72,8 +72,16 @@ void FORM_TCPC_ADD_CONNECT::onClicked_PB_TARGET_CONNECT_INFO_INSERT(){
 	//disconnect(tableWidget, &QTableWidget::cellChanged, this, &FORM_TCPC_ADD_CONNECT::onCellChanged_TW_TARGET_CONNECT_INFO);
 
 	int rowCount = tableWidget->rowCount();
-	int columnCount = tableWidget->columnCount();
 
+	//size_t thread_num = std::thread::hardware_concurrency();
+	//ui.TW_TARGET_CONNECT_INFO->setRowCount((int)thread_num); 
+	//if (rowCount > (int)thread_num)
+	//{
+	//	QMessageBox::critical(NULL, "Critical", tr(QString::fromLocal8Bit("当前连接数量超过电脑支持，添加失败！").toStdString().data()));
+	//	
+	//	return;
+	//}
+	int columnCount = tableWidget->columnCount();
 	tableWidget->insertRow(rowCount);
 	QTableWidgetItem *item3 = new QTableWidgetItem(
 		tr("%1").arg("false"));
