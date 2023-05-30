@@ -33,6 +33,8 @@ public:
 	int getPort(){ return m_port; };
 
 	std::string getRecvMsg(){ return std::string(m_recvBuff); }
+
+	int getRecvCountBytes(){ return m_recv_length; };
 	
 	bool InitSocket(); // 初始化socket库
 
@@ -60,6 +62,7 @@ private:
 	int m_port;
 	bool m_isBlocking; // 阻塞
 	int m_timeout;
+	long m_recv_length;
 	char	m_recvBuff[MAX_PACKET_SIZE + 1]; // 接收消息记录
 	bool m_stopRecv;
 };

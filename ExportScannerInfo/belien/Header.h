@@ -6,7 +6,7 @@
 
 #if BELIEN_QT==0
 #define BELIEN_ENUM_QSTRING
-#define BELIEN_TCP_CHECK
+#define BELIEN_CHECK_QTCP
 #define BELIEN_LOG_QDENUG
 
 #elif BELIEN_QT==1

@@ -1,7 +1,4 @@
 #include "ExportScannerInfo.h"
-#include <qfile.h>
-#include <qmessagebox.h>
-#include <thread>
 
 #define cross_thread_start
 
@@ -17,17 +14,41 @@ std::mutex              t_mx;
 
 #pragma region 主程序界面处理
 
-ExportScannerInfo::ExportScannerInfo(QWidget* parent) : QMainWindow(parent) {
+ExportScannerInfo::ExportScannerInfo(QWidget* parent) : m_parent(parent) {
 	ui.setupUi(this);
 
+	init_member();
 	init_main_slots();
 	init_default_widget();
 	init_ctrl_visible(false);
-	init_member();
 
 #ifdef test_eventFilter
 	init_register_eventFilter();
 #endif
+}
+
+ExportScannerInfo::~ExportScannerInfo(){
+	if (m_parent)
+	{
+		m_parent = nullptr;
+		delete m_parent;
+	}
+
+	if (label)
+	{
+		label = nullptr;
+		delete label;
+	}
+
+	if (m_form_tcpc_add_connect)
+	{
+		m_form_tcpc_add_connect = nullptr;
+		delete m_form_tcpc_add_connect;
+	}
+
+	m_tcps.clear();
+
+	m_tcpc.clear();
 }
 
 void ExportScannerInfo::paintEvent(QPaintEvent* event) {
@@ -58,7 +79,11 @@ void ExportScannerInfo::init_main_slots() {
 	connect(ui.TL_PDF_ICON, SIGNAL(clicked()), this,
 		SLOT(onClickableLabel_Clicked()));
 	connect(ui.TL_TCP, SIGNAL(clicked()), this,
-		SLOT(onClickableLabel_Clicked()));
+		SLOT(onClickableLabel_Clicked()));	
+
+	connect(m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::startLogTcpcConnection, this,
+		&ExportScannerInfo::doStartLogTcpcConnection);
+	connect(this, &ExportScannerInfo::updateConnectionInfo, m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo);
 }
 
 void ExportScannerInfo::init_default_widget() {
@@ -90,6 +115,8 @@ void ExportScannerInfo::init_ctrl_visible(bool isVisible) {
 	// 添加QSpacerItem到垂直布局中，用于占据空间
 	//m_spacerItem = new QSpacerItem(0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding);
 	//ui.VLAYOUT_PDF_SETS->addItem(m_spacerItem);
+	
+	m_form_tcpc_add_connect->hide();
 }
 
 void ExportScannerInfo::clear_sidebar_label() {
@@ -172,19 +199,9 @@ void ExportScannerInfo::init_sidebar_label(TextLabelID tlid) {
 void ExportScannerInfo::init_member() {
 	label = new ClickableLabel();
 
-	m_mainInfo[0] = "";
-	m_mainInfo[1] = "";
-	m_mainInfo[2] = "";
-	m_mainInfo[3] = "";
-	m_mainInfo[4] = "";
-	m_mainInfo[5] = "";
+	m_mainInfo.resize(6);
 
 	m_form_tcpc_add_connect = new FORM_TCPC_ADD_CONNECT(this);
-	m_form_tcpc_add_connect->hide();
-
-	connect(m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::startLogTcpcConnection, this,
-		&ExportScannerInfo::doStartLogTcpcConnection);
-	connect(this, &ExportScannerInfo::updateConnectionInfo, m_form_tcpc_add_connect, &FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo);
 }
 
 void ExportScannerInfo::onClickableLabel_Clicked() {
@@ -251,6 +268,19 @@ void ExportScannerInfo::onClickableLabel_Clicked() {
 	prompt_operation_status(false, m_mainInfo[i]);
 
 	init_sidebar_label(tempID);
+}
+
+// 标签提示操作状态
+void ExportScannerInfo::prompt_operation_status(
+	bool isSuccess, const QString& labelContent) const {
+	ui.TL_PROMPT_OPERATION_STATUS->setText(labelContent); // 设置文本
+	ui.TL_PROMPT_OPERATION_STATUS->setAlignment(
+		Qt::AlignCenter); // 设置文本对齐方式为居中
+	QColor   color = isSuccess ? QColor(Qt::blue)
+		: QColor(Qt::red); // 根据success参数设置文本颜色
+	QPalette palette;
+	palette.setColor(QPalette::WindowText, color);
+	ui.TL_PROMPT_OPERATION_STATUS->setPalette(palette);
 }
 
 #pragma endregion
@@ -332,6 +362,7 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTEN_PORT_CREATE() {
 		}
 		else {
 			tempstr = TPStr.PORT_ADDED.toStdString();
+			ui.LE_TCPS_LISTEN_PORT->clear();
 		}
 	}
 
@@ -425,8 +456,6 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTENING() {
 	/// 4 更改监听状态
 	isListen_change_control_status();
 
-	LOGI_("");
-
 #ifdef uncross_thread_start
 	// 启动线程读数据，不可跨线程通信
 	t_canRun = true;
@@ -497,8 +526,6 @@ void ExportScannerInfo::onClicked_PB_TCPS_LISTENED() {
 	}
 	t_cv.notify_all(); // 通知其他线程
 #endif
-
-	LOGE_(TPStr.NOT_LISTENED.toStdString().data());
 }
 
 // 继续接收请求数据
@@ -512,8 +539,6 @@ void ExportScannerInfo::onClicked_PB_TCPS_START_RECV_CONTENT() {
 	onUpdateTcpsRecvOrNone();
 
 	//connect(m_tcps[temp], &TcpServer::logReady, this,	&ExportScannerInfo::getTcpsRest);
-
-	LOGI_(TPStr.RECVING_REQUEST_DATA);
 }
 
 // 停止接收
@@ -527,8 +552,6 @@ void ExportScannerInfo::onClicked_PB_TCPS_STOP_RECV_CONTENT() {
 	onUpdateTcpsRecvOrNone();
 
 	//disconnect(m_tcps[temp], &TcpServer::logReady, this,	&ExportScannerInfo::getTcpsRest);
-
-	LOGE_(TPStr.STOP_RECVED_REQUEST_DATA);
 }
 
 // 更改指定客户端
@@ -575,6 +598,8 @@ void ExportScannerInfo::onClicked_PB_TCPS_DISCONNECT_CLIENT(){
 		m_tcps[temp]->disconnectedOne(ui.CB_TCPS_CONNECT_CLIENT_IP->currentText(), ui.LE_TCPS_CONTENT_CLIENT_PORT->text().toInt());
 	}
 
+	onUpdateClients();
+
 	LOGI_(TPStr.DISCONNECT.toStdString().data());
 }
 
@@ -590,28 +615,31 @@ void ExportScannerInfo::onClicked_PB_TCPS_SEND(){
 	}
 
 	TP isSuccess = TP::SEND_FAILURE;
-	QString mess = "";
-
-	if (ui.CHB_TCPS_ALL_CLIENT->isChecked()) // 所有
+	QString mess = ui.TE_TCPS_SEND_CONTENT->toPlainText();
+	int num = ui.SB_TCPS_NUM_SEND->text().toInt();
+	if (TCPCheck.isValidData(mess.toLocal8Bit()))
 	{
-		int num = ui.SB_TCPS_NUM_SEND->text().toInt();
-		mess = ui.TE_TCPS_SEND_CONTENT->toPlainText();
+		LOGI_(TPStr.SENDING.toStdString().data());
 
-		isSuccess = m_tcps[temp]->sendDataToClient(num, mess.toStdString().data());
+		if (ui.CHB_TCPS_ALL_CLIENT->isChecked()) // 所有
+		{
+			isSuccess = m_tcps[temp]->sendDataToClient(num, mess.toStdString().data());
+		}
+		else // 指定客户端
+		{
+			QString ip = ui.CB_TCPS_CONNECT_CLIENT_IP->currentText();
+			int port = ui.LE_TCPS_CONTENT_CLIENT_PORT->text().toInt();
+
+			isSuccess = m_tcps[temp]->sendDataToClient(ip, port, num, mess.toStdString().data());
+		}
+
+		prompt_operation_status(isSuccess == TP::SEND_SUCCESS, (isSuccess == TP::SEND_SUCCESS ? TPStr.SEND_SUCCESS : TPStr.SEND_FAILURE).toStdString().data());
 	}
-	else // 指定客户端
+	else
 	{
-		QString ip = ui.CB_TCPS_CONNECT_CLIENT_IP->currentText();
-		int port = ui.LE_TCPS_CONTENT_CLIENT_PORT->text().toInt();
-		int num = ui.SB_TCPS_NUM_SEND->text().toInt();
-		mess = ui.TE_TCPS_SEND_CONTENT->toPlainText();
-
-		isSuccess = m_tcps[temp]->sendDataToClient(ip, port, num, mess.toStdString().data());
+		LOGE_(DataStr.INVALID_DATA.toStdString().data());
 	}
 
-	prompt_operation_status(isSuccess == TP::SEND_SUCCESS, (isSuccess == TP::SEND_SUCCESS ? TPStr.SEND_SUCCESS : TPStr.SEND_FAILURE).toStdString().data());
-
-	LOGI_("");
 }
 
 // 当前监听的服务端端口
@@ -712,19 +740,6 @@ void ExportScannerInfo::onUpdateTcpsRecvOrNone(){
 	}
 }
 
-// 标签提示操作状态
-void ExportScannerInfo::prompt_operation_status(
-	bool isSuccess, const QString& labelContent) const {
-	ui.TL_PROMPT_OPERATION_STATUS->setText(labelContent); // 设置文本
-	ui.TL_PROMPT_OPERATION_STATUS->setAlignment(
-		Qt::AlignCenter); // 设置文本对齐方式为居中
-	QColor   color = isSuccess ? QColor(Qt::blue)
-		: QColor(Qt::red); // 根据success参数设置文本颜色
-	QPalette palette;
-	palette.setColor(QPalette::WindowText, color);
-	ui.TL_PROMPT_OPERATION_STATUS->setPalette(palette);
-}
-
 #pragma endregion
 
 #pragma region TCP 客户端连接处理
@@ -769,7 +784,7 @@ void ExportScannerInfo::doStartLogTcpcConnection(const std::vector<Connection>& 
 	}
 }
 
-// 指定连接
+// 指定连接的IP与Port
 void ExportScannerInfo::onCurrentIndexChanged_CB_TCPC_TARGET_IP(){
 	int index = ui.CB_TCPC_TARGET_IP->currentIndex(); // 更新对方端口
 	ui.CB_TCPC_TARGET_PORT->setCurrentIndex(index);
@@ -803,17 +818,15 @@ void ExportScannerInfo::onClicked_PB_TCPC_CONNECT(){
 
 	connect(client, &TcpClient::logReady, this,
 		&ExportScannerInfo::getTcpcRest);
-
 	connect(client, &TcpClient::readyDisconnectFromServer, this,
 		&ExportScannerInfo::doDisconnectFromServer);
-
-
+	
+	prompt_operation_status(temp, TPStr.CONNECTING);
 	if (client->ConectToServer())
 	{
 		m_tcpcConnection[temp].setConnected(true);
 		prompt_operation_status(true, TPStr.CONNECT);
-		LOGI_(TPStr.CONNECT);
-
+		LOGI_(TPStr.CONNECT.toStdString().data());
 #pragma region 异步接收
 		std::async(std::launch::async, &TcpClient::RecvServerMsg, m_tcpc[currentTCPC()]); // 异步任务
 
@@ -829,23 +842,37 @@ void ExportScannerInfo::onClicked_PB_TCPC_CONNECT(){
 		m_tcpcConnection[temp].setConnected(false);
 		client = nullptr;
 		prompt_operation_status(false, TPStr.UNCONNECT);
-		LOGE_(TPStr.UNCONNECT);
+		LOGE_(TPStr.UNCONNECT.toStdString().data());
 	}
 
 	isConnect_change_control_status();
 }
 
+// 来自服务端的连接断开
 void ExportScannerInfo::doDisconnectFromServer(){
-	int index = currentTCPC();
-	m_tcpcConnection[ui.CB_TCPC_TARGET_IP->currentIndex()].setConnected(false);
-	isConnect_change_control_status();
+	auto* tcpclient = static_cast<TcpClient*>(sender());
+	std::string ip = tcpclient->getIp();
+	int port = tcpclient->getPort();
 
+	int connindex = -1, clientindex = -1;
+	int count = ui.CB_TCPC_TARGET_IP->count();
+	for (int i = 0; i < count; i++)
+	{
+		if (ui.CB_TCPC_TARGET_IP->itemText(i) == QString::fromStdString(ip) && ui.CB_TCPC_TARGET_PORT->itemText(i).toInt() == port)
+		{
+			connindex = i;
+			ui.CB_TCPC_TARGET_IP->setCurrentIndex(connindex);
+		}
+	}
+
+	m_tcpcConnection[connindex].setConnected(false);
+	isConnect_change_control_status();
 	auto it = m_tcpc.begin();
-	auto client = (it + index);
+
+	auto client = (it + currentTCPC());
 	m_tcpc.erase(client);
 
-	LOGE_(TPStr.DISCONNECT);
-
+	LOGE_(TPStr.DISCONNECT.toStdString().data());
 }
 
 // 断开连接
@@ -869,14 +896,6 @@ void ExportScannerInfo::onClicked_PB_TCPC_DISCONNECT(){
 	isConnect_change_control_status();
 }
 
-// 接收服务端
-void ExportScannerInfo::recvServerMsg(){
-	// 1 全局线程池
-
-	// 2 连接服务器后添加任务 add_task
-	/// RecvServerMsg()
-}
-
 // 开始接收
 void ExportScannerInfo::onClicked_PB_TCPC_START_RECV_CONTENT(){
 	int index = currentTCPC();
@@ -891,6 +910,8 @@ void ExportScannerInfo::onClicked_PB_TCPC_START_RECV_CONTENT(){
 
 	ui.PB_TCPC_START_RECV_CONTENT->setEnabled(false);
 	ui.PB_TCPC_STOP_RECV_CONTENT->setEnabled(true);
+
+	prompt_operation_status(true, TPStr.RECVING_REQUEST_DATA);
 }
 
 // 停止接收
@@ -901,17 +922,80 @@ void ExportScannerInfo::onClicked_PB_TCPC_STOP_RECV_CONTENT(){
 		return;
 	}
 
+	//LOGE_(TPStr. )
+
 	auto it = m_tcpc.begin() + index;
 	disconnect((*it), &TcpClient::logReady, this,
 		&ExportScannerInfo::getTcpcRest);
 
 	ui.PB_TCPC_START_RECV_CONTENT->setEnabled(true);
 	ui.PB_TCPC_STOP_RECV_CONTENT->setEnabled(false);
+
+	prompt_operation_status(false, TPStr.STOP_RECVED_REQUEST_DATA);
 }
 
 // 发送服务端
 void ExportScannerInfo::onClicked_PB_TCPC_SEND(){
+	int index = currentTCPC();
+	if (index < 0)
+	{
+		return;
+	}
 
+	LOGI_(TPStr.SENDING.toStdString().data());
+
+	std::string content = ui.TE_TCPC_SEND_CONTENT->toPlainText().toLocal8Bit();
+	if (!TCPCheck.isValidData(content))
+	{
+		LOGE_(DataStr.INVALID_DATA.toStdString().data());
+		return;
+	}
+
+	// 单独发送
+	if (!ui.CHB_TCPC_ALL_SERVER->isChecked())
+	{
+		if (m_tcpc[index]->SendDataToServer(content.data())){
+			prompt_operation_status(true, TPStr.SEND_SUCCESS);
+		}
+		else
+		{
+			prompt_operation_status(true, TPStr.SEND_FAILURE);
+		}
+
+		return;
+	}
+
+	// 全部发送
+	for (int i = 0; i < m_tcpcConnection.size(); i++)
+	{
+		if (!m_tcpcConnection[i].isConnected())
+		{
+			continue;
+		}
+
+		std::string ip = ui.CB_TCPC_TARGET_IP->itemText(i).toStdString();
+		int port = ui.CB_TCPC_TARGET_PORT->itemText(i).toInt();
+
+		for each (auto client in m_tcpc)
+		{
+			if (!(ip == client->getIp() && port == client->getPort()))
+			{
+				continue;
+			}
+
+			if (client->SendDataToServer(content.data())){
+				prompt_operation_status(true, TPStr.SEND_SUCCESS);
+			}
+			else
+			{
+				prompt_operation_status(true, TPStr.SEND_FAILURE);
+
+				QString megtext = QString("[%1] > [%2:%3] %4").arg(QString::fromStdString(client->getLocalPort())).arg(QString::fromStdString(ip)).arg(port).arg(TPStr.SEND_FAILURE);
+
+				QMessageBox::critical(this, TPStr.SENDING, megtext);
+			}
+		}
+	}
 }
 
 // 连接状态改变窗口控件

@@ -229,8 +229,8 @@ public:
     QVBoxLayout *verticalLayout_16;
     QLabel *label_16;
     QSpinBox *SB_TCPC_NUM_SEND;
+    QCheckBox *CHB_TCPC_ALL_SERVER;
     QPushButton *PB_TCPC_SEND;
-    QSpacerItem *verticalSpacer_11;
     QWidget *SW_PDF_EXPORT;
     QWidget *gridLayoutWidget_5;
     QGridLayout *gridLayout_6;
@@ -1354,8 +1354,8 @@ public:
 
         HS_TCPC_CONNECT_TIMEOUT = new QSlider(groupBox_7);
         HS_TCPC_CONNECT_TIMEOUT->setObjectName(QStringLiteral("HS_TCPC_CONNECT_TIMEOUT"));
-        HS_TCPC_CONNECT_TIMEOUT->setMaximum(2000);
-        HS_TCPC_CONNECT_TIMEOUT->setValue(2000);
+        HS_TCPC_CONNECT_TIMEOUT->setMaximum(20);
+        HS_TCPC_CONNECT_TIMEOUT->setValue(20);
         HS_TCPC_CONNECT_TIMEOUT->setOrientation(Qt::Horizontal);
 
         horizontalLayout_34->addWidget(HS_TCPC_CONNECT_TIMEOUT);
@@ -1508,9 +1508,11 @@ public:
         verticalLayout_16 = new QVBoxLayout();
         verticalLayout_16->setSpacing(6);
         verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
-        verticalLayout_16->setContentsMargins(12, -1, 12, -1);
+        verticalLayout_16->setContentsMargins(12, -1, 12, 0);
         label_16 = new QLabel(groupBox_6);
         label_16->setObjectName(QStringLiteral("label_16"));
+        sizePolicy9.setHeightForWidth(label_16->sizePolicy().hasHeightForWidth());
+        label_16->setSizePolicy(sizePolicy9);
 
         verticalLayout_16->addWidget(label_16);
 
@@ -1522,6 +1524,11 @@ public:
 
         verticalLayout_16->addWidget(SB_TCPC_NUM_SEND);
 
+        CHB_TCPC_ALL_SERVER = new QCheckBox(groupBox_6);
+        CHB_TCPC_ALL_SERVER->setObjectName(QStringLiteral("CHB_TCPC_ALL_SERVER"));
+
+        verticalLayout_16->addWidget(CHB_TCPC_ALL_SERVER);
+
         PB_TCPC_SEND = new QPushButton(groupBox_6);
         PB_TCPC_SEND->setObjectName(QStringLiteral("PB_TCPC_SEND"));
         sizePolicy10.setHeightForWidth(PB_TCPC_SEND->sizePolicy().hasHeightForWidth());
@@ -1531,10 +1538,6 @@ public:
         PB_TCPC_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/send.png\");"));
 
         verticalLayout_16->addWidget(PB_TCPC_SEND);
-
-        verticalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_16->addItem(verticalSpacer_11);
 
 
         horizontalLayout_31->addLayout(verticalLayout_16);
@@ -1579,7 +1582,7 @@ public:
         ExportScannerInfoClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ExportScannerInfoClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1090, 26));
+        menuBar->setGeometry(QRect(0, 0, 1090, 23));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -1765,8 +1768,8 @@ public:
 #ifndef QT_NO_TOOLTIP
         CB_TCPC_CONNECT_MODE->setToolTip(QApplication::translate("ExportScannerInfoClass", "\346\216\247\345\210\266\350\277\236\346\216\245\350\266\205\346\227\266", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        label_10->setText(QApplication::translate("ExportScannerInfoClass", "\350\266\205\346\227\266(\346\257\253\347\247\222)\357\274\232", Q_NULLPTR));
-        label_14->setText(QApplication::translate("ExportScannerInfoClass", "2000", Q_NULLPTR));
+        label_10->setText(QApplication::translate("ExportScannerInfoClass", "\350\266\205\346\227\266(\347\247\222)\357\274\232", Q_NULLPTR));
+        label_14->setText(QApplication::translate("ExportScannerInfoClass", "20", Q_NULLPTR));
         PB_TCPC_CONNECT->setText(QApplication::translate("ExportScannerInfoClass", " \350\277\236\346\216\245", Q_NULLPTR));
         PB_TCPC_DISCONNECT->setText(QApplication::translate("ExportScannerInfoClass", " \346\226\255\345\274\200", Q_NULLPTR));
         GB_TCP_SERVER_RECV_2->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\225\260\346\215\256\346\216\245\346\224\266\345\217\212\346\217\220\347\244\272", Q_NULLPTR));
@@ -1775,6 +1778,7 @@ public:
         PB_TCPC_RECV_CONTENT_CLEAR->setText(QApplication::translate("ExportScannerInfoClass", " \346\270\205\347\251\272", Q_NULLPTR));
         groupBox_6->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\225\260\346\215\256\345\217\221\351\200\201", Q_NULLPTR));
         label_16->setText(QApplication::translate("ExportScannerInfoClass", "\351\207\215\345\244\215\345\217\221\351\200\201\346\254\241\346\225\260\357\274\232", Q_NULLPTR));
+        CHB_TCPC_ALL_SERVER->setText(QApplication::translate("ExportScannerInfoClass", "\345\205\250\351\203\250", Q_NULLPTR));
         PB_TCPC_SEND->setText(QApplication::translate("ExportScannerInfoClass", " \345\217\221\351\200\201", Q_NULLPTR));
         menu->setTitle(QApplication::translate("ExportScannerInfoClass", "\346\226\207\344\273\266", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("ExportScannerInfoClass", "\345\270\256\345\212\251", Q_NULLPTR));

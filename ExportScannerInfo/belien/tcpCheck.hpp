@@ -4,8 +4,10 @@
 #include <string>
 #include "Header.h"
 #include "singleton.h"
+#include <winsock2.h>
+#include <ws2tcpip.h> // for inet_pton
 
-#ifdef BELIEN_TCP_CHECK
+#ifdef BELIEN_CHECK_QTCP
 #include <QRegularExpression>
 #include <QtNetwork\qhostaddress.h>
 #endif
@@ -41,24 +43,31 @@ namespace belien {
 			}
 
 			bool isValidData(const std::string & data){
-				if (data.size() > MAX_PACKET_SIZE) {
-					return false;
-				}
-				return true;
-			}			
+				return (data.size() > 0 && data.size() < MAX_PACKET_SIZE);
+			}
 
-#ifdef BELIEN_TCP_CHECK
+			bool isIPValid(const std::string & ipAddress) {
+				struct in_addr addr;
+				int retVal = inet_pton(AF_INET, ipAddress.c_str(), &addr);
+				return (retVal != 0);
+			}
+
+			bool isValidIpAddressAndPort(const std::string& ipAddress, int port) {
+				return (isIPValid(ipAddress) && isValidPort(port));
+			}
+
+#ifdef BELIEN_CHECK_QTCP
 			bool isIPValid(const QString& ip) {
-				//QRegularExpression regExp("^((([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5]))$");
-				//QRegularExpressionMatch match = regExp.match(ip);
-				//return match.hasMatch();
-				QHostAddress addr(ip);
+				QRegularExpression regExp("^((([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){1}(([0-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){2}([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5]))$");
+				QRegularExpressionMatch match = regExp.match(ip);
+				return match.hasMatch();
+				/*QHostAddress addr(ip);
 				if (addr.isNull() || addr.protocol() != QAbstractSocket::IPv4Protocol) {
 					return false;
 				}
 				else {
 					return true;
-				}
+				}*/
 			}
 
 			bool isValidData(const QByteArray & data){
@@ -66,10 +75,6 @@ namespace belien {
 					return false;
 				}
 				return true;
-			}
-
-			bool isIPValid(const std::string & ip) {
-				return isIPValid(QString::fromLocal8Bit(ip.data()));
 			}
 #endif 
 		};

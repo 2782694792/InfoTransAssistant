@@ -1,7 +1,7 @@
 #include "TCPC_AddConnect.h"
 
 FORM_TCPC_ADD_CONNECT::FORM_TCPC_ADD_CONNECT(QWidget *parent) :
-QDialog(parent)
+m_parent(parent)
 {
 	ui.setupUi(this);
 
@@ -17,23 +17,108 @@ QDialog(parent)
 	//if (mainWindow != nullptr) {
 	//}
 
+	connect(ui.TW_TARGET_CONNECT_INFO, SIGNAL(customContextMenuRequested(QPoint)), this,
+		SLOT(on_tableWidget_customContextMenuRequested(QPoint)));
+
 	ReadOnlyDelegate* readOnlyDelegate = new ReadOnlyDelegate(this);
 	ui.TW_TARGET_CONNECT_INFO->setItemDelegateForColumn(2, readOnlyDelegate);
 }
 
 FORM_TCPC_ADD_CONNECT::~FORM_TCPC_ADD_CONNECT()
 {
+	m_connection.clear();
 }
 
-void FORM_TCPC_ADD_CONNECT::showEvent(QShowEvent *event) {
-	// 首先调用父类的 showEvent 函数
-	//QWidget::showEvent(event);
+void FORM_TCPC_ADD_CONNECT::on_tableWidget_customContextMenuRequested(const QPoint & cpos){
+	//static int status = 1;
+	//if (status == 1) {
+	if (ui.TW_TARGET_CONNECT_INFO->rowCount() == 0)
+	{
+		return;
 
-	//// 拿到父窗口对象指针
-	//QMainWindow *parentWidget = qobject_cast<QMainWindow *>(sender()->parent());
-	//if (!parentWidget) {
-	//    return;
+		m_menu_clear->setEnabled(false);
+		m_menu_check->setEnabled(false);
+	}
+
+	m_menu = new QMenu(this);
+	m_menu_check = m_menu->addAction(QString::fromLocal8Bit("检查"));
+	m_menu->addSeparator();
+	m_menu_clear = m_menu->addAction(QString::fromLocal8Bit("清空"));
+
+	connect(m_menu_check, SIGNAL(triggered()), this, SLOT(Check_ConnectInfoTable()));
+	connect(m_menu_clear, SIGNAL(triggered()), this, SLOT(Clear_ConnectInfoTable()));
+
+	m_menu->exec(QCursor::pos()); // 光标位置呼出
+	m_menu->clear();
+	m_menu = nullptr;
 	//}
+
+	//status *= -1;	
+}
+
+//void FORM_TCPC_ADD_CONNECT::showEvent(QShowEvent *event) {
+//	// 首先调用父类的 showEvent 函数
+//	//QWidget::showEvent(event);
+//
+//	//// 拿到父窗口对象指针
+//	//QMainWindow *parentWidget = qobject_cast<QMainWindow *>(sender()->parent());
+//	//if (!parentWidget) {
+//	//    return;
+//	//}
+//}
+
+void FORM_TCPC_ADD_CONNECT::Check_ConnectInfoTable(){
+	DoAction_ConnectInfoTable(MENUACTION::CHECK);
+
+	disconnect(m_menu_check, SIGNAL(triggered()), this, SLOT(Check_ConnectInfoTable()));
+}
+
+void FORM_TCPC_ADD_CONNECT::Clear_ConnectInfoTable(){
+	DoAction_ConnectInfoTable(MENUACTION::CLEAR);
+	
+	disconnect(m_menu_clear, SIGNAL(triggered()), this, SLOT(Clear_ConnectInfoTable()));
+}
+
+void FORM_TCPC_ADD_CONNECT::DoAction_ConnectInfoTable(MENUACTION menuaction_enum){
+	auto tableWidget = ui.TW_TARGET_CONNECT_INFO;
+	int rowCount = tableWidget->rowCount();
+	for (int row = 0; row < rowCount; row++)
+	{
+		bool isEmpty = false;
+		QTableWidgetItem* item = tableWidget->item(row, 0);
+		QTableWidgetItem* item1 = tableWidget->item(row, 1);
+		if (!(item && !item->text().isEmpty() && item1 && !item1->text().isEmpty()))
+		{
+			isEmpty = true;
+		}
+
+		switch (menuaction_enum)
+		{
+		case MENUACTION::CHECK:
+			if (!isEmpty)
+			{
+				QString ip = item->text();
+				int port = item1->text().toInt();
+				if (!(TCPCheck.isIPValid(ip) && TCPCheck.isValidPort(port)))
+				{
+					QMessageBox::critical(this, QString::fromLocal8Bit("连接检查"), QString::fromLocal8Bit("非法连接：%1: %2").arg(ip).arg(port), QMessageBox::Ok);
+				}
+			}
+			break;
+		case MENUACTION::CLEAR:
+			if (!isEmpty && tableWidget->item(row, 2)->text() != "false")
+			{
+				QMessageBox::critical(this, QString::fromLocal8Bit("连接清空"), QString::fromLocal8Bit("%1: %2 已连接，请先断开！").arg(tableWidget->item(row, 0)->text()).arg(tableWidget->item(row, 1)->text()), QMessageBox::Ok);
+			}
+			else
+			{
+				tableWidget->removeRow(row);
+			}
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo(const std::vector<Connection>& connection){
@@ -42,21 +127,18 @@ void FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo(const std::vector<Connection>
 	if (count > 0)
 	{
 		QTableWidget *tableWidget = findChild<QTableWidget *>("TW_TARGET_CONNECT_INFO");
-		
-		// 清除子项行
-		//tableWidget->clearContents();
+
+		//tableWidget->clearContents(); // 清除子项行
 		for (int i = tableWidget->rowCount() - 1; i >= 0; --i) {
 			tableWidget->removeRow(i); // 从最后一行开始逆序删除
 		}
 
-		// 添加子项行
-		for (int i = 0; i < count; i++)
+		for (int i = 0; i < count; i++) // 添加子项行
 		{
 			tableWidget->insertRow(i);
 		}
 
-		// 设置单元格值
-		for (int row = 0; row < count; row++) {
+		for (int row = 0; row < count; row++) { // 设置单元格值
 			QTableWidgetItem *item1 = new QTableWidgetItem(
 				tr("%1").arg(connectionInfo[row].getIP())
 				);
@@ -71,6 +153,7 @@ void FORM_TCPC_ADD_CONNECT::doUpdateConnectionInfo(const std::vector<Connection>
 			tableWidget->setItem(row, 2, item3);
 		}
 	}
+
 	// 自动调整列宽和行高
 	//tableWidget->resizeColumnsToContents();
 	//tableWidget->resizeRowsToContents();
@@ -102,6 +185,14 @@ void FORM_TCPC_ADD_CONNECT::onClicked_PB_TARGET_CONNECT_INFO_DELETE(){
 		int row = 0;
 		for (int i = selectedRows.count() - 1; i >= 0; i--) {
 			row = selectedRows.at(i).row();
+			QString col_3 = tableWidget->item(row, 2)->text();
+			if (col_3 != "false")
+			{
+				QMessageBox::critical(this, QString::fromLocal8Bit("删除检查"), QString::fromLocal8Bit("%1: %2 已连接，请先断开！").arg(tableWidget->item(row, 0)->text()).arg(tableWidget->item(row, 1)->text()), QMessageBox::Ok);
+
+				continue;
+			}
+
 			tableWidget->removeRow(row);
 		}
 	}
@@ -120,37 +211,45 @@ void FORM_TCPC_ADD_CONNECT::onClicked_PB_TARGET_CONNECT_INFO_REFRESH(){
 
 	bool iserror = true;
 
-	if (rowCount > 0) {
-		m_connection.clear();
+	if (rowCount <= 0) {
+		this->close();
+		return;
+	}
 
-		for (int row = 0; row < rowCount; row++)
+	m_connection.clear();
+
+	for (int row = 0; row < rowCount; row++)
+	{
+		QTableWidgetItem* item = tableWidget->item(row, 0);
+		QTableWidgetItem* item1 = tableWidget->item(row, 1);
+		if (!(item && !item->text().isEmpty() && item1 && !item1->text().isEmpty()))
 		{
-			QTableWidgetItem* item = tableWidget->item(row, 0);
-			QTableWidgetItem* item1 = tableWidget->item(row, 1);
-			QTableWidgetItem* item2 = tableWidget->item(row, 2);
-			if (item && !item->text().isEmpty() && item1 && !item1->text().isEmpty())
-			{
-				QString ip = item->text();
-				int port = item1->text().toInt();
-				bool isconnect = item2->text().toStdString() == "false" ? false : true;
-				if (TCPCheck.isIPValid(ip) && TCPCheck.isValidPort(port))
-				{
-					m_connection.push_back(Connection(ip, port, isconnect));
-					iserror = false;
-				}
-				else
-				{
-					LOGE("%s:%d %s", ip.toStdString().data(), port, QString::fromLocal8Bit("非法连接").toStdString().data());
-				}
-			}
+			continue;
 		}
 
-		if (!iserror)
+		QString ip = item->text();
+		int port = item1->text().toInt();
+		QTableWidgetItem* item2 = tableWidget->item(row, 2);
+		bool isconnect = item2->text().toStdString() == "false" ? false : true;
+		if (TCPCheck.isIPValid(ip) && TCPCheck.isValidPort(port))
 		{
-			emit startLogTcpcConnection(m_connection);
+			m_connection.push_back(Connection(ip, port, isconnect));
+			iserror = false;
 		}
+		else
+		{
+			LOGE("%s:%d %s", ip.toStdString().data(), port, QString::fromLocal8Bit("非法连接").toStdString().data());
 
+			QMessageBox::critical(this, QString::fromLocal8Bit("信息检查"), QString::fromLocal8Bit("非法连接：%1: %2").arg(ip).arg(port), QMessageBox::Ok);
+
+			//QLabel * label = m_parent->findChild<QLabel*>("TL_PROMPT_OPERATION_STATUS");
+			//label->setText(QString::fromLocal8Bit("存在非法连接").toStdString().data());
+		}
+	}
+
+	if (!iserror)
+	{
+		emit startLogTcpcConnection(m_connection);
 		this->close();
 	}
 }
-

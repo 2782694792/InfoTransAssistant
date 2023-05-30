@@ -62,6 +62,8 @@ TP TcpServer::stopListen() {
 }
 
 void TcpServer::onNewConnection() {
+	LOGI_(TPStr.REQUEST_CONNECT.toStdString().data());
+
 	// while (m_server->hasPendingConnections()) 
 	{
 		QTcpSocket* socket = m_server->nextPendingConnection();
@@ -93,7 +95,7 @@ void TcpServer::onReadyRead() {
 		m_mx.lock();
 
 		QByteArray data = socket->readAll();
-		if (TCPCheck.isValidData(data)) {
+		if (!TCPCheck.isValidData(data)) {
 			LOGE_(DataStr.INVALID_SIZE.toStdString().data());
 			return;
 		}
@@ -114,7 +116,8 @@ void TcpServer::onReadyRead() {
 TP TcpServer::sendDataToClient(int repeatNum, const std::string & message) {
 	const QByteArray & mess = QString(message.data()).toLocal8Bit();
 
-	record_result(TP::SENDING, nullptr);
+	LOGI_(TPStr.SENDING.toStdString().data());
+
 	bool fail = true;
 
 	QMutexLocker lock(&m_mx);
@@ -148,10 +151,8 @@ TP TcpServer::sendDataToClient(int repeatNum, const std::string & message) {
 
 TP TcpServer::sendDataToClient(QString addr, int port, int repeatNum, const std::string & message){
 	const QByteArray & mess = QString(message.data()).toLocal8Bit();
-
 	bool fail = true;
-	record_result(TP::SENDING, nullptr);
-
+	
 	QMutexLocker lock(&m_mx);
 
 	for each (auto var in m_clients)
@@ -248,7 +249,6 @@ TP TcpServer::disconnectedAll(){
 	}
 	return record_result(TP::DISCONNECT, nullptr);
 }
-
 
 void TcpServer::closeServer() {
 	LOGE("%s:%s", QString::fromLocal8Bit("连接数").toStdString().data(),

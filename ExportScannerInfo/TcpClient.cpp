@@ -2,9 +2,7 @@
 #include <regex>
 #include <vector>
 #include <qpushbutton.h>
-
-#define	SERVER_PORT				4096			// 端口号
-#define SERVER_IP			"127.0.0.1"	// server端的IP地址
+#include <TCPC_AddConnect.h>
 
 static std::string replace_string(const std::string& content, const std::vector<std::string>& args) {
 	std::string result = content;
@@ -21,6 +19,7 @@ static std::string replace_string(const std::string& content, const std::vector<
 
 TcpClient::TcpClient(QObject* parent) : m_parent(parent)
 {
+	m_recv_length = 0;
 	InitSocket();
 }
 
@@ -35,6 +34,7 @@ TcpClient::~TcpClient()
 	::WSACleanup();
 }
 
+// 连接初始化
 bool TcpClient::InitSocket()
 {
 	// 初始化socket dll
@@ -61,8 +61,15 @@ bool TcpClient::InitSocket()
 	return true;
 }
 
+//#include "Loading.h"
+// 连接服务端
 bool TcpClient::ConectToServer()
 {
+	LOGI_(TPStr.REQUEST_CONNECT.toStdString().data());
+
+	//Form_Loading *load = new Form_Loading();
+	//load->show();
+
 	sockaddr_in servAddr;
 	servAddr.sin_family = AF_INET;
 	servAddr.sin_port = htons(m_port);
@@ -98,7 +105,7 @@ bool TcpClient::ConectToServer()
 	{
 		//closesocket(m_client);
 	}
-
+	
 	fd_set Write, Err;
 	FD_ZERO(&Write);
 	FD_ZERO(&Err);
@@ -116,10 +123,14 @@ bool TcpClient::ConectToServer()
 		closesocket(m_client);
 		m_client = INVALID_SOCKET;
 
+		//delete load;
+
 		return false;
 	}
 
 	record_result(TP::CONNECT, &m_client, TPStr.CONNECT);
+
+	//delete load;
 
 	return true;
 }
@@ -127,17 +138,14 @@ bool TcpClient::ConectToServer()
 // 发送服务端
 bool TcpClient::SendDataToServer(const char * data)
 {
-	record_result(TP::SENDING, &m_client, data);
-
 	if (SOCKET_ERROR == ::send(m_client, data, MAXFILEDIRLENGTH, 0))
 	{
 		record_result(TP::SEND_FAILURE, &m_client, data);
-		//exit(-1);
 
 		return false;
 	}
 
-	record_result(TP::SEND_SUCCESS, &m_client, data);
+	record_result(TP::SEND_SUCCESS, &m_client, QString::fromLocal8Bit(data));
 
 	return true;
 }
@@ -151,14 +159,16 @@ void TcpClient::RecvServerMsg()
 
 		return;
 	}
-
+	
 	int nRecv = 0;
 	m_stopRecv = false;
 	memset(m_recvBuff, 0, MAX_PACKET_SIZE);
 	do {
 		nRecv = ::recv(m_client, m_recvBuff, MAX_PACKET_SIZE + 1, 0);
 		if (nRecv > 0) {
-			LOGI("(%d Bytes) %.*s\n", nRecv, nRecv, m_recvBuff);
+			// TODO: 整理字节接收统计（接收则更新、客户端连接断开进行清空处理）
+			m_recv_length += nRecv;
+			//LOGI("(%d Bytes) %.*s\n", nRecv, nRecv, m_recvBuff);
 			QString recvbuf = QString("%1").arg(m_recvBuff);
 			record_result(TP::RECV_SUCCESS, &m_client, recvbuf);
 		}
@@ -181,7 +191,6 @@ void TcpClient::RecvServerMsg()
 //	QPushButton * p_connect = m_parent.findChild<QPushButton*>("PB_TCPC_CONNECT");
 //	QPushButton * p_startrecv = m_parent.findChild<QPushButton*>("PB_TCPC_START_RECV_CONTENT");
 //	QPushButton * p_stoprecv = m_parent.findChild<QPushButton*>("PB_TCPC_STOP_RECV_CONTENT");
-//
 //	p_disconnect->setEnabled(false);
 //	p_connect->setEnabled(true);
 //	p_startrecv->setEnabled(false);
@@ -272,7 +281,7 @@ TP TcpClient::record_result(TP result, const SOCKET* client,
 	case belien::identification::TP::SENDING:
 		break;
 	case belien::identification::TP::SEND_SUCCESS:
-		log = TPStr.SEND_SUCCESS;
+		log = data;
 		break;
 	case belien::identification::TP::SEND_FAILURE:
 		log = TPStr.SEND_FAILURE;

@@ -116,6 +116,7 @@
     <ClCompile Include="belien\work_deque\test.cpp" />
     <ClCompile Include="ClickableLabel.cpp" />
     <ClCompile Include="ExportScannerInfo.cpp" />
+    <ClCompile Include="Loading.cpp" />
     <ClCompile Include="ReadOnlyDelegate.cpp" />
     <ClCompile Include="TCPC_AddConnect.cpp" />
     <ClCompile Include="main.cpp">
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ExportScannerInfo.ui" />
+    <QtUic Include="Loading.ui" />
     <QtUic Include="TCPC_AddConnect.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +167,10 @@
     <ClInclude Include="belien\work_deque\thread_pool.hpp" />
     <ClInclude Include="belien\work_deque\woker.hpp" />
     <ClInclude Include="ConnectionInfo.h" />
+    <QtMoc Include="Loading.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
+    </QtMoc>
     <ClInclude Include="ReadOnlyDelegate.h" />
     <QtMoc Include="TcpClient.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>

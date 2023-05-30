@@ -60,6 +60,9 @@
     <ClCompile Include="belien\work_deque\test.cpp">
       <Filter>belien\work</Filter>
     </ClCompile>
+    <ClCompile Include="Loading.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ClickableLabel.h">
@@ -77,12 +80,18 @@
     <QtMoc Include="TcpClient.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Loading.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ExportScannerInfo.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="TCPC_AddConnect.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Loading.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -5,11 +5,14 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QtWidgets/QMainWindow>
-#include <QSpacerItem>
-#include <QPropertyAnimation>
+#include <valarray>
+//#include <QSpacerItem>
+//#include <QPropertyAnimation>
 #include <map>
 #include <thread>
 #include <future>
+#include <qmovie.h> // 显示动态图
+#include <QProgressDialog>
 #include "belien\work_deque\thread_pool.hpp"
 
 #include "ClickableLabel.h"
@@ -24,6 +27,7 @@ class ExportScannerInfo : public QMainWindow {
 
 public:
     ExportScannerInfo(QWidget* parent = Q_NULLPTR);
+	~ExportScannerInfo();
 
 #ifdef test_eventFilter
     bool eventFilter(QObject* obj, QEvent* event) override; // 事件过滤器
@@ -49,9 +53,10 @@ private:
     void init_ctrl_visible(bool isVisible); // 初始化控件显示
 	
 private:
+	QWidget * m_parent;
     Ui::ExportScannerInfoClass ui;
     ClickableLabel* label;
-	QString m_mainInfo[6];
+	std::valarray<QString> m_mainInfo;
 	thread_pool m_pool;
 
 #pragma region TCP 服务端
@@ -96,8 +101,8 @@ private:
     QStringList               m_ClientAddr; // 客户端地址
     QList< int >              m_ClientPort; // 客户端端口
 	QString					  m_log; // 接收客户端消息记录
-	QSpacerItem	*			  m_spacerItem; // 空间项
-	QPropertyAnimation *	  m_animation; // 动画类
+	//QSpacerItem	*			  m_spacerItem; // 空间项
+	//QPropertyAnimation *	  m_animation; // 动画类
 
 #pragma endregion
 

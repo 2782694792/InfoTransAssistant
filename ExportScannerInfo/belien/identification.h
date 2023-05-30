@@ -76,6 +76,7 @@ namespace identification {
 		LISTENING,
 		NOT_LISTENED,
 		REQUEST_CONNECT,
+		CONNECTING,
 		CONNECT,
 		UNCONNECT,
 		DISCONNECT,
@@ -105,6 +106,7 @@ namespace identification {
         const std::string LISTENING                = "监听中...";
         const std::string NOT_LISTENED             = "未监听";
         const std::string REQUEST_CONNECT          = "请求连接";
+        const std::string CONNECTING			   = "正在连接...";		
         const std::string CONNECT                  = "连接成功";
         const std::string UNCONNECT                = "未连接";
         const std::string DISCONNECT               = "连接断开";
@@ -128,6 +130,7 @@ namespace identification {
 		const QString SOCKET_NON_BLOCKING      = QString::fromLocal8Bit("连接非阻塞");
 		const QString SOCKET_BLOCKING          = QString::fromLocal8Bit("连接阻塞");
         const QString REQUEST_CONNECT = QString::fromLocal8Bit("请求连接");
+        const QString CONNECTING			   = QString::fromLocal8Bit("正在连接...");	
         const QString CONNECT         = QString::fromLocal8Bit("连接成功");
         const QString UNCONNECT       = QString::fromLocal8Bit("未连接");
         const QString DISCONNECT      = QString::fromLocal8Bit("连接断开");
