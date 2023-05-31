@@ -1,6 +1,27 @@
 <RCC>
     <qresource prefix="/ExportScannerInfo">
-        <file alias="main">main.qss</file>
-        <file alias="black">blackTheme.qss</file>
+        <file alias="main.qss">main.qss</file>
+        <file alias="black.qss">blackTheme.qss</file>
+        <file>images/addConnect-pressed.png</file>
+        <file>images/c_connect.png</file>
+        <file>images/c_disconnect.png</file>
+        <file>images/clear.png</file>
+        <file>images/close.png</file>
+        <file>images/continue.png</file>
+        <file>images/create.png</file>
+        <file>images/delete.png</file>
+        <file>images/disconnect.png</file>
+        <file>images/listen.png</file>
+        <file>images/loading.gif</file>
+        <file>images/pause.png</file>
+        <file>images/send.png</file>
+        <file>images/toDown-arrow.png</file>
+        <file>images/toDown-blue.png</file>
+        <file>images/toDown-hover.png</file>
+        <file>images/toRight.png</file>
+        <file>images/toRight-blue.png</file>
+        <file>images/toUp-arrow.png</file>
+        <file>images/toUp-hover.png</file>
+        <file>images/warn.png</file>
     </qresource>
 </RCC>

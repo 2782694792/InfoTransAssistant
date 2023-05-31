@@ -294,7 +294,7 @@ public:
         label->setFont(font1);
         label->setLayoutDirection(Qt::LeftToRight);
         label->setAutoFillBackground(false);
-        label->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images.png\");"));
+        label->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images.png\");"));
 
         horizontalLayout_2->addWidget(label);
 
@@ -461,18 +461,18 @@ public:
         TL_PDF_ICON->setMinimumSize(QSize(22, 22));
         TL_PDF_ICON->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    border: 0px solid black;\n"
-"border-image: url(./images/toDown-arrow.png);    border-radius: 5px;\n"
+"border-image: url(:/ExportScannerInfo/images/toDown-arrow.png);    border-radius: 5px;\n"
 "}\n"
 "\n"
 "/* \345\256\232\344\271\211\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\346\240\267\345\274\217 */\n"
 "QLabel:hover {\n"
 "    border-color: blue;\n"
-"    border-image: url(./images/toDown-blue.png);\n"
+"    border-image: url(:/ExportScannerInfo/images/toDown-blue.png);\n"
 "}\n"
 "\n"
 "/* \345\256\232\344\271\211\351\274\240\346\240\207\347\202\271\345\207\273\346\227\266\347\232\204\346\240\267\345\274\217 */\n"
 "QLabel:pressed {\n"
-"    border-image: url(./images/toDown-blue.png);}"));
+"    border-image: url(:/ExportScannerInfo/images/toDown-blue.png);}"));
 
         horizontalLayout_24->addWidget(TL_PDF_ICON);
 
@@ -867,7 +867,7 @@ public:
         PB_TCPS_LISTEN_PORT_CREATE->setMinimumSize(QSize(110, 35));
         QFont font7;
         PB_TCPS_LISTEN_PORT_CREATE->setFont(font7);
-        PB_TCPS_LISTEN_PORT_CREATE->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/create.png\");"));
+        PB_TCPS_LISTEN_PORT_CREATE->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/create.png\");"));
 
         horizontalLayout_16->addWidget(PB_TCPS_LISTEN_PORT_CREATE);
 
@@ -927,7 +927,7 @@ public:
         PB_TCPS_LISTENING->setSizePolicy(sizePolicy10);
         PB_TCPS_LISTENING->setMinimumSize(QSize(110, 35));
         PB_TCPS_LISTENING->setFont(font7);
-        PB_TCPS_LISTENING->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/listen.png\");"));
+        PB_TCPS_LISTENING->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/listen.png\");"));
 
         horizontalLayout_14->addWidget(PB_TCPS_LISTENING);
 
@@ -941,7 +941,7 @@ public:
         PB_TCPS_LISTENED->setSizePolicy(sizePolicy9);
         PB_TCPS_LISTENED->setMinimumSize(QSize(110, 35));
         PB_TCPS_LISTENED->setFont(font7);
-        PB_TCPS_LISTENED->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/warn.png\");"));
+        PB_TCPS_LISTENED->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/warn.png\");"));
 
         horizontalLayout_14->addWidget(PB_TCPS_LISTENED);
 
@@ -953,7 +953,7 @@ public:
         PB_TCPS_LISTEN_PORT_DELETE->setObjectName(QStringLiteral("PB_TCPS_LISTEN_PORT_DELETE"));
         PB_TCPS_LISTEN_PORT_DELETE->setMinimumSize(QSize(110, 35));
         PB_TCPS_LISTEN_PORT_DELETE->setFont(font5);
-        PB_TCPS_LISTEN_PORT_DELETE->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/delete.png\");"));
+        PB_TCPS_LISTEN_PORT_DELETE->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/delete.png\");"));
 
         horizontalLayout_14->addWidget(PB_TCPS_LISTEN_PORT_DELETE);
 
@@ -1023,7 +1023,7 @@ public:
         PB_TCPS_DISCONNECT_CLIENT->setMinimumSize(QSize(110, 35));
         PB_TCPS_DISCONNECT_CLIENT->setFont(font7);
         PB_TCPS_DISCONNECT_CLIENT->setAutoFillBackground(false);
-        PB_TCPS_DISCONNECT_CLIENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/disConnect.png\");"));
+        PB_TCPS_DISCONNECT_CLIENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/disconnect.png\");"));
 
         horizontalLayout_4->addWidget(PB_TCPS_DISCONNECT_CLIENT);
 
@@ -1120,14 +1120,14 @@ public:
         PB_TCPS_START_RECV_CONTENT = new QPushButton(GB_TCP_SERVER_RECV);
         PB_TCPS_START_RECV_CONTENT->setObjectName(QStringLiteral("PB_TCPS_START_RECV_CONTENT"));
         PB_TCPS_START_RECV_CONTENT->setMinimumSize(QSize(90, 35));
-        PB_TCPS_START_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/continue.png\");"));
+        PB_TCPS_START_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/continue.png\");"));
 
         verticalLayout_8->addWidget(PB_TCPS_START_RECV_CONTENT);
 
         PB_TCPS_STOP_RECV_CONTENT = new QPushButton(GB_TCP_SERVER_RECV);
         PB_TCPS_STOP_RECV_CONTENT->setObjectName(QStringLiteral("PB_TCPS_STOP_RECV_CONTENT"));
         PB_TCPS_STOP_RECV_CONTENT->setMinimumSize(QSize(90, 35));
-        PB_TCPS_STOP_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/pause.png\");"));
+        PB_TCPS_STOP_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/pause.png\");"));
 
         verticalLayout_8->addWidget(PB_TCPS_STOP_RECV_CONTENT);
 
@@ -1142,7 +1142,7 @@ public:
         PB_TCPS_RECV_CONTENT_CLEAR->setMinimumSize(QSize(90, 35));
         PB_TCPS_RECV_CONTENT_CLEAR->setBaseSize(QSize(0, 0));
         PB_TCPS_RECV_CONTENT_CLEAR->setLayoutDirection(Qt::LeftToRight);
-        PB_TCPS_RECV_CONTENT_CLEAR->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/clear.png\");"));
+        PB_TCPS_RECV_CONTENT_CLEAR->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/clear.png\");"));
         PB_TCPS_RECV_CONTENT_CLEAR->setInputMethodHints(Qt::ImhNone);
         PB_TCPS_RECV_CONTENT_CLEAR->setCheckable(false);
         PB_TCPS_RECV_CONTENT_CLEAR->setAutoDefault(false);
@@ -1212,7 +1212,7 @@ public:
         PB_TCPS_SEND->setSizePolicy(sizePolicy10);
         PB_TCPS_SEND->setMinimumSize(QSize(90, 35));
         PB_TCPS_SEND->setFont(font7);
-        PB_TCPS_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/send.png\");"));
+        PB_TCPS_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/send.png\");"));
 
         verticalLayout_21->addWidget(PB_TCPS_SEND);
 
@@ -1265,7 +1265,7 @@ public:
         sizePolicy10.setHeightForWidth(PB_TCPC_ADD_CONNECT->sizePolicy().hasHeightForWidth());
         PB_TCPC_ADD_CONNECT->setSizePolicy(sizePolicy10);
         PB_TCPC_ADD_CONNECT->setMinimumSize(QSize(110, 35));
-        PB_TCPC_ADD_CONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/addConnect-pressed.png\");"));
+        PB_TCPC_ADD_CONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/addConnect-pressed.png\");"));
 
         horizontalLayout_33->addWidget(PB_TCPC_ADD_CONNECT);
 
@@ -1373,7 +1373,7 @@ public:
         PB_TCPC_CONNECT->setObjectName(QStringLiteral("PB_TCPC_CONNECT"));
         PB_TCPC_CONNECT->setMinimumSize(QSize(110, 35));
         PB_TCPC_CONNECT->setFont(font7);
-        PB_TCPC_CONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/c_connect.png\");"));
+        PB_TCPC_CONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/c_connect.png\");"));
 
         horizontalLayout_34->addWidget(PB_TCPC_CONNECT);
 
@@ -1385,7 +1385,7 @@ public:
         PB_TCPC_DISCONNECT->setObjectName(QStringLiteral("PB_TCPC_DISCONNECT"));
         PB_TCPC_DISCONNECT->setMinimumSize(QSize(110, 35));
         PB_TCPC_DISCONNECT->setFont(font5);
-        PB_TCPC_DISCONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/c_disconnect.png\");"));
+        PB_TCPC_DISCONNECT->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/c_disconnect.png\");"));
 
         horizontalLayout_34->addWidget(PB_TCPC_DISCONNECT);
 
@@ -1435,7 +1435,7 @@ public:
         PB_TCPC_START_RECV_CONTENT = new QPushButton(GB_TCP_SERVER_RECV_2);
         PB_TCPC_START_RECV_CONTENT->setObjectName(QStringLiteral("PB_TCPC_START_RECV_CONTENT"));
         PB_TCPC_START_RECV_CONTENT->setMinimumSize(QSize(90, 35));
-        PB_TCPC_START_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/continue.png\");"));
+        PB_TCPC_START_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/continue.png\");"));
 
         verticalLayout_13->addWidget(PB_TCPC_START_RECV_CONTENT);
 
@@ -1443,7 +1443,7 @@ public:
         PB_TCPC_STOP_RECV_CONTENT->setObjectName(QStringLiteral("PB_TCPC_STOP_RECV_CONTENT"));
         PB_TCPC_STOP_RECV_CONTENT->setEnabled(true);
         PB_TCPC_STOP_RECV_CONTENT->setMinimumSize(QSize(90, 35));
-        PB_TCPC_STOP_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/pause.png\");"));
+        PB_TCPC_STOP_RECV_CONTENT->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/pause.png\");"));
 
         verticalLayout_13->addWidget(PB_TCPC_STOP_RECV_CONTENT);
 
@@ -1458,7 +1458,7 @@ public:
         PB_TCPC_RECV_CONTENT_CLEAR->setMinimumSize(QSize(90, 35));
         PB_TCPC_RECV_CONTENT_CLEAR->setBaseSize(QSize(0, 0));
         PB_TCPC_RECV_CONTENT_CLEAR->setLayoutDirection(Qt::LeftToRight);
-        PB_TCPC_RECV_CONTENT_CLEAR->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/clear.png\");"));
+        PB_TCPC_RECV_CONTENT_CLEAR->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/clear.png\");"));
         PB_TCPC_RECV_CONTENT_CLEAR->setInputMethodHints(Qt::ImhNone);
         PB_TCPC_RECV_CONTENT_CLEAR->setCheckable(false);
         PB_TCPC_RECV_CONTENT_CLEAR->setAutoDefault(false);
@@ -1535,7 +1535,7 @@ public:
         PB_TCPC_SEND->setSizePolicy(sizePolicy10);
         PB_TCPC_SEND->setMinimumSize(QSize(90, 35));
         PB_TCPC_SEND->setFont(font7);
-        PB_TCPC_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\"./images/send.png\");"));
+        PB_TCPC_SEND->setStyleSheet(QStringLiteral("qproperty-icon: url(\":/ExportScannerInfo/images/send.png\");"));
 
         verticalLayout_16->addWidget(PB_TCPC_SEND);
 
@@ -1582,7 +1582,7 @@ public:
         ExportScannerInfoClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ExportScannerInfoClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1090, 23));
+        menuBar->setGeometry(QRect(0, 0, 1090, 26));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);

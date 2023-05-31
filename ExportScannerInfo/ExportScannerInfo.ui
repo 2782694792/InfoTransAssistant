@@ -88,7 +88,7 @@
          <bool>false</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">qproperty-icon: url(&quot;./images.png&quot;);</string>
+         <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images.png&quot;);</string>
         </property>
         <property name="text">
          <string>信息传输助手</string>
@@ -393,18 +393,18 @@
                <property name="styleSheet">
                 <string notr="true">QLabel {
     border: 0px solid black;
-border-image: url(./images/toDown-arrow.png);    border-radius: 5px;
+border-image: url(:/ExportScannerInfo/images/toDown-arrow.png);    border-radius: 5px;
 }
 
 /* 定义鼠标悬停时的样式 */
 QLabel:hover {
     border-color: blue;
-    border-image: url(./images/toDown-blue.png);
+    border-image: url(:/ExportScannerInfo/images/toDown-blue.png);
 }
 
 /* 定义鼠标点击时的样式 */
 QLabel:pressed {
-    border-image: url(./images/toDown-blue.png);}</string>
+    border-image: url(:/ExportScannerInfo/images/toDown-blue.png);}</string>
                </property>
                <property name="text">
                 <string/>
@@ -1173,7 +1173,7 @@ QLabel:pressed {
                        <font/>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/create.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/create.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 添加</string>
@@ -1323,7 +1323,7 @@ QLabel:pressed {
                        <font/>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/listen.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/listen.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 启动监听</string>
@@ -1364,7 +1364,7 @@ QLabel:pressed {
                        <font/>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/warn.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/warn.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 停止监听</string>
@@ -1399,7 +1399,7 @@ QLabel:pressed {
                        </font>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/delete.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/delete.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 删除</string>
@@ -1561,7 +1561,7 @@ border-top: 1px solid;</string>
                        <bool>false</bool>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/disConnect.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/disconnect.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 断开连接</string>
@@ -1715,7 +1715,7 @@ border-top: 1px solid;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/continue.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/continue.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 继续接收</string>
@@ -1731,7 +1731,7 @@ border-top: 1px solid;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/pause.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/pause.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 关闭接收</string>
@@ -1778,7 +1778,7 @@ border-top: 1px solid;</string>
                        <enum>Qt::LeftToRight</enum>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/clear.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/clear.png&quot;);</string>
                       </property>
                       <property name="inputMethodHints">
                        <set>Qt::ImhNone</set>
@@ -1913,7 +1913,7 @@ border-top: 1px solid;</string>
                          <string>可发送指定 / 全部客户端</string>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">qproperty-icon: url(&quot;./images/send.png&quot;);</string>
+                         <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/send.png&quot;);</string>
                         </property>
                         <property name="text">
                          <string> 发送</string>
@@ -2008,7 +2008,7 @@ border-top: 1px solid;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/addConnect-pressed.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/addConnect-pressed.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 连接管理</string>
@@ -2264,7 +2264,7 @@ border-top: 1px solid;</string>
                        <font/>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/c_connect.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/c_connect.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 连接</string>
@@ -2302,7 +2302,7 @@ border-top: 1px solid;</string>
                        </font>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/c_disconnect.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/c_disconnect.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 断开</string>
@@ -2385,7 +2385,7 @@ border-top: 1px solid;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/continue.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/continue.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 继续接收</string>
@@ -2404,7 +2404,7 @@ border-top: 1px solid;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/pause.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/pause.png&quot;);</string>
                       </property>
                       <property name="text">
                        <string> 关闭接收</string>
@@ -2451,7 +2451,7 @@ border-top: 1px solid;</string>
                        <enum>Qt::LeftToRight</enum>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">qproperty-icon: url(&quot;./images/clear.png&quot;);</string>
+                       <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/clear.png&quot;);</string>
                       </property>
                       <property name="inputMethodHints">
                        <set>Qt::ImhNone</set>
@@ -2590,7 +2590,7 @@ border-top: 1px solid;</string>
                          <font/>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">qproperty-icon: url(&quot;./images/send.png&quot;);</string>
+                         <string notr="true">qproperty-icon: url(&quot;:/ExportScannerInfo/images/send.png&quot;);</string>
                         </property>
                         <property name="text">
                          <string> 发送</string>
@@ -2646,7 +2646,7 @@ border-top: 1px solid;</string>
      <x>0</x>
      <y>0</y>
      <width>1090</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">

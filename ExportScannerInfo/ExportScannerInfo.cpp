@@ -98,7 +98,7 @@ void ExportScannerInfo::init_default_widget() {
 }
 
 void ExportScannerInfo::init_qss() {
-	QFile styleFile("./main.qss");
+	QFile styleFile(":/ExportScannerInfo/main.qss");
 	styleFile.open(QFile::ReadOnly | QFile::Text);
 	QString style = QString(styleFile.readAll().data());
 	qApp->setStyleSheet(style.toLocal8Bit());
@@ -157,7 +157,7 @@ void ExportScannerInfo::init_sidebar_label(TextLabelID tlid) {
 
 	auto    label_icon = ui.TL_FTP_SERVER_ICON;
 	QString label_icon_style = QString::fromLocal8Bit(
-		"border-image:url(\"./images/toRight-blue.png\");");
+		"border-image:url(\":/ExportScannerInfo/images/toRight-blue.png\");");
 
 	switch (tlid) {
 	case FTP_SERVER:
@@ -184,7 +184,7 @@ void ExportScannerInfo::init_sidebar_label(TextLabelID tlid) {
 
 		label_icon = ui.TL_PDF_EXPORT_ICON;
 		label_icon_style = QString::fromLocal8Bit(
-			"border-image:url(\"./images/toRight.png\");");
+			"border-image:url(\":/ExportScannerInfo/images/toRight.png\");");
 		break;
 	case UNKNOWN:
 		return;

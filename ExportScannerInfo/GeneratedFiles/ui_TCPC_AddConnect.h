@@ -73,6 +73,7 @@ public:
         TW_TARGET_CONNECT_INFO->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         TW_TARGET_CONNECT_INFO->setObjectName(QStringLiteral("TW_TARGET_CONNECT_INFO"));
         TW_TARGET_CONNECT_INFO->setMinimumSize(QSize(240, 0));
+        TW_TARGET_CONNECT_INFO->setContextMenuPolicy(Qt::CustomContextMenu);
         TW_TARGET_CONNECT_INFO->setFrameShadow(QFrame::Sunken);
         TW_TARGET_CONNECT_INFO->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         TW_TARGET_CONNECT_INFO->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);

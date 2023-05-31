@@ -47,13 +47,13 @@ QComboBox::drop-down {
     border-bottom-right-radius: 3px;
 }
 QComboBox::down-arrow {
-    border-image: url(./images/toDown-hover.png);
+    border-image: url(:/ExportScannerInfo/images/toDown-hover.png);
 }
 QComboBox::down-arrow:on {
     top: 1px;
 }
 QComboBox::down-arrow:hover {
-    border-image: url(./images/toDown-blue.png);
+    border-image: url(:/ExportScannerInfo/images/toDown-blue.png);
 }
 
 /*================================================= lineedit */
@@ -118,10 +118,10 @@ QSpinBox::up-button {
     border-top-left-radius: 3px;
 }
 QSpinBox::up-arrow {
-    border-image: url(./images/toUp-arrow.png);
+    border-image: url(:/ExportScannerInfo/images/toUp-arrow.png);
 }
 QSpinBox::up-arrow:hover {
-    border-image: url(./images/toUp-hover.png);
+    border-image: url(:/ExportScannerInfo/images/toUp-hover.png);
 }
 QSpinBox::up-arrow:pressed {
     top: 1px;
@@ -136,10 +136,10 @@ QSpinBox::down-button {
     border-bottom-left-radius: 3px;
 }
 QSpinBox::down-arrow {
-    border-image: url(./images/toDown-arrow.png);
+    border-image: url(:/ExportScannerInfo/images/toDown-arrow.png);
 }
 QSpinBox::down-arrow:hover {
-    border-image: url(./images/toDown-hover.png);
+    border-image: url(:/ExportScannerInfo/images/toDown-hover.png);
 }
 QSpinBox::down-arrow:pressed {
     top: -1px;
@@ -236,4 +236,36 @@ QTableWidget::grid-line:horizontal {
 
 QTableWidget::grid-line:vertical {
     background-color: blue;
+}
+
+/*=================================================  QMenu*/
+QMenu {
+    background-color: #f0f0f0; /* 背景色 */
+    border: none; /* 边框 */
+    font-size: 14px; /* 字体大小 */
+}
+
+QMenu::item {
+    padding: 5px 20px; /* item 的 padding */
+}
+
+QMenu::item:selected {
+    background-color: #0088cc; /* 被选中的 item 背景颜色 */
+    color: #fff; /* 被选中的 item 文字颜色 */
+}
+
+/*=================================================  QStackedWidget*/
+QStackedWidget {
+    /*background-color: #f0f0f0;*/ /* 背景色 */
+}
+
+QStackedWidget::pane {
+    border: none; /* 主 widget 的边框 */
+}
+
+QStackedWidget QWidget {
+    /*background-color: #f0f0f0;*/ /* 子 widget 的背景色 */
+    border-radius: 5px; /* 子 widget 圆角半径 */
+    /*border: 1px solid #dcdcdc;*/ /* 子 widget 边框 */
+    /*padding: 20px;*/ /* 子 widget 的 padding */
 }
