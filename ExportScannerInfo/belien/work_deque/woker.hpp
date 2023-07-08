@@ -23,7 +23,7 @@ public:
 	{
 		thread_ = std::thread(&worker_t::execute, this);
 		//thread_.detach();
-		std::async(std::launch::async, &worker_t::execute, this); // 异步任务方式
+		//std::async(std::launch::async, &worker_t::execute, this); // 异步任务方式
 	}
 
 	~worker_t()

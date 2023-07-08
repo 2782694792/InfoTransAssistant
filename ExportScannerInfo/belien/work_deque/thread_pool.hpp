@@ -1,10 +1,20 @@
+#ifndef BELIEN_THREADPOOL_HPP
+#define BELIEN_THREADPOOL_HPP
+
 #include "woker.hpp"
+
+#define MAX_THREAD_COUNT 20
 
 class thread_pool
 {
 public:
 	thread_pool(size_t thread_num = std::thread::hardware_concurrency())
 	{
+		if (thread_num > MAX_THREAD_COUNT)
+		{
+
+		}
+
 		workers_ = std::make_shared<std::vector<std::shared_ptr<worker_t>>>();
 		for (size_t i = 0; i < thread_num; i++)
 		{
@@ -38,3 +48,4 @@ private:
 
 	workers_ptr workers_; // 作业向量（集）
 };
+#endif
